@@ -13,8 +13,7 @@ import * as marked from 'marked';
 })
 export class HomeComponent implements OnInit {
 
-  isProcessing = true;
-  readmeText: string;
+  isProcessing = false;
   tutorialTypeEnum = TutorialType;
 
   constructor(private homeService: HomeService) { }
