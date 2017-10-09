@@ -18,7 +18,9 @@ import { TutorialService } from '../../../shared/tutorial/tutorial.service';
 export class NavigationComponent implements OnInit, OnChanges {
 
   @Input() swipeEvent: PointerEvent;
-  @ViewChild('tabLinkHome') tabLinkHome: ElementRef;
+  @ViewChild('tabLinkAbout') tabLinkAbout: ElementRef;
+  @ViewChild('tabLinkStartCampaign') tabLinkStartCampaign: ElementRef;
+  @ViewChild('tabLinkSignUp') tabLinkSignUp: ElementRef;
   @ViewChild('tabLinkLogin') tabLinkLogin: ElementRef;
   @ViewChild('tabLinkProfile') tabLinkProfile: ElementRef;
 
@@ -83,15 +85,16 @@ export class NavigationComponent implements OnInit, OnChanges {
     for (const propName in changes) {
       if (propName === 'swipeEvent') {
         if (this.swipeEvent !== undefined) {
-          if (this.swipeEvent.type === 'swiperight') {
-            this.router.navigate([(<HTMLAnchorElement>this.tabLinkHome.nativeElement).pathname]);
-          } else if (this.swipeEvent.type === 'swipeleft') {
-            if (this.loggedInUserId) {
-              this.router.navigate([(<HTMLAnchorElement>this.tabLinkProfile.nativeElement).pathname]);
-            } else {
-              this.router.navigate([(<HTMLAnchorElement>this.tabLinkLogin.nativeElement).pathname]);
-            }
-          }
+          // TODO: impliment swipes again
+          // if (this.swipeEvent.type === 'swiperight') {
+          //   this.router.navigate([(<HTMLAnchorElement>this.tabLinkHome.nativeElement).pathname]);
+          // } else if (this.swipeEvent.type === 'swipeleft') {
+          //   if (this.loggedInUserId) {
+          //     this.router.navigate([(<HTMLAnchorElement>this.tabLinkProfile.nativeElement).pathname]);
+          //   } else {
+          //     this.router.navigate([(<HTMLAnchorElement>this.tabLinkLogin.nativeElement).pathname]);
+          //   }
+          // }
         }
       }
     }

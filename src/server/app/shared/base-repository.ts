@@ -23,11 +23,14 @@ export class BaseRepository {
 }
 
 export enum Folder {
-    Posts,
+    Campaigns,
     Users
 }
 
-export enum Posts {
+export enum Campaigns {
+    CreateCampaign,
+    GetCampaigns,
+    GetCampaign
 }
 
 export enum Users {
