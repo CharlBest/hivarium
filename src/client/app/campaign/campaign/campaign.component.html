@@ -1,0 +1,51 @@
+<div *ngIf="!isProcessing && campaign">
+    <md-card>
+        <img [src]="campaign.campaign.media"
+            *ngIf="campaign.campaign.media"
+            md-card-image>
+        <md-card-title>{{campaign.campaign.title}}</md-card-title>
+        <md-card-content>
+            <div>by
+                <strong>{{campaign.user.username}}</strong>
+            </div>
+            <div>{{campaign.campaign.description}}</div>
+            <h5>{{campaign.user.dateCreated | date }}</h5>
+        </md-card-content>
+        <md-card-actions>
+            <button md-raised-button>Buy now</button>
+            <button md-raised-button>Refer a friend</button>
+        </md-card-actions>
+    </md-card>
+    <md-card>
+        <md-tab-group>
+            <md-tab>
+                <ng-template md-tab-label>Rewards</ng-template>
+                <div *ngFor="let milestone of campaign.campaign.milestones; let i=index">
+                    <h3>Milestone {{i+1}}</h3>
+
+                    <div>Unloacked at: {{milestone.unlockAtValueOfSales}}</div>
+                    <div>Percentage discount: {{milestone.percentageDiscount}}%</div>
+                </div>
+
+                <hr>
+
+                <div>give: {{campaign.campaign.referralPercentage/2}}%</div>
+                <div>get: {{campaign.campaign.referralPercentage/2}}%</div>
+            </md-tab>
+            <md-tab>
+                <ng-template md-tab-label>Buy</ng-template>
+
+            </md-tab>
+            <md-tab>
+                <ng-template md-tab-label>Campaign</ng-template>
+                <div [innerHTML]="campaign.campaign.fullDescription"></div>
+            </md-tab>
+        </md-tab-group>
+    </md-card>
+</div>
+
+<md-card *ngIf="isProcessing">
+    <md-card-content>
+        <md-spinner class="preloader"></md-spinner>
+    </md-card-content>
+</md-card>

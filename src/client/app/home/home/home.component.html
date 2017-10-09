@@ -1,6 +1,15 @@
 <md-card *ngIf="!isProcessing">
     <md-card-content>
         All Hives
+
+        <div *ngFor="let campaign of campaigns">
+            <h2>{{campaign.campaign.title}}</h2>
+            <h5>{{campaign.campaign.description}}</h5>
+            <h5>{{campaign.user.username}}</h5>
+            <h5>{{campaign.user.dateCreated | date }}</h5>
+            <button md-raised-button
+                routerLink="/campaign/{{campaign.campaign.uId}}">GO</button>
+        </div>
     </md-card-content>
 </md-card>
 

@@ -7,6 +7,8 @@ import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-us
 import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
 import { CampaignModel } from '../../models/campaign/campaign.model';
+import { CampaignViewModel } from '../../view-models/campaign/campaign.view-model';
+import { CreateCampaignViewModel } from '../../view-models/campaign/create-campaign.view-model';
 
 export class CampaignsRepository extends BaseRepository {
 
@@ -14,38 +16,65 @@ export class CampaignsRepository extends BaseRepository {
         super();
     }
 
-    public async createCampaign(session: neo4j.Session, uId: string, email: string): Promise<CampaignModel> {
+    public async createCampaign(session: neo4j.Session, userId: number, campaignUId: string, viewModel: CreateCampaignViewModel): Promise<CampaignModel> {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Campaigns, Campaigns.CreateCampaign)}`);
-        const result = await session.run(query.data, { uId, email });
+        const result = await session.run(query.data, {
+            userId,
+            uId: campaignUId,
+            title: viewModel.title,
+            description: viewModel.description,
+            daysDuration: viewModel.daysDuration,
+            fullDescription: viewModel.fullDescription,
+            media: viewModel.media,
+            referralPercentage: viewModel.referralPercentage,
+            milestones: JSON.stringify(viewModel.milestones),
+            products: viewModel.products
+        });
 
-        const user = result.records.map(x => Database.createNodeObject(x.get('campaign'))) as CampaignModel[];
-        if (user !== null && user.length > 0) {
-            return user[0];
+        const campaign = result.records.map(x => Database.createNodeObject(x.get('campaign'))) as CampaignModel[];
+        if (campaign !== null && campaign.length > 0) {
+            return campaign[0];
         } else {
             return null;
         }
     }
 
-    public async getCampaigns(session: neo4j.Session): Promise<CampaignModel> {
+    public async getCampaigns(session: neo4j.Session): Promise<CampaignViewModel[]> {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Campaigns, Campaigns.GetCampaigns)}`);
         const result = await session.run(query.data);
 
-        const user = result.records.map(x => Database.createNodeObject(x.get('campaign'))) as CampaignModel[];
-        if (user !== null && user.length > 0) {
-            return user[0];
+        const campaigns = result.records.map(x => {
+            const viewModel = new CampaignViewModel();
+            viewModel.campaign = Database.createNodeObject(x.get('campaign'));
+            viewModel.user = Database.createNodeObject(x.get('user'));
+            // viewModel.products = Database.createNodeObject(x.get('products'));
+
+            return viewModel;
+        });
+
+        if (campaigns !== null && campaigns.length > 0) {
+            return campaigns;
         } else {
             return null;
         }
     }
 
 
-    public async getCampaign(session: neo4j.Session, userId: number, campaignId: number): Promise<CampaignModel> {
+    public async getCampaign(session: neo4j.Session, userId: number, uId: string): Promise<CampaignViewModel> {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Campaigns, Campaigns.GetCampaign)}`);
-        const result = await session.run(query.data, { userId, campaignId });
+        const result = await session.run(query.data, { uId });
 
-        const user = result.records.map(x => Database.createNodeObject(x.get('campaign'))) as CampaignModel[];
-        if (user !== null && user.length > 0) {
-            return user[0];
+        const campaign = result.records.map(x => {
+            const viewModel = new CampaignViewModel();
+            viewModel.campaign = Database.createNodeObject(x.get('campaign'));
+            viewModel.user = Database.createNodeObject(x.get('user'));
+            // viewModel.products = Database.createNodeObject(x.get('products'));
+
+            return viewModel;
+        });
+
+        if (campaign !== null && campaign.length > 0) {
+            return campaign[0];
         } else {
             return null;
         }

@@ -14,6 +14,7 @@ import { UsersRoutes } from '../app/users/users.routes';
 // import resolvers from '../resolvers/resolver';
 import { Authentication } from './middleware/authentication';
 import { environment } from '../environments/environment';
+import { CampaignsRoutes } from '../app/campaigns/campaigns.routes';
 // import { exceptionHandler } from './api/exceptionHandler';
 // import { extendExpressResponse } from './api/extendExpressResponse';
 const root = './';
@@ -42,8 +43,10 @@ export class Bootstrap {
 
         // serving api routes
         const usersRouter = new UsersRoutes().router;
+        const campaignsRouter = new CampaignsRoutes().router;
 
         app.use('/api', usersRouter);
+        app.use('/api', campaignsRouter);
 
         // TODO: not sure if this is the best way of doing it
         // This is to serve web app sub routes

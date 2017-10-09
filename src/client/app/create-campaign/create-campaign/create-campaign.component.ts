@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
 import { CreateCampaignService } from '../create-campaign.service';
@@ -9,6 +9,7 @@ import { LoginService } from '../../login/login.service';
 import { Validators } from '../../../../server/validation/validators';
 import { FormService } from '../../shared/form.service';
 import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
+import { CreateCampaignViewModel } from '../../../../server/view-models/campaign/create-campaign.view-model';
 
 @Component({
   selector: 'app-create-campaign',
@@ -20,11 +21,12 @@ export class CreateCampaignComponent implements OnInit {
   form: FormGroup;
   serverErrors;
   isProcessing = false;
+  products: FormArray;
+  milestones: FormArray;
 
   constructor(private fb: FormBuilder,
-    private createUserService: CreateCampaignService,
+    private createCampaignService: CreateCampaignService,
     private router: Router,
-    private authService: AuthService,
     private formService: FormService) {
   }
 
@@ -34,30 +36,81 @@ export class CreateCampaignComponent implements OnInit {
 
   buildForm() {
     this.form = this.fb.group({
-      email: ['', [
-        Validators.required,
-        Validators.email
-      ]],
-      username: ['', [
-        Validators.required
-      ]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(6)
-      ]]
+      title: '',
+      description: '',
+      daysDuration: '',
+      fullDescription: '',
+      media: '',
+      referralPercentage: '',
+      milestones: this.buildMilestonesArray(),
+      products: this.buildProductsArray()
     });
   }
+
+  //#region Milestone
+
+  buildMilestonesArray() {
+    this.milestones = this.fb.array([
+      this.buildMilestoneGroup()
+    ]);
+    return this.milestones;
+  }
+
+  buildMilestoneGroup(): FormGroup {
+    return this.fb.group({
+      unlockAtValueOfSales: null,
+      percentageDiscount: ''
+    });
+  }
+
+  addMilestone() {
+    this.milestones.push(this.buildMilestoneGroup());
+  }
+
+  //#endregion
+
+  //#region Product
+
+  buildProductsArray() {
+    this.products = this.fb.array([
+      this.buildProductGroup()
+    ]);
+    return this.products;
+  }
+
+  buildProductGroup(): FormGroup {
+    return this.fb.group({
+      uId: null,
+      title: '',
+      description: '',
+      cost: '',
+      quantity: '',
+      media: ''
+    });
+  }
+
+  addProduct() {
+    this.products.push(this.buildProductGroup());
+  }
+
+  //#endregion
 
   onSubmit() {
     this.isProcessing = true;
 
-    const viewModel = new CreateUserViewModel();
-    viewModel.email = this.form.get('email').value;
-    viewModel.username = this.form.get('username').value;
-    viewModel.password = this.form.get('password').value;
+    const viewModel = new CreateCampaignViewModel();
+    viewModel.title = this.form.get('title').value;
+    viewModel.description = this.form.get('description').value;
+    viewModel.daysDuration = this.form.get('daysDuration').value;
+    viewModel.fullDescription = this.form.get('fullDescription').value;
+    viewModel.media = this.form.get('media').value;
+    viewModel.referralPercentage = this.form.get('referralPercentage').value;
+    viewModel.milestones = this.form.get('milestones').value;
+    viewModel.products = this.form.get('products').value;
 
-    this.createUserService.createCampaign(viewModel).subscribe(
+    this.createCampaignService.createCampaign(viewModel).subscribe(
       data => {
+        this.router.navigate([`/campaign/${data.uId}`]);
       }, error => {
         this.isProcessing = false;
         this.serverErrors = this.formService.getServerErrors(error);

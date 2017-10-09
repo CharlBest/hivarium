@@ -1,11 +1,15 @@
+import { MilestoneModel } from './milestone.model';
+
 export class CampaignModel {
     uId: string;
     title: string;
     category: string;
     description: string;
-    daysDuration: string;
+    daysDuration: number;
     dateCreated: number;
-    views: number;
     fullDescription: string;
-    media: string[];
+    views: number;
+    media: string;
+    referralPercentage: number;
+    milestones: MilestoneModel[];
 }

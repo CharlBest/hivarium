@@ -4,11 +4,11 @@ export class BaseRepository {
 
     constructor() { }
 
-    protected getQueryPath(folder: Folder, file: Posts | Users): string {
+    protected getQueryPath(folder: Folder, file: Campaigns | Users): string {
         let fileName;
         switch (folder) {
-            case Folder.Posts:
-                fileName = Posts[file];
+            case Folder.Campaigns:
+                fileName = Campaigns[file];
                 break;
 
             case Folder.Users:

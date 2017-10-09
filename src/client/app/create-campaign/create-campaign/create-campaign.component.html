@@ -4,43 +4,184 @@
 
             <md-form-field>
                 <input mdInput
-                    formControlName="email"
+                    formControlName="title"
                     type="text"
-                    placeholder="email"
+                    placeholder="title"
                     required>
             </md-form-field>
-            <div *ngIf="serverErrors?.email"
-                class="validation-message">{{ serverErrors.email.message }}</div>
-            <app-show-errors [control]="form.controls['email']"></app-show-errors>
+            <div *ngIf="serverErrors?.title"
+                class="validation-message">{{ serverErrors.title.message }}</div>
+            <app-show-errors [control]="form.controls['title']"></app-show-errors>
+
+            <br>
+
+            <md-form-field>
+                <textarea mdInput
+                    formControlName="description"
+                    rows="5"
+                    placeholder="description"></textarea>
+            </md-form-field>
+            <div *ngIf="serverErrors?.description"
+                class="validation-message">{{ serverErrors.description.message }}</div>
+            <app-show-errors [control]="form.controls['description']"></app-show-errors>
 
             <br>
 
             <md-form-field>
                 <input mdInput
-                    formControlName="username"
-                    type="text"
-                    placeholder="username"
+                    formControlName="daysDuration"
+                    type="number"
+                    placeholder="duration"
                     required>
             </md-form-field>
-            <div *ngIf="serverErrors?.username"
-                class="validation-message">{{ serverErrors.username.message }}</div>
-            <app-show-errors [control]="form.controls['username']"></app-show-errors>
+            <div *ngIf="serverErrors?.daysDuration"
+                class="validation-message">{{ serverErrors.daysDuration.message }}</div>
+            <app-show-errors [control]="form.controls['daysDuration']"></app-show-errors>
+
+            <br>
+
+            <md-form-field>
+                <textarea mdInput
+                    formControlName="fullDescription"
+                    rows="5"
+                    placeholder="full description"></textarea>
+            </md-form-field>
+            <div *ngIf="serverErrors?.fullDescription"
+                class="validation-message">{{ serverErrors.fullDescription.message }}</div>
+            <app-show-errors [control]="form.controls['fullDescription']"></app-show-errors>
 
             <br>
 
             <md-form-field>
                 <input mdInput
-                    formControlName="password"
-                    type="password"
-                    placeholder="password"
+                    formControlName="media"
+                    type="text"
+                    placeholder="media url"
                     required>
             </md-form-field>
-            <div *ngIf="serverErrors?.password"
-                class="validation-message">{{ serverErrors.password.message }}</div>
-            <app-show-errors [control]="form.controls['password']"></app-show-errors>
+            <div *ngIf="serverErrors?.media"
+                class="validation-message">{{ serverErrors.media.message }}</div>
+            <app-show-errors [control]="form.controls['media']"></app-show-errors>
 
-            <div class="signUpInfo">
-                By signing up, you agree to our <a routerLink="/legal/termsandconditions">Terms</a> and <a routerLink="/legal/privacypolicy">Privacy Policy</a>
+            <br>
+
+            <md-form-field>
+                <input mdInput
+                    formControlName="referralPercentage"
+                    type="number"
+                    placeholder="referral percentage"
+                    required>
+            </md-form-field>
+            <div *ngIf="serverErrors?.referralPercentage"
+                class="validation-message">{{ serverErrors.referralPercentage.message }}</div>
+            <app-show-errors [control]="form.controls['referralPercentage']"></app-show-errors>
+
+
+            <div formArrayName="milestones">
+                <div *ngFor="let milestone of milestones.controls; let i=index"
+                    [formGroupName]="i">
+
+                    <h3>Milestone {{i+1}}</h3>
+
+                    <md-form-field>
+                        <input mdInput
+                            formControlName="unlockAtValueOfSales"
+                            type="number"
+                            placeholder="unlock at value of sales"
+                            required>
+                    </md-form-field>
+                    <div *ngIf="serverErrors?.unlockAtValueOfSales"
+                        class="validation-message">{{ serverErrors.unlockAtValueOfSales.message }}</div>
+                    <app-show-errors [control]="form.controls['unlockAtValueOfSales']"></app-show-errors>
+
+                    <br>
+
+                    <md-form-field>
+                        <input mdInput
+                            formControlName="percentageDiscount"
+                            type="number"
+                            placeholder="percentage discount"
+                            required>
+                    </md-form-field>
+                    <div *ngIf="serverErrors?.percentageDiscount"
+                        class="validation-message">{{ serverErrors.percentageDiscount.message }}</div>
+                    <app-show-errors [control]="form.controls['percentageDiscount']"></app-show-errors>
+                </div>
+                <button md-raised-button
+                    (click)="addProduct()">Add milestone</button>
+            </div>
+
+
+            <div formArrayName="products">
+                <div *ngFor="let product of products.controls; let i=index"
+                    [formGroupName]="i">
+
+                    <h3>Product {{i+1}}</h3>
+
+                    <md-form-field>
+                        <input mdInput
+                            formControlName="title"
+                            type="text"
+                            placeholder="title"
+                            required>
+                    </md-form-field>
+                    <div *ngIf="serverErrors?.title"
+                        class="validation-message">{{ serverErrors.title.message }}</div>
+                    <app-show-errors [control]="form.controls['title']"></app-show-errors>
+
+                    <br>
+
+                    <md-form-field>
+                        <textarea mdInput
+                            formControlName="description"
+                            rows="5"
+                            placeholder="description"></textarea>
+                    </md-form-field>
+                    <div *ngIf="serverErrors?.description"
+                        class="validation-message">{{ serverErrors.description.message }}</div>
+                    <app-show-errors [control]="form.controls['description']"></app-show-errors>
+
+                    <br>
+
+                    <md-form-field>
+                        <input mdInput
+                            formControlName="cost"
+                            type="number"
+                            placeholder="cost"
+                            required>
+                    </md-form-field>
+                    <div *ngIf="serverErrors?.cost"
+                        class="validation-message">{{ serverErrors.cost.message }}</div>
+                    <app-show-errors [control]="form.controls['cost']"></app-show-errors>
+
+                    <br>
+
+                    <md-form-field>
+                        <input mdInput
+                            formControlName="quantity"
+                            type="number"
+                            placeholder="quantity"
+                            required>
+                    </md-form-field>
+                    <div *ngIf="serverErrors?.quantity"
+                        class="validation-message">{{ serverErrors.quantity.message }}</div>
+                    <app-show-errors [control]="form.controls['quantity']"></app-show-errors>
+
+                    <br>
+
+                    <md-form-field>
+                        <input mdInput
+                            formControlName="media"
+                            type="text"
+                            placeholder="media url"
+                            required>
+                    </md-form-field>
+                    <div *ngIf="serverErrors?.media"
+                        class="validation-message">{{ serverErrors.media.message }}</div>
+                    <app-show-errors [control]="form.controls['media']"></app-show-errors>
+                </div>
+                <button md-raised-button
+                    (click)="addProduct()">Add product</button>
             </div>
         </md-card-content>
         <md-card-actions align="end">
@@ -48,7 +189,7 @@
                 color="primary"
                 type="submit"
                 [disabled]="!form.valid"
-                (click)="onSubmit()">Sign up</button>
+                (click)="onSubmit()">Create</button>
         </md-card-actions>
     </md-card>
 </form>

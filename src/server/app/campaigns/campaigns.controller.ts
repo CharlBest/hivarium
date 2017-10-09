@@ -17,6 +17,8 @@ import { FeedbackViewModel } from '../../view-models/feedback/feedback.view-mode
 import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
 import { CampaignsService } from './campaigns.service';
+import { GetCampaignViewModel } from '../../view-models/campaign/get-campaign.view-model';
+import { CreateCampaignViewModel } from '../../view-models/campaign/create-campaign.view-model';
 
 export class CampaignsController extends BaseController {
     private campaignsService: CampaignsService;
@@ -28,20 +30,25 @@ export class CampaignsController extends BaseController {
 
     public async createCampaign(req: Request, res: Response, next: NextFunction) {
         try {
-            const viewModel = req.body as CreateUserViewModel;
+            const viewModel = req.body as CreateCampaignViewModel;
 
-            const valid = Validators.required({ value: viewModel.username }) ||
-                Validators.required({ value: viewModel.email }) ||
-                Validators.required({ value: viewModel.password }) ||
-                Validators.minLength(6)({ value: viewModel.password }) ||
-                Validators.email({ value: viewModel.email }) ||
+            const valid = Validators.required({ value: viewModel.title }) ||
+                Validators.required({ value: viewModel.description }) ||
+                Validators.required({ value: viewModel.daysDuration }) ||
+                Validators.required({ value: viewModel.fullDescription }) ||
+                Validators.required({ value: viewModel.media }) ||
+                Validators.required({ value: viewModel.referralPercentage }) ||
+                // Validators.required({ value: viewModel.milestones }) ||
+                // Validators.required({ value: viewModel.products }) ||
                 null;
 
             if (valid !== null) {
                 throw ValidationUtil.createValidationErrors(valid);
             }
 
-            const response = await this.campaignsService.createCampaign(Database.getSession(req), viewModel.email);
+            const campaignUId = nodeUUId();
+
+            const response = await this.campaignsService.createCampaign(Database.getSession(req), this.getUserId(req), campaignUId, viewModel);
             // Emailer.welcomeEmail(response.email, response.username, response.emailCode);
 
             res.status(200).json(response);
@@ -61,7 +68,16 @@ export class CampaignsController extends BaseController {
 
     public async getCampaign(req: Request, res: Response, next: NextFunction) {
         try {
-            const response = await this.campaignsService.getCampaign(Database.getSession(req), this.getUserId(req), 1);
+            const uId = req.params.uId as string;
+
+            const valid = Validators.required({ value: uId }) ||
+                null;
+
+            if (valid !== null) {
+                throw ValidationUtil.createValidationErrors(valid);
+            }
+
+            const response = await this.campaignsService.getCampaign(Database.getSession(req), this.getUserId(req), uId);
             res.status(200).json(response);
         } catch (error) {
             this.returnError(res, error);

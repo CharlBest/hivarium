@@ -13,6 +13,8 @@ import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
 import { CampaignsRepository } from './campaigns.repository';
 import { CampaignModel } from '../../models/campaign/campaign.model';
+import { CampaignViewModel } from '../../view-models/campaign/campaign.view-model';
+import { CreateCampaignViewModel } from '../../view-models/campaign/create-campaign.view-model';
 
 export class CampaignsService extends BaseService {
 
@@ -23,16 +25,16 @@ export class CampaignsService extends BaseService {
         this.campaignsRepository = new CampaignsRepository();
     }
 
-    public async createCampaign(session: neo4j.Session, email: string): Promise<CampaignModel> {
+    public async createCampaign(session: neo4j.Session, userId: number, campaignUId: string, viewModel: CreateCampaignViewModel): Promise<CampaignModel> {
         // TODO: validation checks
-        return await this.campaignsRepository.createCampaign(session, nodeUUId(), email);
+        return await this.campaignsRepository.createCampaign(session, userId, campaignUId, viewModel);
     }
 
-    public async getCampaigns(session: neo4j.Session): Promise<CampaignModel> {
+    public async getCampaigns(session: neo4j.Session): Promise<CampaignViewModel[]> {
         return await this.campaignsRepository.getCampaigns(session);
     }
 
-    public async getCampaign(session: neo4j.Session, userId: number, campaignId: number): Promise<CampaignModel> {
-        return await this.campaignsRepository.getCampaign(session, userId, campaignId);
+    public async getCampaign(session: neo4j.Session, userId: number, uId: string): Promise<CampaignViewModel> {
+        return await this.campaignsRepository.getCampaign(session, userId, uId);
     }
 }
