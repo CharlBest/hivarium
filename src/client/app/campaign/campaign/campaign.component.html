@@ -1,4 +1,4 @@
-<div *ngIf="!isProcessing && campaign">
+<div *ngIf="!isProcessing && campaign !== null">
     <md-card>
         <img [src]="campaign.campaign.media"
             *ngIf="campaign.campaign.media"

@@ -12,7 +12,7 @@ export class CampaignComponent implements OnInit {
 
   isProcessing = true;
   campaignUId: string;
-  campaign: CampaignViewModel;
+  campaign: CampaignViewModel = null;
   constructor(private route: ActivatedRoute,
     private campaignService: CampaignService) { }
 
