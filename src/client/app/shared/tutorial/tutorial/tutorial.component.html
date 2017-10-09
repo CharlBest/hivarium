@@ -1,0 +1,30 @@
+<div class="tutorial-overlay"
+  *ngIf="active"></div>
+
+<div class="tutorial-overlay-transparent"
+  *ngIf="active"
+  (click)="preventClick($event)"></div>
+
+<div *ngFor="let tut of tuts">
+  <div *ngIf="tutorialInUrl == tut.tutorialType"
+    class="tutorial-box">
+    <div>{{tut.text}}</div>
+
+    <br>
+
+    <button md-raised-button
+      (click)="back()"
+      *ngIf="!tut.isFirst">Previous</button>
+    <button md-raised-button
+      (click)="goToTutorial(tut)">
+      <span *ngIf="!tut.isLast">Next</span>
+      <span *ngIf="tut.isLast">Done</span>
+    </button>
+
+    <br>
+    <br>
+
+    <button md-raised-button
+      (click)="skip(tut)">Skip</button>
+  </div>
+</div>

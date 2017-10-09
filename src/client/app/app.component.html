@@ -1,0 +1,10 @@
+<app-navigation [swipeEvent]="swipeEvent"></app-navigation>
+
+<!-- Temp workaround touch-action https://github.com/angular/material2/pull/6294 -->
+<div class="app-container" (swipeleft)="swipeEvent = $event" (swiperight)="swipeEvent = $event" [style.touch-action]="'pan-y'">
+    <router-outlet></router-outlet>
+</div>
+
+<app-footer></app-footer>
+
+<app-tutorial></app-tutorial>

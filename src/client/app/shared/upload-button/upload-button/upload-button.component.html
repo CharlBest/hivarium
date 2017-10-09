@@ -1,0 +1,13 @@
+<input type="file"
+    id="upload-button-file-input"
+    (change)="handleChange($event)" />
+<label for="upload-button-file-input"
+    class="mat-raised-button">Upload file</label>
+
+<md-progress-bar *ngIf="progressPercentage >= 0"
+    [value]="progressPercentage"
+    mdTooltip="{{progressPercentage}}%"></md-progress-bar>
+
+<img width="100%"
+    *ngIf="showPreview"
+    src={{previewImgUrl}} />

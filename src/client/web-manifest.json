@@ -1,0 +1,16 @@
+{
+    "name": "NEAN",
+    "short_name": "NEAN",
+    "start_url": ".",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#ffffff",
+    "theme_color": "#673ab7",
+    "description": "NEAN stack starter",
+    "icons": [
+        {
+            "src": "\/assets\/logo.svg",
+            "sizes": "48x48 72x72 96x96 128x128 256x256"
+        }
+    ]
+}
