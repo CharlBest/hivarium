@@ -97,7 +97,7 @@ export class Bootstrap {
         app.use((req: Request | any, res: Response, next: NextFunction) => {
             const allowedOrigins = app.get('env') === 'development'
                 ? ['http://localhost:4200' /*Dev web client*/, 'http://localhost:3000' /*Web client*/, 'http://localhost:8000' /*IOS client*/, 'http://10.0.0.10:3000' /*Phone client*/]
-                : ['https://nean-starter.azurewebsites.net'];
+                : ['https://hivarium.herokuapp.com'];
             const origin = req.headers.origin;
             if (allowedOrigins.indexOf(origin) > -1) {
                 res.setHeader('Access-Control-Allow-Origin', origin);

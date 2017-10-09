@@ -1,12 +1,12 @@
 {
-    "name": "NEAN",
-    "short_name": "NEAN",
+    "name": "Hivarium",
+    "short_name": "Hivarium",
     "start_url": ".",
     "display": "standalone",
     "orientation": "portrait",
     "background_color": "#ffffff",
     "theme_color": "#673ab7",
-    "description": "NEAN stack starter",
+    "description": "Hivarium",
     "icons": [
         {
             "src": "\/assets\/logo.svg",

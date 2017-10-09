@@ -1,11 +1,11 @@
 {
-  "name": "app",
-  "version": "0.0.4",
-  "description": "A sample Angular, Node.js and Neo4j app",
+  "name": "hivarium",
+  "version": "0.0.",
+  "description": "",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/CharlBest/nean-stack-starter"
+    "url": "https://hivarium.visualstudio.com/_git/Hivarium"
   },
   "keywords": [
     "angular",

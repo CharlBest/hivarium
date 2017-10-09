@@ -20,23 +20,5 @@ export class HomeComponent implements OnInit {
   constructor(private homeService: HomeService) { }
 
   ngOnInit() {
-    if (environment.production) {
-      this.getRepoReadme();
-    } else {
-      this.isProcessing = false;
-      this.readmeText = 'IN DEVELOPMENT MODE';
-    }
-  }
-
-  getRepoReadme() {
-    const oReq = new XMLHttpRequest();
-    oReq.addEventListener('load', (event) => {
-      const content = (<XMLHttpRequest>event.target).responseText;
-      this.readmeText = marked(content);
-      this.isProcessing = false;
-    });
-
-    oReq.open('GET', 'https://raw.githubusercontent.com/CharlBest/nean-stack-starter/master/README.md');
-    oReq.send();
   }
 }

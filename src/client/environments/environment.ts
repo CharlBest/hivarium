@@ -13,11 +13,11 @@ export const environment = {
   },
   hostUrlForSharingToWeb: 'http://localhost:3000',
   firebase: {
-    apiKey: '***',
-    authDomain: 'nean-dev.firebaseapp.com',
-    databaseURL: 'https://nean-dev.firebaseio.com',
-    projectId: 'nean-dev',
-    storageBucket: 'gs://nean-dev.appspot.com/',
-    messagingSenderId: '***'
+    apiKey: 'AIzaSyAo1BQ8WyxtYKzYOWODhv_zcY7OWmmS-1k',
+    authDomain: 'hivarium-dev.firebaseapp.com',
+    databaseURL: 'https://hivarium-dev.firebaseio.com',
+    projectId: 'hivarium-dev',
+    storageBucket: 'gs://hivarium-dev.appspot.com/',
+    messagingSenderId: '445872811735'
   }
 };
