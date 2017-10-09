@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
-  apiUrlEndpoint: 'https://hivarium.herokuapp.com/',
+  apiUrlEndpoint: 'https://hivarium.herokuapp.com',
   googleAnalytics: {
     web: 'UA-107304143-2',
     ios: 'UA-102909242-3',
     chromeExtension: 'UA-102909242-2'
   },
-  hostUrlForSharingToWeb: 'https://hivarium.herokuapp.com/',
+  hostUrlForSharingToWeb: 'https://hivarium.herokuapp.com',
   firebase: {
     apiKey: 'AIzaSyBwmXj52--PyL9lihDTSp9A4E5k4sg1giI',
     authDomain: 'hivarium.firebaseapp.com',
