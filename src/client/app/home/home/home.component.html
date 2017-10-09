@@ -1,16 +1,23 @@
-<md-card *ngIf="!isProcessing">
-    <md-card-content>
-        All Hives
+<md-card style="text-align: center;">
+    All Hives
+</md-card>
 
-        <div *ngFor="let campaign of campaigns">
-            <h2>{{campaign.campaign.title}}</h2>
-            <h5>{{campaign.campaign.description}}</h5>
-            <h5>{{campaign.user.username}}</h5>
-            <h5>{{campaign.user.dateCreated | date }}</h5>
-            <button md-raised-button
-                routerLink="/campaign/{{campaign.campaign.uId}}">GO</button>
+<md-card *ngFor="let campaign of campaigns">
+    <img [src]="campaign.campaign.media"
+        *ngIf="campaign.campaign.media"
+        md-card-image>
+    <md-card-title>{{campaign.campaign.title}}</md-card-title>
+    <md-card-content>
+        <div>by
+            <strong>{{campaign.user.username}}</strong>
         </div>
+        <div>{{campaign.campaign.description}}</div>
+        <h5>{{campaign.user.dateCreated | date }}</h5>
     </md-card-content>
+    <md-card-actions>
+        <button md-raised-button
+            routerLink="/campaign/{{campaign.campaign.uId}}">Go</button>
+    </md-card-actions>
 </md-card>
 
 <md-card *ngIf="isProcessing">
