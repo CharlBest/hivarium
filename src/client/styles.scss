@@ -17,7 +17,8 @@ body {
 }
 
 md-card {
-    margin-bottom: 10px;
+    max-width: 650px;
+    margin: 0 auto 10px auto;
 }
 
 .card-item {
