@@ -39,6 +39,11 @@ mat-card {
     margin: 0 auto;
     max-width: 25px;
     max-height: 25px;
+
+    svg {
+        max-width: 25px;
+        max-height: 25px;
+    }
 }
 
 //Overide mat-card styles

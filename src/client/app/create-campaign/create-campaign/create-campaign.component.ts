@@ -18,7 +18,10 @@ import { CreateCampaignViewModel } from '../../../../server/view-models/campaign
 })
 export class CreateCampaignComponent implements OnInit {
 
-  form: FormGroup;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
+
   serverErrors;
   isProcessing = false;
   products: FormArray;
@@ -35,14 +38,20 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   buildForm() {
-    this.form = this.fb.group({
+    this.firstFormGroup = this.fb.group({
       title: '',
       description: '',
       daysDuration: '',
       fullDescription: '',
       media: '',
-      referralPercentage: '',
-      milestones: this.buildMilestonesArray(),
+      referralPercentage: ''
+    });
+
+    this.secondFormGroup = this.fb.group({
+      milestones: this.buildMilestonesArray()
+    });
+
+    this.thirdFormGroup = this.fb.group({
       products: this.buildProductsArray()
     });
   }
@@ -99,14 +108,14 @@ export class CreateCampaignComponent implements OnInit {
     this.isProcessing = true;
 
     const viewModel = new CreateCampaignViewModel();
-    viewModel.title = this.form.get('title').value;
-    viewModel.description = this.form.get('description').value;
-    viewModel.daysDuration = this.form.get('daysDuration').value;
-    viewModel.fullDescription = this.form.get('fullDescription').value;
-    viewModel.media = this.form.get('media').value;
-    viewModel.referralPercentage = this.form.get('referralPercentage').value;
-    viewModel.milestones = this.form.get('milestones').value;
-    viewModel.products = this.form.get('products').value;
+    viewModel.title = this.firstFormGroup.get('title').value;
+    viewModel.description = this.firstFormGroup.get('description').value;
+    viewModel.daysDuration = this.firstFormGroup.get('daysDuration').value;
+    viewModel.fullDescription = this.firstFormGroup.get('fullDescription').value;
+    viewModel.media = this.firstFormGroup.get('media').value;
+    viewModel.referralPercentage = this.firstFormGroup.get('referralPercentage').value;
+    viewModel.milestones = this.secondFormGroup.get('milestones').value;
+    viewModel.products = this.thirdFormGroup.get('products').value;
 
     this.createCampaignService.createCampaign(viewModel).subscribe(
       data => {

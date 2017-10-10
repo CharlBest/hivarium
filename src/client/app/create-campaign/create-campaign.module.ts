@@ -11,7 +11,8 @@ import {
   MatButtonModule,
   MatInputModule,
   MatProgressSpinnerModule,
-  MatCardModule
+  MatCardModule,
+  MatStepperModule
 } from '@angular/material';
 
 @NgModule({
@@ -22,6 +23,7 @@ import {
     MatButtonModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatStepperModule,
     MatCardModule,
     ShowErrorsModule
   ],

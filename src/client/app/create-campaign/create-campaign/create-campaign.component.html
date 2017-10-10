@@ -1,122 +1,10 @@
-<form [formGroup]="form">
-    <mat-card *ngIf="!isProcessing">
-        <mat-card-content>
+<mat-card *ngIf="!isProcessing">
+    <mat-card-content>
 
-            <mat-form-field>
-                <input matInput
-                    formControlName="title"
-                    type="text"
-                    placeholder="title"
-                    required>
-            </mat-form-field>
-            <div *ngIf="serverErrors?.title"
-                class="validation-message">{{ serverErrors.title.message }}</div>
-            <app-show-errors [control]="form.controls['title']"></app-show-errors>
-
-            <br>
-
-            <mat-form-field>
-                <textarea matInput
-                    formControlName="description"
-                    rows="5"
-                    placeholder="description"></textarea>
-            </mat-form-field>
-            <div *ngIf="serverErrors?.description"
-                class="validation-message">{{ serverErrors.description.message }}</div>
-            <app-show-errors [control]="form.controls['description']"></app-show-errors>
-
-            <br>
-
-            <mat-form-field>
-                <input matInput
-                    formControlName="daysDuration"
-                    type="number"
-                    placeholder="duration"
-                    required>
-            </mat-form-field>
-            <div *ngIf="serverErrors?.daysDuration"
-                class="validation-message">{{ serverErrors.daysDuration.message }}</div>
-            <app-show-errors [control]="form.controls['daysDuration']"></app-show-errors>
-
-            <br>
-
-            <mat-form-field>
-                <textarea matInput
-                    formControlName="fullDescription"
-                    rows="5"
-                    placeholder="full description"></textarea>
-            </mat-form-field>
-            <div *ngIf="serverErrors?.fullDescription"
-                class="validation-message">{{ serverErrors.fullDescription.message }}</div>
-            <app-show-errors [control]="form.controls['fullDescription']"></app-show-errors>
-
-            <br>
-
-            <mat-form-field>
-                <input matInput
-                    formControlName="media"
-                    type="text"
-                    placeholder="media url"
-                    required>
-            </mat-form-field>
-            <div *ngIf="serverErrors?.media"
-                class="validation-message">{{ serverErrors.media.message }}</div>
-            <app-show-errors [control]="form.controls['media']"></app-show-errors>
-
-            <br>
-
-            <mat-form-field>
-                <input matInput
-                    formControlName="referralPercentage"
-                    type="number"
-                    placeholder="referral percentage"
-                    required>
-            </mat-form-field>
-            <div *ngIf="serverErrors?.referralPercentage"
-                class="validation-message">{{ serverErrors.referralPercentage.message }}</div>
-            <app-show-errors [control]="form.controls['referralPercentage']"></app-show-errors>
-
-
-            <div formArrayName="milestones">
-                <div *ngFor="let milestone of milestones.controls; let i=index"
-                    [formGroupName]="i">
-
-                    <h3>Milestone {{i+1}}</h3>
-
-                    <mat-form-field>
-                        <input matInput
-                            formControlName="unlockAtValueOfSales"
-                            type="number"
-                            placeholder="unlock at value of sales"
-                            required>
-                    </mat-form-field>
-                    <div *ngIf="serverErrors?.unlockAtValueOfSales"
-                        class="validation-message">{{ serverErrors.unlockAtValueOfSales.message }}</div>
-                    <app-show-errors [control]="form.controls['unlockAtValueOfSales']"></app-show-errors>
-
-                    <br>
-
-                    <mat-form-field>
-                        <input matInput
-                            formControlName="percentageDiscount"
-                            type="number"
-                            placeholder="percentage discount"
-                            required>
-                    </mat-form-field>
-                    <div *ngIf="serverErrors?.percentageDiscount"
-                        class="validation-message">{{ serverErrors.percentageDiscount.message }}</div>
-                    <app-show-errors [control]="form.controls['percentageDiscount']"></app-show-errors>
-                </div>
-                <button mat-raised-button
-                    (click)="addMilestone()">Add milestone</button>
-            </div>
-
-
-            <div formArrayName="products">
-                <div *ngFor="let product of products.controls; let i=index"
-                    [formGroupName]="i">
-
-                    <h3>Product {{i+1}}</h3>
+        <mat-horizontal-stepper [linear]="true">
+            <mat-step [stepControl]="firstFormGroup">
+                <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel>Details</ng-template>
 
                     <mat-form-field>
                         <input matInput
@@ -127,7 +15,7 @@
                     </mat-form-field>
                     <div *ngIf="serverErrors?.title"
                         class="validation-message">{{ serverErrors.title.message }}</div>
-                    <app-show-errors [control]="form.controls['title']"></app-show-errors>
+                    <app-show-errors [control]="firstFormGroup.controls['title']"></app-show-errors>
 
                     <br>
 
@@ -135,37 +23,38 @@
                         <textarea matInput
                             formControlName="description"
                             rows="5"
+                            required
                             placeholder="description"></textarea>
                     </mat-form-field>
                     <div *ngIf="serverErrors?.description"
                         class="validation-message">{{ serverErrors.description.message }}</div>
-                    <app-show-errors [control]="form.controls['description']"></app-show-errors>
+                    <app-show-errors [control]="firstFormGroup.controls['description']"></app-show-errors>
 
                     <br>
 
                     <mat-form-field>
                         <input matInput
-                            formControlName="cost"
+                            formControlName="daysDuration"
                             type="number"
-                            placeholder="cost"
+                            placeholder="duration"
                             required>
                     </mat-form-field>
-                    <div *ngIf="serverErrors?.cost"
-                        class="validation-message">{{ serverErrors.cost.message }}</div>
-                    <app-show-errors [control]="form.controls['cost']"></app-show-errors>
+                    <div *ngIf="serverErrors?.daysDuration"
+                        class="validation-message">{{ serverErrors.daysDuration.message }}</div>
+                    <app-show-errors [control]="firstFormGroup.controls['daysDuration']"></app-show-errors>
 
                     <br>
 
                     <mat-form-field>
-                        <input matInput
-                            formControlName="quantity"
-                            type="number"
-                            placeholder="quantity"
-                            required>
+                        <textarea matInput
+                            formControlName="fullDescription"
+                            rows="5"
+                            required
+                            placeholder="full description"></textarea>
                     </mat-form-field>
-                    <div *ngIf="serverErrors?.quantity"
-                        class="validation-message">{{ serverErrors.quantity.message }}</div>
-                    <app-show-errors [control]="form.controls['quantity']"></app-show-errors>
+                    <div *ngIf="serverErrors?.fullDescription"
+                        class="validation-message">{{ serverErrors.fullDescription.message }}</div>
+                    <app-show-errors [control]="firstFormGroup.controls['fullDescription']"></app-show-errors>
 
                     <br>
 
@@ -178,68 +67,176 @@
                     </mat-form-field>
                     <div *ngIf="serverErrors?.media"
                         class="validation-message">{{ serverErrors.media.message }}</div>
-                    <app-show-errors [control]="form.controls['media']"></app-show-errors>
+                    <app-show-errors [control]="firstFormGroup.controls['media']"></app-show-errors>
+
+                    <br>
+
+                    <mat-form-field>
+                        <input matInput
+                            formControlName="referralPercentage"
+                            type="number"
+                            placeholder="referral percentage"
+                            required>
+                    </mat-form-field>
+                    <div *ngIf="serverErrors?.referralPercentage"
+                        class="validation-message">{{ serverErrors.referralPercentage.message }}</div>
+                    <app-show-errors [control]="firstFormGroup.controls['referralPercentage']"></app-show-errors>
+
+                    <div>
+                        <button mat-button
+                            matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup">
+                <form [formGroup]="secondFormGroup">
+                    <ng-template matStepLabel>Milestones</ng-template>
+
+                    <div formArrayName="milestones">
+                        <div *ngFor="let milestone of milestones.controls; let i=index"
+                            [formGroupName]="i">
+
+                            <h3>Milestone {{i+1}}</h3>
+
+                            <mat-form-field>
+                                <input matInput
+                                    formControlName="unlockAtValueOfSales"
+                                    type="number"
+                                    placeholder="unlock at value of sales"
+                                    required>
+                            </mat-form-field>
+                            <div *ngIf="serverErrors?.unlockAtValueOfSales"
+                                class="validation-message">{{ serverErrors.unlockAtValueOfSales.message }}</div>
+                            <app-show-errors [control]="secondFormGroup.controls['unlockAtValueOfSales']"></app-show-errors>
+
+                            <br>
+
+                            <mat-form-field>
+                                <input matInput
+                                    formControlName="percentageDiscount"
+                                    type="number"
+                                    placeholder="percentage discount"
+                                    required>
+                            </mat-form-field>
+                            <div *ngIf="serverErrors?.percentageDiscount"
+                                class="validation-message">{{ serverErrors.percentageDiscount.message }}</div>
+                            <app-show-errors [control]="secondFormGroup.controls['percentageDiscount']"></app-show-errors>
+                        </div>
+                        <button mat-raised-button
+                            (click)="addMilestone()">Add milestone</button>
+                    </div>
+
+                    <div>
+                        <button mat-button
+                            matStepperPrevious>Back</button>
+                        <button mat-button
+                            matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="thirdFormGroup">
+                <form [formGroup]="thirdFormGroup">
+                    <ng-template matStepLabel>Prodcuts</ng-template>
+
+                    <div formArrayName="products">
+                        <div *ngFor="let product of products.controls; let i=index"
+                            [formGroupName]="i">
+
+                            <h3>Product {{i+1}}</h3>
+
+                            <mat-form-field>
+                                <input matInput
+                                    formControlName="title"
+                                    type="text"
+                                    placeholder="title"
+                                    required>
+                            </mat-form-field>
+                            <div *ngIf="serverErrors?.title"
+                                class="validation-message">{{ serverErrors.title.message }}</div>
+                            <app-show-errors [control]="thirdFormGroup.controls['title']"></app-show-errors>
+
+                            <br>
+
+                            <mat-form-field>
+                                <textarea matInput
+                                    formControlName="description"
+                                    rows="5"
+                                    required
+                                    placeholder="description"></textarea>
+                            </mat-form-field>
+                            <div *ngIf="serverErrors?.description"
+                                class="validation-message">{{ serverErrors.description.message }}</div>
+                            <app-show-errors [control]="thirdFormGroup.controls['description']"></app-show-errors>
+
+                            <br>
+
+                            <mat-form-field>
+                                <input matInput
+                                    formControlName="cost"
+                                    type="number"
+                                    placeholder="cost"
+                                    required>
+                            </mat-form-field>
+                            <div *ngIf="serverErrors?.cost"
+                                class="validation-message">{{ serverErrors.cost.message }}</div>
+                            <app-show-errors [control]="thirdFormGroup.controls['cost']"></app-show-errors>
+
+                            <br>
+
+                            <mat-form-field>
+                                <input matInput
+                                    formControlName="quantity"
+                                    type="number"
+                                    placeholder="quantity"
+                                    required>
+                            </mat-form-field>
+                            <div *ngIf="serverErrors?.quantity"
+                                class="validation-message">{{ serverErrors.quantity.message }}</div>
+                            <app-show-errors [control]="thirdFormGroup.controls['quantity']"></app-show-errors>
+
+                            <br>
+
+                            <mat-form-field>
+                                <input matInput
+                                    formControlName="media"
+                                    type="text"
+                                    placeholder="media url"
+                                    required>
+                            </mat-form-field>
+                            <div *ngIf="serverErrors?.media"
+                                class="validation-message">{{ serverErrors.media.message }}</div>
+                            <app-show-errors [control]="thirdFormGroup.controls['media']"></app-show-errors>
+                        </div>
+                        <button mat-raised-button
+                            (click)="addProduct()">Add product</button>
+                    </div>
+
+                    <div>
+                        <button mat-button
+                            matStepperPrevious>Back</button>
+                        <button mat-button
+                            matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                You are now done.
+                <div>
+                    <button mat-button
+                        matStepperPrevious>Back</button>
+                    <button mat-button
+                        color="primary"
+                        (click)="onSubmit()">Publish</button>
                 </div>
-                <button mat-raised-button
-                    (click)="addProduct()">Add product</button>
-            </div>
-        </mat-card-content>
-        <mat-card-actions align="end">
-            <button mat-raised-button
-                color="primary"
-                type="submit"
-                [disabled]="!form.valid"
-                (click)="onSubmit()">Create</button>
-        </mat-card-actions>
-    </mat-card>
-</form>
+            </mat-step>
+        </mat-horizontal-stepper>
+
+    </mat-card-content>
+</mat-card>
 
 <mat-card *ngIf="isProcessing">
     <mat-card-content>
         <mat-spinner class="preloader"></mat-spinner>
     </mat-card-content>
 </mat-card>
-
-
-<mat-horizontal-stepper [linear]="isLinear">
-    <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
-            <ng-template matStepLabel>Fill out your name</ng-template>
-            <mat-form-field>
-                <input matInput
-                    placeholder="Last name, First name"
-                    formControlName="firstCtrl"
-                    required>
-            </mat-form-field>
-            <div>
-                <button mat-button
-                    matStepperNext>Next</button>
-            </div>
-        </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup">
-        <form [formGroup]="secondFormGroup">
-            <ng-template matStepLabel>Fill out your address</ng-template>
-            <mat-form-field>
-                <input matInput
-                    placeholder="Address"
-                    formControlName="secondCtrl"
-                    required>
-            </mat-form-field>
-            <div>
-                <button mat-button
-                    matStepperPrevious>Back</button>
-                <button mat-button
-                    matStepperNext>Next</button>
-            </div>
-        </form>
-    </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>Done</ng-template>
-        You are now done.
-        <div>
-            <button mat-button
-                matStepperPrevious>Back</button>
-        </div>
-    </mat-step>
-</mat-horizontal-stepper>
