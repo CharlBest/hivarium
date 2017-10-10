@@ -1,4 +1,4 @@
-<div *ngIf="!isProcessing && campaign !== null">
+<div *ngIf="campaign !== null && campaign !== undefined">
     <mat-card>
         <img [src]="campaign.campaign.media"
             *ngIf="campaign.campaign.media"
@@ -143,7 +143,7 @@
                             style="max-height: 16px;">** max milestone reward</span>
                     <br>
                     <button mat-raised-button
-                        routerLink="/checkout/{{product.uId}}">Buy this product</button>
+                        (click)="goToProduct(product)">Buy this product</button>
                 </div>
             </mat-tab>
             <mat-tab>
@@ -153,9 +153,3 @@
         </mat-tab-group>
     </mat-card>
 </div>
-
-<mat-card *ngIf="isProcessing">
-    <mat-card-content>
-        <mat-spinner class="preloader"></mat-spinner>
-    </mat-card-content>
-</mat-card>

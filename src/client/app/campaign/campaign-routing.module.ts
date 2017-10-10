@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Navigation } from '../shared/navigation/navigation/navigation.component';
-import { CampaignComponent } from './campaign/campaign.component';
+import { CampaignMasterComponent } from './campaign-master/campaign-master.component';
 
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: ':uId', component: CampaignComponent, pathMatch: 'full', data: { title: 'Campaign', nav: Navigation.Back } },
+            { path: ':uId', component: CampaignMasterComponent, pathMatch: 'full', data: { title: 'Campaign', nav: Navigation.Back } },
         ])
     ],
     exports: [RouterModule]

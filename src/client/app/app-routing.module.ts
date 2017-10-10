@@ -20,7 +20,6 @@ import { CustomPreloading } from './shared/custom-preloading';
       { path: 'feedback', loadChildren: './feedback/feedback.module#FeedbackModule' },
       { path: 'legal', loadChildren: './legal/legal.module#LegalModule' },
       { path: 'about', loadChildren: './about/about.module#AboutModule' },
-      { path: 'checkout', loadChildren: './checkout/checkout.module#CheckoutModule' },
       { path: 'referral', loadChildren: './referral/referral.module#ReferralModule' },
       { path: 'campaign', loadChildren: './campaign/campaign.module#CampaignModule' },
       { path: 'newsletter', loadChildren: './newsletter/newsletter.module#NewsletterModule' },

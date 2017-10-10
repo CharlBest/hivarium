@@ -1,0 +1,9 @@
+<app-campaign *ngIf="selectedProductUId === null" [campaign]="campaign"></app-campaign>
+
+<app-checkout *ngIf="selectedProductUId !== null" [campaign]="campaign" [productUId]="selectedProductUId"></app-checkout>
+
+<mat-card *ngIf="isProcessing">
+    <mat-card-content>
+        <mat-spinner class="preloader"></mat-spinner>
+    </mat-card-content>
+</mat-card>

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { CampaignService } from '../campaign.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { CampaignViewModel } from '../../../../server/view-models/campaign/campaign.view-model';
 import { MatDialog } from '@angular/material';
 import { CoinRewardInfoDialogComponent } from '../coin-reward-info-dialog/coin-reward-info-dialog.component';
+import { ProductModel } from '../../../../server/models/campaign/product.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-campaign',
@@ -12,26 +12,15 @@ import { CoinRewardInfoDialogComponent } from '../coin-reward-info-dialog/coin-r
 })
 export class CampaignComponent implements OnInit {
 
-  isProcessing = true;
-  campaignUId: string;
-  campaign: CampaignViewModel = null;
-  constructor(private route: ActivatedRoute,
-    private campaignService: CampaignService,
-    public dialog: MatDialog) { }
+  @Input() campaign: CampaignViewModel = null;
+  constructor(public dialog: MatDialog,
+    private router: Router) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.campaignUId = params.get('uId');
-
-      this.getCampaign();
-    });
   }
 
-  getCampaign() {
-    this.campaignService.getCampaign(this.campaignUId).subscribe(data => {
-      this.isProcessing = false;
-      this.campaign = new CampaignViewModel(data.campaign, data.owner, data.milestones, data.products);
-    });
+  goToProduct(product: ProductModel) {
+    this.router.navigate([], { queryParams: { productUId: product.uId } });
   }
 
   openCoinRewardInfoDialog() {
