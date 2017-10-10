@@ -10,16 +10,28 @@
             mat-card-image>
         <mat-card-title>{{campaign.campaign.title}}</mat-card-title>
         <mat-card-content>
-            <div>{{campaign.campaign.description}}</div>
             <div>by
                 <strong>{{campaign.owner.username}}</strong>
             </div>
+            <br>
+            <div>{{campaign.campaign.description}}</div>
+            <br>
+            <mat-progress-bar value="60"></mat-progress-bar>
+            <br>
             <span>
                 <span>
+                    <strong>{{campaign.milestonesReached}}</strong> of
                     <strong>{{campaign.milestones.length}}</strong>
                 </span>
                 <span>milestones</span>
-            </span>
+            </span> |
+            <span>
+                <span>
+                    <strong>{{campaign.totalAmountSold}}</strong> of
+                    <strong>{{campaign.totalAvailableProducts}}</strong>
+                </span>
+                <span>sold</span>
+            </span> |
             <span>
                 <span>
                     <strong>{{campaign.campaign.daysRemaining}}</strong>

@@ -14,7 +14,8 @@ import {
   MatCardModule,
   MatProgressSpinnerModule,
   MatIconModule,
-  MatButtonModule
+  MatButtonModule,
+  MatProgressBarModule
 } from '@angular/material';
 
 @NgModule({
@@ -30,7 +31,8 @@ import {
     MatIconModule,
     MatButtonModule,
     MediaTypeModule,
-    TutorialModule
+    TutorialModule,
+    MatProgressBarModule
   ],
   declarations: [
     HomeComponent,

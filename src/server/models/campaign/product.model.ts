@@ -4,5 +4,6 @@ export class ProductModel {
     description: string;
     cost: number;
     quantity: number;
+    sold: number;
     media: string;
 }

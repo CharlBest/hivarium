@@ -6,7 +6,9 @@ import { CampaignComponent } from './campaign/campaign.component';
 import {
   MatButtonModule,
   MatCardModule,
-  MatTabsModule
+  MatTabsModule,
+  MatIconModule,
+  MatProgressBarModule
 } from '@angular/material';
 
 @NgModule({
@@ -15,7 +17,9 @@ import {
     CampaignRoutingModule,
     MatButtonModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    MatIconModule,
+    MatProgressBarModule
   ],
   declarations: [
     CampaignComponent

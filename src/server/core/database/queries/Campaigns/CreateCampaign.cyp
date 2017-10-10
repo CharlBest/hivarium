@@ -11,7 +11,7 @@ FOREACH (milestone IN {milestones} |
 )
 
 FOREACH (product IN {products} |
-    CREATE (newProduct:Product { uId: product.uId, title: product.title, description: product.description, cost: product.cost, quantity: product.quantity, media: product.media })
+    CREATE (newProduct:Product { uId: product.uId, title: product.title, description: product.description, cost: product.cost, quantity: product.quantity, sold: 0, media: product.media })
     MERGE (campaign)-[:HAS_PRODUCT]->(newProduct)
 )
 

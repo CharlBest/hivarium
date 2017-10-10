@@ -8,7 +8,29 @@
             <div>by
                 <strong>{{campaign.owner.username}}</strong>
             </div>
+            <br>
             <div>{{campaign.campaign.description}}</div>
+            <br>
+            <span>
+                <span>
+                    <strong>{{campaign.milestonesReached}}</strong> of
+                    <strong>{{campaign.milestones.length}}</strong>
+                </span>
+                <span>milestones</span>
+            </span> |
+            <span>
+                <span>
+                    <strong>{{campaign.totalAmountSold}}</strong> of
+                    <strong>{{campaign.totalAvailableProducts}}</strong>
+                </span>
+                <span>sold</span>
+            </span> |
+            <span>
+                <span>
+                    <strong>{{campaign.campaign.daysRemaining}}</strong>
+                </span>
+                <span>days to go</span>
+            </span>
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button>Buy now</button>
@@ -19,31 +41,105 @@
         <mat-tab-group>
             <mat-tab>
                 <ng-template mat-tab-label>Rewards</ng-template>
-                <div *ngFor="let milestone of campaign.milestones; let i=index">
-                    <h3>Milestone {{i+1}}</h3>
 
-                    <div>Unloacked at: {{milestone.unlockAtValueOfSales}}</div>
-                    <div>Percentage discount: {{milestone.percentageDiscount}}%</div>
+                <h3>Milestone HiveCoin Rewards</h3>
+                <mat-progress-bar value="60"></mat-progress-bar>
+                <div>Value of Sales:
+                    <strong>${{campaign.totalValueOfSales}}</strong>
+                </div>
+                <br>
+
+                <div *ngFor="let milestone of campaign.milestones; let i=index">
+                    <div style="float: left;">
+                        <img src="assets/hive-coin.svg"
+                            style="max-height: 40px;">
+                    </div>
+                    <div style="float: left;">
+                        <h4>Milestone {{i+1}}</h4>
+                        <div>Unloacked at: ${{milestone.unlockAtValueOfSales}}</div>
+                        <div>
+                            Earn
+                            <strong>{{milestone.percentageDiscount}}%</strong>
+                            of your purchase back in HiveCoins
+                        </div>
+                    </div>
+                    <div style="float: left; font-size: 2rem;">
+                        {{milestone.percentageDiscount}}%
+                    </div>
+                    <div style="clear: both;"></div>
                 </div>
 
                 <hr>
 
-                <div>give: {{campaign.campaign.referralPercentage/2}}%</div>
-                <div>get: {{campaign.campaign.referralPercentage/2}}%</div>
+                <h3>Referral HiveCoin Rewards</h3>
+                <div>Give and Get HiveCoins! Get rewarded and make your friends love you.</div>
+
+
+                <div *ngFor="let referral of [1,2]; let i=index">
+                    <div style="float: left;">
+                        <img src="assets/hive-coin.svg"
+                            style="max-height: 40px;">
+                    </div>
+                    <div style="float: left;">
+                        <span *ngIf="i == 0">
+                            <h4>Give</h4>
+                            <strong>Give your friends HiveCoins</strong>
+                            <div>
+                                Your friends
+                                <strong>Earn and additional {{campaign.campaign.singleReferralPercentage}}%</strong>
+                                of their purchase back in HiveCoins
+                                <br> when following your link and making a purchase.
+                            </div>
+                        </span>
+                        <span *ngIf="i == 1">
+                            <h4>Get</h4>
+                            <strong>Refer more friends and keep earning HiveCoins, again and again.</strong>
+                            <div>
+                                You
+                                <strong>Earn {{campaign.campaign.singleReferralPercentage}}%</strong>
+                                of their purchase back in HiveCoins.
+                            </div>
+                        </span>
+                    </div>
+                    <div style="float: left; font-size: 2rem;">
+                        {{campaign.campaign.singleReferralPercentage}}%
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
             </mat-tab>
             <mat-tab>
                 <ng-template mat-tab-label>Buy</ng-template>
-                <div *ngFor="let product of campaign.products">
+                <div *ngFor="let product of campaign.products; let i=index">
+                    <hr *ngIf="i>0">
                     <img [src]="product.media"
-                        *ngIf="product.media">
-                    <div>${{product.cost}}</div>
-                    <div>{{product.title}}</div>
+                        *ngIf="product.media"
+                        style="max-height: 200px;">
+                    <div>${{product.cost}} USD |
+                        <img src="assets/hive-coin.svg"
+                            style="max-height: 16px;">{{product.cost}}</div>
+                    <h3>{{product.title}}</h3>
                     <div>{{product.description}}</div>
+                    <br>
                     <div>
-                        <strong>xx</strong> of
+                        <strong>{{product.sold}}</strong> of
                         <strong>{{product.quantity}}</strong>
                         <br> sold
                     </div>
+                    <hr>
+                    <h5>HiveCoins Rewards
+                        <mat-icon>info</mat-icon>
+                    </h5>
+                    <span>
+                        <img src="assets/hive-coin.svg"
+                            style="max-height: 16px;">** milestone reward</span> |
+                    <span>
+                        <img src="assets/hive-coin.svg"
+                            style="max-height: 16px;">** referral reward</span> |
+                    <span>
+                        <img src="assets/hive-coin.svg"
+                            style="max-height: 16px;">** max milestone reward</span>
+                    <br>
+                    <button mat-raised-button>Buy this product</button>
                 </div>
             </mat-tab>
             <mat-tab>

@@ -10,4 +10,27 @@ export class CampaignViewModel {
         this.milestones = Object.assign(new Array<MilestoneModel>(), milestones);
         this.products = Object.assign(new Array<ProductModel>(), products);
     }
+
+    get totalAvailableProducts(): number {
+        let total = 0;
+        this.products.forEach(x => total += x.quantity);
+        return total;
+    }
+
+    get totalAmountSold(): number {
+        let total = 0;
+        this.products.forEach(x => total += x.sold);
+        return total;
+    }
+
+    get totalValueOfSales(): number {
+        let total = 0;
+        this.products.forEach(x => total += (x.sold * x.cost));
+        return total;
+    }
+
+    get milestonesReached(): number {
+        const totalValueOfSales = this.totalValueOfSales;
+        return this.milestones.filter(x => x.unlockAtValueOfSales <= totalValueOfSales).length;
+    }
 }
