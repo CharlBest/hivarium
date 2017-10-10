@@ -1,19 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FeedbackComponent } from './feedback/feedback.component';
-import { MdButtonModule, MdCardModule, MdInputModule, MdProgressSpinnerModule } from '@angular/material';
 import { FeedbackRoutingModule } from '../feedback/feedback-routing.module';
 import { FeedbackService } from './feedback.service';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatInputModule,
+  MatProgressSpinnerModule
+} from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     FeedbackRoutingModule,
-    MdButtonModule,
-    MdCardModule,
-    MdInputModule,
-    MdProgressSpinnerModule,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
     TutorialModule
   ],
   declarations: [

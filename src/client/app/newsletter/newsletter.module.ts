@@ -1,19 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewsletterComponent } from './newsletter/newsletter.component';
-import { MdButtonModule, MdCardModule, MdInputModule, MdProgressSpinnerModule } from '@angular/material';
 import { NewsletterRoutingModule } from '../newsletter/newsletter-routing.module';
 import { NewsletterService } from './newsletter.service';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatInputModule,
+  MatProgressSpinnerModule
+} from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
     NewsletterRoutingModule,
-    MdButtonModule,
-    MdCardModule,
-    MdInputModule,
-    MdProgressSpinnerModule,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
     TutorialModule
   ],
   declarations: [

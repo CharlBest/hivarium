@@ -1,24 +1,24 @@
 <div *ngIf="!isProcessing && campaign !== null">
-    <md-card>
+    <mat-card>
         <img [src]="campaign.campaign.media"
             *ngIf="campaign.campaign.media"
-            md-card-image>
-        <md-card-title>{{campaign.campaign.title}}</md-card-title>
-        <md-card-content>
+            mat-card-image>
+        <mat-card-title>{{campaign.campaign.title}}</mat-card-title>
+        <mat-card-content>
             <div>by
                 <strong>{{campaign.owner.username}}</strong>
             </div>
             <div>{{campaign.campaign.description}}</div>
-        </md-card-content>
-        <md-card-actions>
-            <button md-raised-button>Buy now</button>
-            <button md-raised-button>Refer a friend</button>
-        </md-card-actions>
-    </md-card>
-    <md-card>
-        <md-tab-group>
-            <md-tab>
-                <ng-template md-tab-label>Rewards</ng-template>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button>Buy now</button>
+            <button mat-raised-button>Refer a friend</button>
+        </mat-card-actions>
+    </mat-card>
+    <mat-card>
+        <mat-tab-group>
+            <mat-tab>
+                <ng-template mat-tab-label>Rewards</ng-template>
                 <div *ngFor="let milestone of campaign.milestones; let i=index">
                     <h3>Milestone {{i+1}}</h3>
 
@@ -30,9 +30,9 @@
 
                 <div>give: {{campaign.campaign.referralPercentage/2}}%</div>
                 <div>get: {{campaign.campaign.referralPercentage/2}}%</div>
-            </md-tab>
-            <md-tab>
-                <ng-template md-tab-label>Buy</ng-template>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>Buy</ng-template>
                 <div *ngFor="let product of campaign.products">
                     <img [src]="product.media"
                         *ngIf="product.media">
@@ -45,17 +45,17 @@
                         <br> sold
                     </div>
                 </div>
-            </md-tab>
-            <md-tab>
-                <ng-template md-tab-label>Campaign</ng-template>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>Campaign</ng-template>
                 <div [innerHTML]="campaign.campaign.fullDescription"></div>
-            </md-tab>
-        </md-tab-group>
-    </md-card>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card>
 </div>
 
-<md-card *ngIf="isProcessing">
-    <md-card-content>
-        <md-spinner class="preloader"></md-spinner>
-    </md-card-content>
-</md-card>
+<mat-card *ngIf="isProcessing">
+    <mat-card-content>
+        <mat-spinner class="preloader"></mat-spinner>
+    </mat-card-content>
+</mat-card>

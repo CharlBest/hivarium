@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import * as emojione from 'emojione';
-import { MdTabChangeEvent } from '@angular/material';
+import { MatTabChangeEvent } from '@angular/material';
 
 @Component({
   selector: 'app-emoji-panel',
@@ -33,12 +33,12 @@ export class EmojiPanelComponent implements OnInit {
       if (img
         && img.classList
         && img.classList.contains('emojione')) {
-        this.onInserted.emit(img.title)
+        this.onInserted.emit(img.title);
       }
     });
   }
 
-  onTabSelectChange(event: MdTabChangeEvent) {
+  onTabSelectChange(event: MatTabChangeEvent) {
     this.loadCategory(event.index);
   }
 

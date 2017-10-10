@@ -1,15 +1,15 @@
-<md-card style="text-align: center;">
+<mat-card style="text-align: center;">
     All Hives
-</md-card>
+</mat-card>
 
 <div class="card-container">
-    <md-card *ngFor="let campaign of campaigns"
+    <mat-card *ngFor="let campaign of campaigns"
         routerLink="/campaign/{{campaign.campaign.uId}}">
         <img [src]="campaign.campaign.media"
             *ngIf="campaign.campaign.media"
-            md-card-image>
-        <md-card-title>{{campaign.campaign.title}}</md-card-title>
-        <md-card-content>
+            mat-card-image>
+        <mat-card-title>{{campaign.campaign.title}}</mat-card-title>
+        <mat-card-content>
             <div>{{campaign.campaign.description}}</div>
             <div>by
                 <strong>{{campaign.owner.username}}</strong>
@@ -26,12 +26,12 @@
                 </span>
                 <span>days to go</span>
             </span>
-        </md-card-content>
-    </md-card>
+        </mat-card-content>
+    </mat-card>
 </div>
 
-<md-card *ngIf="isProcessing">
-    <md-card-content>
-        <md-spinner class="preloader"></md-spinner>
-    </md-card-content>
-</md-card>
+<mat-card *ngIf="isProcessing">
+    <mat-card-content>
+        <mat-spinner class="preloader"></mat-spinner>
+    </mat-card-content>
+</mat-card>
