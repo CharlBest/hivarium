@@ -31,8 +31,8 @@ export class CampaignsService extends BaseService {
         return await this.campaignsRepository.createCampaign(session, userId, campaignUId, viewModel);
     }
 
-    public async getCampaigns(session: neo4j.Session): Promise<CampaignViewModel[]> {
-        return await this.campaignsRepository.getCampaigns(session);
+    public async getCampaigns(session: neo4j.Session, skip: number): Promise<CampaignViewModel[]> {
+        return await this.campaignsRepository.getCampaigns(session, skip);
     }
 
     public async getCampaign(session: neo4j.Session, userId: number, uId: string): Promise<CampaignViewModel> {

@@ -59,7 +59,15 @@ export class CampaignsController extends BaseController {
 
     public async getCampaigns(req: Request, res: Response, next: NextFunction) {
         try {
-            const response = await this.campaignsService.getCampaigns(Database.getSession(req));
+            const skip = +req.params.skip as number;
+            const valid = Validators.required({ value: skip }) ||
+                null;
+
+            if (valid !== null) {
+                throw ValidationUtil.createValidationErrors(valid);
+            }
+
+            const response = await this.campaignsService.getCampaigns(Database.getSession(req), skip);
             res.status(200).json(response);
         } catch (error) {
             this.returnError(res, error);

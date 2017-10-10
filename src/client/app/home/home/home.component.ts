@@ -17,8 +17,9 @@ import { CampaignModel } from '../../../../server/models/campaign/campaign.model
 export class HomeComponent implements OnInit {
 
   isProcessing = true;
+  skip = 0;
   tutorialTypeEnum = TutorialType;
-  campaigns: CampaignViewModel[];
+  campaigns: CampaignViewModel[] = [];
 
   constructor(private route: ActivatedRoute,
     private homeService: HomeService) { }
@@ -28,9 +29,21 @@ export class HomeComponent implements OnInit {
   }
 
   getCampaigns() {
-    this.homeService.getCampaigns().subscribe(data => {
-      this.campaigns = data.map(x => new CampaignViewModel(x.campaign, x.owner, x.milestones, x.products));
+    this.isProcessing = true;
+
+    this.homeService.getCampaigns(this.skip).subscribe(data => {
+      if (data !== null) {
+        const campaigns = data.map(x => new CampaignViewModel(x.campaign, x.owner, x.milestones, x.products));
+        this.campaigns = this.campaigns.concat(campaigns);
+      }
       this.isProcessing = false;
     });
+  }
+
+  loadMore() {
+    this.isProcessing = true;
+    this.skip += 10;
+
+    this.getCampaigns();
   }
 }

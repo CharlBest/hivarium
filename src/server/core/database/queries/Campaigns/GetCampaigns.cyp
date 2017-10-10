@@ -1,10 +1,12 @@
 export const data = `
-MATCH (campaign:Campaign)
-MATCH (user:User)-[:OWNER]->(campaign)-[:HAS_PRODUCT]->(product:Product)
-MATCH (user:User)-[:OWNER]->(campaign)-[:HAS_MILESTONE]->(milestone:Milestone)
+MATCH (user:User)-[:OWNER]->(campaign:Campaign)
+MATCH (milestone:Milestone)<-[:HAS_MILESTONE]-(campaign)-[:HAS_PRODUCT]->(product:Product)
 RETURN campaign, 
 user, 
-collect(product) as products,
-collect(milestone) as milestones
+collect(DISTINCT product) as products,
+collect(DISTINCT milestone) as milestones
+
+ORDER BY campaign.dateCreated DESC
+SKIP {skip}
 LIMIT 10
 `

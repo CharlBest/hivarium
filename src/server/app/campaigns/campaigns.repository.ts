@@ -39,9 +39,9 @@ export class CampaignsRepository extends BaseRepository {
         }
     }
 
-    public async getCampaigns(session: neo4j.Session): Promise<CampaignViewModel[]> {
+    public async getCampaigns(session: neo4j.Session, skip: number): Promise<CampaignViewModel[]> {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Campaigns, Campaigns.GetCampaigns)}`);
-        const result = await session.run(query.data);
+        const result = await session.run(query.data, { skip });
 
         const campaigns = result.records.map(x => {
             return new CampaignViewModel(

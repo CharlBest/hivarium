@@ -42,8 +42,24 @@
     </mat-card>
 </div>
 
+<button mat-raised-button
+    class="center"
+    *ngIf="campaigns?.length > 0 && campaigns?.length % 10 == 0"
+    (click)="loadMore()">Load more</button>
+
 <mat-card *ngIf="isProcessing">
     <mat-card-content>
         <mat-spinner class="preloader"></mat-spinner>
     </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="campaigns?.length <= 0 && !isProcessing">
+    <mat-card-content>
+        <mat-icon>do_not_disturb</mat-icon>
+        <span>no campaings at the moment sorry</span>
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-raised-button
+            routerLink="/create-campaign">Start campaign</button>
+    </mat-card-actions>
 </mat-card>

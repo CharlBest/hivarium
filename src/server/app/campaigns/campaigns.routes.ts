@@ -15,7 +15,7 @@ export class CampaignsRoutes extends BaseRoute {
 
     initRoutes() {
         this.router.post(CampaignRoutes.createCampaign.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.campaignsController.createCampaign(req, res, next));
-        this.router.get(CampaignRoutes.getCampaigns.constructEndpointUrl(), (req, res, next) => this.campaignsController.getCampaigns(req, res, next));
+        this.router.get(CampaignRoutes.getCampaigns.constructEndpointUrl('/:skip'), (req, res, next) => this.campaignsController.getCampaigns(req, res, next));
         this.router.get(CampaignRoutes.getCampaign.constructEndpointUrl('/:uId'), (req, res, next) => this.campaignsController.getCampaign(req, res, next));
     }
 }

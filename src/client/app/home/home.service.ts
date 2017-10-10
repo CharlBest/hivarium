@@ -10,7 +10,7 @@ export class HomeService {
 
     constructor(private http: HttpClient) { }
 
-    public getCampaigns(): Observable<CampaignViewModel[]> {
-        return this.http.get<CampaignViewModel[]>(`${environment.apiUrlEndpoint}${CampaignRoutes.getCampaigns.constructRootUrl()}`);
+    public getCampaigns(skip: number): Observable<CampaignViewModel[]> {
+        return this.http.get<CampaignViewModel[]>(`${environment.apiUrlEndpoint}${CampaignRoutes.getCampaigns.constructRootUrl(`/${skip}`)}`);
     }
 }
