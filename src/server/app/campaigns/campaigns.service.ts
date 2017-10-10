@@ -27,6 +27,7 @@ export class CampaignsService extends BaseService {
 
     public async createCampaign(session: neo4j.Session, userId: number, campaignUId: string, viewModel: CreateCampaignViewModel): Promise<CampaignModel> {
         // TODO: validation checks
+        viewModel.products.forEach(x => x.uId = nodeUUId());
         return await this.campaignsRepository.createCampaign(session, userId, campaignUId, viewModel);
     }
 

@@ -34,7 +34,8 @@
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button>Buy now</button>
-            <button mat-raised-button>Refer a friend</button>
+            <button mat-raised-button
+                routerLink="/referral">Refer a friend</button>
         </mat-card-actions>
     </mat-card>
     <mat-card>
@@ -127,7 +128,9 @@
                     </div>
                     <hr>
                     <h5>HiveCoins Rewards
-                        <mat-icon>info</mat-icon>
+                        <button mat-icon-button>
+                            <mat-icon (click)="openCoinRewardInfoDialog()">info</mat-icon>
+                        </button>
                     </h5>
                     <span>
                         <img src="assets/hive-coin.svg"
@@ -139,7 +142,8 @@
                         <img src="assets/hive-coin.svg"
                             style="max-height: 16px;">** max milestone reward</span>
                     <br>
-                    <button mat-raised-button>Buy this product</button>
+                    <button mat-raised-button
+                        routerLink="/checkout/{{product.uId}}">Buy this product</button>
                 </div>
             </mat-tab>
             <mat-tab>

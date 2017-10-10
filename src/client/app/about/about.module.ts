@@ -5,8 +5,7 @@ import { AboutRoutingModule } from './about-routing.module';
 import { AboutComponent } from './about/about.component';
 import {
   MatButtonModule,
-  MatCardModule,
-  MatRadioModule
+  MatCardModule
 } from '@angular/material';
 
 @NgModule({
@@ -14,8 +13,7 @@ import {
     CommonModule,
     AboutRoutingModule,
     MatButtonModule,
-    MatCardModule,
-    MatRadioModule
+    MatCardModule
   ],
   declarations: [
     AboutComponent
