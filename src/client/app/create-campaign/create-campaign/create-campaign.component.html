@@ -201,10 +201,10 @@
 </mat-card>
 
 
-<md-horizontal-stepper [linear]="isLinear">
-    <md-step [stepControl]="firstFormGroup">
+<mat-horizontal-stepper [linear]="isLinear">
+    <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
-            <ng-template mdStepLabel>Fill out your name</ng-template>
+            <ng-template matStepLabel>Fill out your name</ng-template>
             <mat-form-field>
                 <input matInput
                     placeholder="Last name, First name"
@@ -213,13 +213,13 @@
             </mat-form-field>
             <div>
                 <button mat-button
-                    mdStepperNext>Next</button>
+                    matStepperNext>Next</button>
             </div>
         </form>
-    </md-step>
-    <md-step [stepControl]="secondFormGroup">
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
-            <ng-template mdStepLabel>Fill out your address</ng-template>
+            <ng-template matStepLabel>Fill out your address</ng-template>
             <mat-form-field>
                 <input matInput
                     placeholder="Address"
@@ -228,18 +228,18 @@
             </mat-form-field>
             <div>
                 <button mat-button
-                    mdStepperPrevious>Back</button>
+                    matStepperPrevious>Back</button>
                 <button mat-button
-                    mdStepperNext>Next</button>
+                    matStepperNext>Next</button>
             </div>
         </form>
-    </md-step>
-    <md-step>
-        <ng-template mdStepLabel>Done</ng-template>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
         You are now done.
         <div>
             <button mat-button
-                mdStepperPrevious>Back</button>
+                matStepperPrevious>Back</button>
         </div>
-    </md-step>
-</md-horizontal-stepper>
+    </mat-step>
+</mat-horizontal-stepper>
