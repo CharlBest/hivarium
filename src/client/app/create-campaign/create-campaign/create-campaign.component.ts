@@ -18,6 +18,8 @@ import { CreateCampaignViewModel } from '../../../../server/view-models/campaign
 })
 export class CreateCampaignComponent implements OnInit {
 
+  loggedInUserId: number = this.authService.getloggedInUserId();
+
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -30,7 +32,8 @@ export class CreateCampaignComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private createCampaignService: CreateCampaignService,
     private router: Router,
-    private formService: FormService) {
+    private formService: FormService,
+    private authService: AuthService) {
   }
 
   ngOnInit() {
