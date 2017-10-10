@@ -27,7 +27,7 @@ export class CampaignsRepository extends BaseRepository {
             fullDescription: viewModel.fullDescription,
             media: viewModel.media,
             referralPercentage: viewModel.referralPercentage,
-            milestones: JSON.stringify(viewModel.milestones),
+            milestones: viewModel.milestones,
             products: viewModel.products
         });
 
@@ -44,12 +44,12 @@ export class CampaignsRepository extends BaseRepository {
         const result = await session.run(query.data);
 
         const campaigns = result.records.map(x => {
-            const viewModel = new CampaignViewModel();
-            viewModel.campaign = Database.createNodeObject(x.get('campaign'));
-            viewModel.user = Database.createNodeObject(x.get('user'));
-            // viewModel.products = Database.createNodeObject(x.get('products'));
-
-            return viewModel;
+            return new CampaignViewModel(
+                Database.createNodeObject(x.get('campaign')),
+                Database.createNodeObject(x.get('user')),
+                Database.createNodeObjectArray(x.get('milestones')),
+                Database.createNodeObjectArray(x.get('products'))
+            );
         });
 
         if (campaigns !== null && campaigns.length > 0) {
@@ -65,12 +65,12 @@ export class CampaignsRepository extends BaseRepository {
         const result = await session.run(query.data, { uId });
 
         const campaign = result.records.map(x => {
-            const viewModel = new CampaignViewModel();
-            viewModel.campaign = Database.createNodeObject(x.get('campaign'));
-            viewModel.user = Database.createNodeObject(x.get('user'));
-            // viewModel.products = Database.createNodeObject(x.get('products'));
-
-            return viewModel;
+            return new CampaignViewModel(
+                Database.createNodeObject(x.get('campaign')),
+                Database.createNodeObject(x.get('user')),
+                Database.createNodeObjectArray(x.get('milestones')),
+                Database.createNodeObjectArray(x.get('products'))
+            );
         });
 
         if (campaign !== null && campaign.length > 0) {

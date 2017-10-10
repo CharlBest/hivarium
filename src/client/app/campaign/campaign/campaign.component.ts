@@ -27,8 +27,7 @@ export class CampaignComponent implements OnInit {
   getCampaign() {
     this.campaignService.getCampaign(this.campaignUId).subscribe(data => {
       this.isProcessing = false;
-      this.campaign = data;
-      this.campaign.campaign.milestones = JSON.parse(this.campaign.campaign.milestones.toString());
+      this.campaign = new CampaignViewModel(data.campaign, data.owner, data.milestones, data.products);
     });
   }
 }

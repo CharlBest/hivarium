@@ -7,6 +7,7 @@ import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-t
 import { ActivatedRoute } from '@angular/router';
 import { CampaignViewModel } from '../../../../server/view-models/campaign/campaign.view-model';
 import * as marked from 'marked';
+import { CampaignModel } from '../../../../server/models/campaign/campaign.model';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit {
 
   getCampaigns() {
     this.homeService.getCampaigns().subscribe(data => {
-      this.campaigns = data;
+      this.campaigns = data.map(x => new CampaignViewModel(x.campaign, x.owner, x.milestones, x.products));
       this.isProcessing = false;
     });
   }

@@ -6,10 +6,9 @@
         <md-card-title>{{campaign.campaign.title}}</md-card-title>
         <md-card-content>
             <div>by
-                <strong>{{campaign.user.username}}</strong>
+                <strong>{{campaign.owner.username}}</strong>
             </div>
             <div>{{campaign.campaign.description}}</div>
-            <h5>{{campaign.user.dateCreated | date }}</h5>
         </md-card-content>
         <md-card-actions>
             <button md-raised-button>Buy now</button>
@@ -20,7 +19,7 @@
         <md-tab-group>
             <md-tab>
                 <ng-template md-tab-label>Rewards</ng-template>
-                <div *ngFor="let milestone of campaign.campaign.milestones; let i=index">
+                <div *ngFor="let milestone of campaign.milestones; let i=index">
                     <h3>Milestone {{i+1}}</h3>
 
                     <div>Unloacked at: {{milestone.unlockAtValueOfSales}}</div>
@@ -34,7 +33,18 @@
             </md-tab>
             <md-tab>
                 <ng-template md-tab-label>Buy</ng-template>
-
+                <div *ngFor="let product of campaign.products">
+                    <img [src]="product.media"
+                        *ngIf="product.media">
+                    <div>${{product.cost}}</div>
+                    <div>{{product.title}}</div>
+                    <div>{{product.description}}</div>
+                    <div>
+                        <strong>xx</strong> of
+                        <strong>{{product.quantity}}</strong>
+                        <br> sold
+                    </div>
+                </div>
             </md-tab>
             <md-tab>
                 <ng-template md-tab-label>Campaign</ng-template>

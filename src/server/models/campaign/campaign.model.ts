@@ -11,5 +11,13 @@ export class CampaignModel {
     views: number;
     media: string;
     referralPercentage: number;
-    milestones: MilestoneModel[];
+
+    get singleReferralPercentage(): number {
+        return this.referralPercentage / 2;
+    }
+
+    get daysRemaining(): number {
+        const daysRemaining = this.daysDuration - (new Date().getDay() - new Date(this.dateCreated).getDay());
+        return daysRemaining >= 0 ? daysRemaining : 0;
+    }
 }
