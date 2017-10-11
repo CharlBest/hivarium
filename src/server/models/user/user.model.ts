@@ -15,5 +15,7 @@
     emailVerifiedDateCreated: number;
     forgotPasswordCodes: string[];
 
+    hiveCoins: number;
+
     // TODO: user role/permission
 }
