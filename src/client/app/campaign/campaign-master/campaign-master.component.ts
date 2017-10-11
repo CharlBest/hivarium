@@ -23,10 +23,12 @@ export class CampaignMasterComponent implements OnInit {
       this.campaignUId = params.get('uId');
 
       this.getCampaign();
+      window.scroll(0, 0);
     });
 
     this.route.queryParamMap.subscribe(params => {
       this.selectedProductUId = params.get('productUId') || null;
+      window.scroll(0, 0);
     });
   }
 

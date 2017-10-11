@@ -12,11 +12,20 @@ import { Router } from '@angular/router';
 })
 export class CampaignComponent implements OnInit {
 
+  selectedTab: number;
   @Input() campaign: CampaignViewModel = null;
   constructor(public dialog: MatDialog,
     private router: Router) { }
 
   ngOnInit() {
+  }
+
+  buyNowButton() {
+    this.selectedTab = 1;
+
+    const element = document.getElementById('app-tab-group');
+    // element.scrollIntoView(element);
+    window.scrollTo(0, element.offsetTop);
   }
 
   goToProduct(product: ProductModel) {

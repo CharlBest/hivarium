@@ -3,7 +3,7 @@
     flex-flow: row wrap;
 
     mat-card {
-        width: 400px;
+        max-width: 400px;
         box-sizing: border-box;
         margin: 16px;
     }
