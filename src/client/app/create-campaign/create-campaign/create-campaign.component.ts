@@ -64,6 +64,8 @@ export class CreateCampaignComponent implements OnInit {
     this.saveAfterEdit();
   }
 
+  //#region base64 string
+
   b64EncodeUnicode(str) {
     // first we use encodeURIComponent to get percent-encoded UTF-8,
     // then we convert the percent encodings into raw bytes which
@@ -80,6 +82,8 @@ export class CreateCampaignComponent implements OnInit {
       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
   }
+
+  //#endregion
 
   save() {
     const data: CreateCampaignFormData = {
@@ -201,6 +205,10 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   //#endregion
+
+  goToLogin() {
+    this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url } });
+  }
 
   onSubmit(): void {
     this.isProcessing = true;

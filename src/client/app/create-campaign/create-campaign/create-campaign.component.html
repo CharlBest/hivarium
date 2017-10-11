@@ -1,8 +1,11 @@
 <mat-card *ngIf="!isProcessing">
     <mat-card-content>
-        <button mat-raised-button
-            color="primary"
-            (click)="save()">Save</button>
+        <mat-card-subtitle *ngIf="!loggedInUserId">
+            You can only create a campaign if you are logged in. Please
+            <a (click)="goToLogin()"
+                style="color: orange;">log in</a>.
+        </mat-card-subtitle>
+
         <mat-horizontal-stepper [linear]="true">
             <mat-step [stepControl]="firstFormGroup">
                 <form [formGroup]="firstFormGroup">
@@ -242,9 +245,11 @@
                                 color="warn"
                                 (click)="thirdFormGroup.controls['products'].controls[i].controls['media'].reset()">Remove media</button>
                             <app-upload-button (onUploadComplete)="thirdFormGroup.controls['products'].controls[i].controls['media'].setValue($event)"
+                        
                                 [showPreview]="false"></app-upload-button>
 
-                            <br><br>
+                            <br>
+                            <br>
                             <button mat-raised-button
                                 color="warn"
                                 (click)="removeMilestone(i)">Remove product</button>
