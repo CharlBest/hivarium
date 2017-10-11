@@ -30,6 +30,11 @@
                 ngxClipboard
                 [cbContent]="link"
                 (cbOnSuccess)="openSnackBar()">Copy</button>
+            <button mat-icon-button
+                *ngIf="hasWebShareApi()"
+                (click)="webShare()">
+                <mat-icon>share</mat-icon>
+            </button>
         </mat-card-content>
     </mat-card>
 </div>

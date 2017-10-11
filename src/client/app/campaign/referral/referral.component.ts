@@ -18,6 +18,20 @@ export class ReferralComponent {
     return false;
   }
 
+  hasWebShareApi() {
+    if ((<any>navigator).share) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  webShare() {
+    if (this.hasWebShareApi()) {
+      (<any>navigator).share({ title: 'Referral link', text: this.link, url: this.link, });
+    }
+  }
+
   openSnackBar() {
     this.snackBar.open('Copied', '', {
       duration: 2000,
