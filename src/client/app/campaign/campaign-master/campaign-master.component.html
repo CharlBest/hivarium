@@ -1,13 +1,12 @@
-<div *ngIf="!showReferralPage">
-    <app-campaign *ngIf="selectedProductUId === null"
+<div *ngIf="!showReferralSection">
+    <app-campaign *ngIf="!showCheckoutSection"
         [campaign]="campaign"></app-campaign>
 
-    <app-checkout *ngIf="selectedProductUId !== null"
-        [campaign]="campaign"
-        [productUId]="selectedProductUId"></app-checkout>
+    <app-checkout *ngIf="showCheckoutSection"
+        [campaign]="campaign"></app-checkout>
 </div>
 
-<div *ngIf="showReferralPage">
+<div *ngIf="showReferralSection">
     <app-referral [campaign]="campaign"></app-referral>
 </div>
 

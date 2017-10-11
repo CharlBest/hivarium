@@ -1,4 +1,4 @@
-<div *ngIf="campaign !== null && campaign !== undefined && selectedProduct !== null && selectedProduct !== undefined">
+<div *ngIf="campaign !== null && campaign !== undefined">
     <mat-card>
         <mat-card-content>
             <h3>{{campaign.campaign.title}}</h3>
@@ -93,9 +93,10 @@
             <br>
             <table>
                 <tbody>
-                    <tr>
-                        <td>{{selectedProduct.title}}</td>
-                        <td>${{selectedProduct.cost}}</td>
+                    <tr *ngFor="let product of campaign.products" [style.opacity]="product['selected'] ? 'none' : 0.5">
+                        <td>{{product['selectedQuantity'] || 0}}</td>
+                        <td>${{product.title}}</td>
+                        <td>${{product.cost}}</td>
                     </tr>
                     <tr>
                         <td>Enter your HiveCoin Discount</td>

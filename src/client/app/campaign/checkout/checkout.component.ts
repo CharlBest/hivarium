@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { CampaignViewModel } from '../../../../server/view-models/campaign/campaign.view-model';
 import { ProductModel } from '../../../../server/models/campaign/product.model';
 import { AuthService } from '../../shared/auth.service';
@@ -9,29 +9,15 @@ import { Router } from '@angular/router';
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit, OnChanges {
+export class CheckoutComponent implements OnInit {
 
   @Input() campaign: CampaignViewModel = null;
-  @Input() productUId: string;
-  selectedProduct: ProductModel;
   loggedInUserId: number = this.authService.getloggedInUserId();
 
   constructor(private authService: AuthService,
     private router: Router) { }
 
   ngOnInit() {
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    for (const propName in changes) {
-      if (propName === 'productUId' || propName === 'campaign') {
-        if (this.campaign !== null && this.campaign !== undefined && this.productUId !== null && this.productUId !== undefined) {
-          this.selectedProduct = this.campaign.products.find(x => x.uId === this.productUId);
-        } else {
-          this.selectedProduct = null;
-        }
-      }
-    }
   }
 
   goToLogin() {

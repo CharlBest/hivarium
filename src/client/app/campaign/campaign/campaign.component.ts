@@ -3,7 +3,7 @@ import { CampaignViewModel } from '../../../../server/view-models/campaign/campa
 import { MatDialog } from '@angular/material';
 import { CoinRewardInfoDialogComponent } from '../coin-reward-info-dialog/coin-reward-info-dialog.component';
 import { ProductModel } from '../../../../server/models/campaign/product.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-campaign',
@@ -15,6 +15,7 @@ export class CampaignComponent implements OnInit {
   selectedTab: number;
   @Input() campaign: CampaignViewModel = null;
   constructor(public dialog: MatDialog,
+    private route: ActivatedRoute,
     private router: Router) { }
 
   ngOnInit() {
@@ -33,7 +34,9 @@ export class CampaignComponent implements OnInit {
   }
 
   goToProduct(product: ProductModel) {
-    this.router.navigate([], { queryParams: { productUId: product.uId } });
+    let uIds = this.route.snapshot.queryParams.productUId || null;
+    uIds = uIds !== null ? `${uIds},${product.uId}` : product.uId;
+    this.router.navigate([], { queryParams: { products: uIds, checkout: true } });
   }
 
   openCoinRewardInfoDialog() {
