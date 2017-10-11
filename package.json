@@ -58,7 +58,6 @@
     "firebase": "^4.5.0",
     "hammerjs": "^2.0.8",
     "jsonwebtoken": "^8.1.0",
-    "marked": "^0.3.6",
     "neo4j-driver": "^1.4.1",
     "ngx-clipboard": "^8.1.0",
     "node-uuid": "^1.4.7",

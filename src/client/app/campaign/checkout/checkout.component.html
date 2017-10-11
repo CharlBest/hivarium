@@ -8,15 +8,6 @@
 
     <mat-card>
         <mat-card-content>
-            <h5>Your Product</h5>
-            <h5>{{selectedProduct.title}}</h5>
-
-            <div>{{selectedProduct.description}}</div>
-        </mat-card-content>
-    </mat-card>
-
-    <mat-card>
-        <mat-card-content>
             <div *ngIf="loggedInUserId">
                 <h5>Guest Checkout or
                     <a (click)="goToLogin()"
@@ -67,9 +58,9 @@
                     </tr>
                     <tr>
                         <td>Enter your HiveCoin Discount</td>
-                        <td>**
+                        <td>
                             <img src="assets/hive-coin.svg"
-                                style="max-height: 16px;">
+                                style="max-height: 16px;"> **
                         </td>
                     </tr>
                     <tr>

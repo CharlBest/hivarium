@@ -4,9 +4,8 @@ import { Location } from '@angular/common';
 import { HomeService } from '../home.service';
 import { environment } from '../../../environments/environment';
 import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CampaignViewModel } from '../../../../server/view-models/campaign/campaign.view-model';
-import * as marked from 'marked';
 import { CampaignModel } from '../../../../server/models/campaign/campaign.model';
 
 @Component({
@@ -22,6 +21,7 @@ export class HomeComponent implements OnInit {
   campaigns: CampaignViewModel[] = [];
 
   constructor(private route: ActivatedRoute,
+    private router: Router,
     private homeService: HomeService) { }
 
   ngOnInit() {
@@ -36,6 +36,8 @@ export class HomeComponent implements OnInit {
         const campaigns = data.map(x => new CampaignViewModel(x.campaign, x.owner, x.milestones, x.products));
         this.campaigns = this.campaigns.concat(campaigns);
       }
+      this.isProcessing = false;
+    }, err => {
       this.isProcessing = false;
     });
   }

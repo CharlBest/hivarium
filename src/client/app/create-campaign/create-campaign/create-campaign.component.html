@@ -1,6 +1,8 @@
 <mat-card *ngIf="!isProcessing">
     <mat-card-content>
-
+        <button mat-raised-button
+            color="primary"
+            (click)="save()">Save</button>
         <mat-horizontal-stepper [linear]="true">
             <mat-step [stepControl]="firstFormGroup">
                 <form [formGroup]="firstFormGroup">
