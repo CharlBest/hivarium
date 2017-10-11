@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
 import { CreateCampaignService } from '../create-campaign.service';
@@ -12,6 +12,7 @@ import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-t
 import { CreateCampaignViewModel } from '../../../../server/view-models/campaign/create-campaign.view-model';
 import { MilestoneModel } from '../../../../server/models/campaign/milestone.model';
 import { ProductModel } from '../../../../server/models/campaign/product.model';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-create-campaign',
@@ -59,6 +60,8 @@ export class CreateCampaignComponent implements OnInit {
     } else {
       this.buildForm();
     }
+
+    this.saveAfterEdit();
   }
 
   b64EncodeUnicode(str) {
@@ -87,6 +90,27 @@ export class CreateCampaignComponent implements OnInit {
 
     const encodedData = this.b64EncodeUnicode(JSON.stringify(data));
     this.router.navigate([], { queryParams: { data: encodedData } });
+  }
+
+  saveAfterEdit() {
+    const miliSecondsBeforeSave = 3000;
+    this.firstFormGroup.valueChanges
+      .debounceTime(miliSecondsBeforeSave)
+      .subscribe(value => {
+        this.save();
+      });
+
+    this.secondFormGroup.valueChanges
+      .debounceTime(miliSecondsBeforeSave)
+      .subscribe(value => {
+        this.save();
+      });
+
+    this.thirdFormGroup.valueChanges
+      .debounceTime(miliSecondsBeforeSave)
+      .subscribe(value => {
+        this.save();
+      });
   }
 
   buildForm() {
@@ -135,6 +159,10 @@ export class CreateCampaignComponent implements OnInit {
     this.milestones.push(this.buildMilestoneGroup());
   }
 
+  removeMilestone(index: number): void {
+    this.milestones.removeAt(index);
+  }
+
   //#endregion
 
   //#region Product
@@ -166,6 +194,10 @@ export class CreateCampaignComponent implements OnInit {
 
   addProduct(): void {
     this.products.push(this.buildProductGroup());
+  }
+
+  removeProduct(index: number): void {
+    this.products.removeAt(index);
   }
 
   //#endregion

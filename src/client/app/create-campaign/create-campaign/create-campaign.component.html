@@ -123,6 +123,11 @@
                             <div *ngIf="serverErrors?.percentageDiscount"
                                 class="validation-message">{{ serverErrors.percentageDiscount.message }}</div>
                             <app-show-errors [control]="secondFormGroup.controls['percentageDiscount']"></app-show-errors>
+
+                            <br>
+                            <button mat-raised-button
+                                color="warn"
+                                (click)="removeMilestone(i)">Remove milestone</button>
                         </div>
                         <button mat-raised-button
                             (click)="addMilestone()">Add milestone</button>
@@ -208,6 +213,11 @@
                             <div *ngIf="serverErrors?.media"
                                 class="validation-message">{{ serverErrors.media.message }}</div>
                             <app-show-errors [control]="thirdFormGroup.controls['media']"></app-show-errors>
+
+                            <br>
+                            <button mat-raised-button
+                                color="warn"
+                                (click)="removeMilestone(i)">Remove product</button>
                         </div>
                         <button mat-raised-button
                             (click)="addProduct()">Add product</button>
