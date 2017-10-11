@@ -60,6 +60,10 @@
 
                     <br>
 
+                    <img [src]="firstFormGroup.controls['media'].value"
+                        *ngIf="firstFormGroup.controls['media'].value"
+                        style="max-width: 200px;">
+                    <br>
                     <mat-form-field>
                         <input matInput
                             formControlName="media"
@@ -70,7 +74,15 @@
                     <div *ngIf="serverErrors?.media"
                         class="validation-message">{{ serverErrors.media.message }}</div>
                     <app-show-errors [control]="firstFormGroup.controls['media']"></app-show-errors>
+                    <br>
+                    <button mat-raised-button
+                        *ngIf="firstFormGroup.controls['media'].value"
+                        color="warn"
+                        (click)="firstFormGroup.controls['media'].reset()">Remove media</button>
+                    <app-upload-button (onUploadComplete)="firstFormGroup.controls['media'].setValue($event)"
+                        [showPreview]="false"></app-upload-button>
 
+                    <br>
                     <br>
 
                     <mat-form-field>
@@ -85,8 +97,10 @@
                     <app-show-errors [control]="firstFormGroup.controls['referralPercentage']"></app-show-errors>
 
                     <div>
-                        <button mat-button
+                        <button mat-raised-button
                             matStepperNext>Next</button>
+                        <br>
+                        <br>
                     </div>
                 </form>
             </mat-step>
@@ -129,15 +143,20 @@
                                 color="warn"
                                 (click)="removeMilestone(i)">Remove milestone</button>
                         </div>
+                        <br>
                         <button mat-raised-button
                             (click)="addMilestone()">Add milestone</button>
+                        <br>
+                        <br>
                     </div>
 
                     <div>
-                        <button mat-button
+                        <button mat-raised-button
                             matStepperPrevious>Back</button>
-                        <button mat-button
+                        <button mat-raised-button
                             matStepperNext>Next</button>
+                        <br>
+                        <br>
                     </div>
                 </form>
             </mat-step>
@@ -203,6 +222,10 @@
 
                             <br>
 
+                            <img [src]="thirdFormGroup.controls['products'].controls[i].controls['media'].value"
+                                *ngIf="thirdFormGroup.controls['products'].controls[i].controls['media'].value"
+                                style="max-width: 200px;">
+                            <br>
                             <mat-form-field>
                                 <input matInput
                                     formControlName="media"
@@ -212,34 +235,50 @@
                             </mat-form-field>
                             <div *ngIf="serverErrors?.media"
                                 class="validation-message">{{ serverErrors.media.message }}</div>
-                            <app-show-errors [control]="thirdFormGroup.controls['media']"></app-show-errors>
-
+                            <app-show-errors [control]="thirdFormGroup.controls['products'].controls[i].controls['media']"></app-show-errors>
                             <br>
+                            <button mat-raised-button
+                                *ngIf="thirdFormGroup.controls['products'].controls[i].controls['media'].value"
+                                color="warn"
+                                (click)="thirdFormGroup.controls['products'].controls[i].controls['media'].reset()">Remove media</button>
+                            <app-upload-button (onUploadComplete)="thirdFormGroup.controls['products'].controls[i].controls['media'].setValue($event)"
+                                [showPreview]="false"></app-upload-button>
+
+                            <br><br>
                             <button mat-raised-button
                                 color="warn"
                                 (click)="removeMilestone(i)">Remove product</button>
                         </div>
+                        <br>
                         <button mat-raised-button
                             (click)="addProduct()">Add product</button>
+                        <br>
+                        <br>
                     </div>
 
                     <div>
-                        <button mat-button
+                        <button mat-raised-button
                             matStepperPrevious>Back</button>
-                        <button mat-button
+                        <button mat-raised-button
                             matStepperNext>Next</button>
+                        <br>
+                        <br>
                     </div>
                 </form>
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Done</ng-template>
                 You are now done.
+                <br>
+                <br>
                 <div>
-                    <button mat-button
+                    <button mat-raised-button
                         matStepperPrevious>Back</button>
-                    <button mat-button
+                    <button mat-raised-button
                         color="primary"
                         (click)="onSubmit()">Publish</button>
+                    <br>
+                    <br>
                 </div>
             </mat-step>
         </mat-horizontal-stepper>

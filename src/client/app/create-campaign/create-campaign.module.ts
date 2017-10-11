@@ -7,6 +7,7 @@ import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { CreateCampaignRoutingModule } from './create-campaign-routing.module';
 import { CreateCampaignComponent } from './create-campaign/create-campaign.component';
 import { CreateCampaignService } from './create-campaign.service';
+import { UploadButtonModule } from '../shared/upload-button/upload-button.module';
 import {
   MatButtonModule,
   MatInputModule,
@@ -25,7 +26,8 @@ import {
     MatProgressSpinnerModule,
     MatStepperModule,
     MatCardModule,
-    ShowErrorsModule
+    ShowErrorsModule,
+    UploadButtonModule
   ],
   declarations: [
     CreateCampaignComponent

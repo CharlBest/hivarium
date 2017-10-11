@@ -13,6 +13,7 @@ export class UploadButtonComponent implements OnInit {
     progressPercentage: number;
 
     @Input() showPreview = true;
+    @Input() hideProgressBarAfterUpload = true;
     @Output() onUploadComplete: EventEmitter<string> = new EventEmitter();
 
     constructor() { }
