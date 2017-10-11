@@ -28,6 +28,10 @@ export class CampaignComponent implements OnInit {
     window.scrollTo(0, element.offsetTop);
   }
 
+  goToRefferalSection() {
+    this.router.navigate([], { queryParams: { ref: true } });
+  }
+
   goToProduct(product: ProductModel) {
     this.router.navigate([], { queryParams: { productUId: product.uId } });
   }

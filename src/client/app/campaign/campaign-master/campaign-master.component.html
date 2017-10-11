@@ -1,6 +1,15 @@
-<app-campaign *ngIf="selectedProductUId === null" [campaign]="campaign"></app-campaign>
+<div *ngIf="!showReferralPage">
+    <app-campaign *ngIf="selectedProductUId === null"
+        [campaign]="campaign"></app-campaign>
 
-<app-checkout *ngIf="selectedProductUId !== null" [campaign]="campaign" [productUId]="selectedProductUId"></app-checkout>
+    <app-checkout *ngIf="selectedProductUId !== null"
+        [campaign]="campaign"
+        [productUId]="selectedProductUId"></app-checkout>
+</div>
+
+<div *ngIf="showReferralPage">
+    <app-referral [campaign]="campaign"></app-referral>
+</div>
 
 <mat-card *ngIf="isProcessing">
     <mat-card-content>

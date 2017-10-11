@@ -14,6 +14,7 @@ export class CampaignMasterComponent implements OnInit {
   campaignUId: string;
   selectedProductUId: string = null;
   campaign: CampaignViewModel;
+  showReferralPage = false;
 
   constructor(private route: ActivatedRoute,
     private campaignService: CampaignService) { }
@@ -29,6 +30,8 @@ export class CampaignMasterComponent implements OnInit {
     this.route.queryParamMap.subscribe(params => {
       this.selectedProductUId = params.get('productUId') || null;
       window.scroll(0, 0);
+
+      this.showReferralPage = params.get('ref') === 'true';
     });
   }
 

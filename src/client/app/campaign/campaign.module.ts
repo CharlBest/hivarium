@@ -6,6 +6,9 @@ import { CampaignComponent } from './campaign/campaign.component';
 import { CoinRewardInfoDialogComponent } from './coin-reward-info-dialog/coin-reward-info-dialog.component';
 import { CampaignMasterComponent } from './campaign-master/campaign-master.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ReferralComponent } from './referral/referral.component';
+import { ReferralRewardsComponent } from './referral-rewards/referral-rewards.component';
+import { ClipboardModule } from 'ngx-clipboard';
 import {
   MatButtonModule,
   MatCardModule,
@@ -26,12 +29,15 @@ import {
     MatIconModule,
     MatProgressBarModule,
     MatDialogModule,
-    MatInputModule
+    MatInputModule,
+    ClipboardModule
   ],
   declarations: [
     CampaignComponent,
     CampaignMasterComponent,
     CheckoutComponent,
+    ReferralComponent,
+    ReferralRewardsComponent,
     CoinRewardInfoDialogComponent
   ],
   providers: [

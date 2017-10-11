@@ -1,0 +1,35 @@
+<div *ngIf="campaign !== null && campaign !== undefined">
+    <mat-card>
+        <mat-card-content>
+            <h3>{{campaign.campaign.title}}</h3>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-content>
+            <h4 style="text-align: center;">Refer a friend!</h4>
+
+            <app-referral-rewards [campaign]="campaign"></app-referral-rewards>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-content>
+            <h4>Your unique referral link</h4>
+
+            <mat-form-field>
+                <input matInput
+                    [value]="link"
+                    type="text"
+                    ngxClipboard
+                    [cbContent]="link"
+                    (cbOnSuccess)="openSnackBar()"
+                    readonly>
+            </mat-form-field>
+            <button mat-raised-button
+                ngxClipboard
+                [cbContent]="link"
+                (cbOnSuccess)="openSnackBar()">Copy</button>
+        </mat-card-content>
+    </mat-card>
+</div>

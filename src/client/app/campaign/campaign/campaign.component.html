@@ -36,7 +36,7 @@
             <button mat-raised-button
                 (click)="buyNowButton()">Buy now</button>
             <button mat-raised-button
-                routerLink="/referral">Refer a friend</button>
+                (click)="goToRefferalSection()">Refer a friend</button>
         </mat-card-actions>
     </mat-card>
     <mat-tab-group [(selectedIndex)]="selectedTab"
@@ -77,40 +77,7 @@
             <mat-card>
                 <mat-card-content>
                     <h3 style="text-align: center;">Referral HiveCoin Rewards</h3>
-                    <div>Give and Get HiveCoins! Get rewarded and make your friends love you.</div>
-
-
-                    <div *ngFor="let referral of [1,2]; let i=index">
-                        <div style="float: left;">
-                            <img src="assets/hive-coin.svg"
-                                style="max-height: 40px;">
-                        </div>
-                        <div style="float: left;">
-                            <span *ngIf="i == 0">
-                                <h4>Give</h4>
-                                <strong>Give your friends HiveCoins</strong>
-                                <div>
-                                    Your friends
-                                    <strong>Earn and additional {{campaign.campaign.singleReferralPercentage}}%</strong>
-                                    of their purchase back in HiveCoins
-                                    <br> when following your link and making a purchase.
-                                </div>
-                            </span>
-                            <span *ngIf="i == 1">
-                                <h4>Get</h4>
-                                <strong>Refer more friends and keep earning HiveCoins, again and again.</strong>
-                                <div>
-                                    You
-                                    <strong>Earn {{campaign.campaign.singleReferralPercentage}}%</strong>
-                                    of their purchase back in HiveCoins.
-                                </div>
-                            </span>
-                        </div>
-                        <div style="float: left; font-size: 2rem;">
-                            {{campaign.campaign.singleReferralPercentage}}%
-                        </div>
-                        <div style="clear: both;"></div>
-                    </div>
+                    <app-referral-rewards [campaign]="campaign"></app-referral-rewards>
                 </mat-card-content>
             </mat-card>
         </mat-tab>
