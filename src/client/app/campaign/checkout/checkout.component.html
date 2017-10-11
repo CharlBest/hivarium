@@ -1,25 +1,24 @@
 <div *ngIf="campaign !== null && campaign !== undefined && selectedProduct !== null && selectedProduct !== undefined">
     <mat-card>
-        <mat-card-title>Campaign</mat-card-title>
         <mat-card-content>
             <h3>{{campaign.campaign.title}}</h3>
         </mat-card-content>
     </mat-card>
 
-    <mat-card>
+    <mat-card *ngIf="!loggedInUserId">
         <mat-card-content>
-            <div *ngIf="loggedInUserId">
-                <h5>Guest Checkout or
-                    <a (click)="goToLogin()"
-                        style="color: orange;">Log in</a>
-                </h5>
-                <mat-form-field>
-                    <input matInput
-                        type="text"
-                        placeholder="Full Name"
-                        required>
-                </mat-form-field>
-                <br>
+            <h5>Please
+                <a (click)="goToLogin()"
+                    style="color: orange;">login</a>
+                to use your account
+            </h5>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card *ngIf="!loggedInUserId">
+        <mat-card-content>
+            <div>
+                <h4>Guest Checkout</h4>
                 <mat-form-field>
                     <input matInput
                         type="text"
@@ -32,7 +31,49 @@
             <mat-form-field>
                 <input matInput
                     type="text"
-                    placeholder="Address"
+                    placeholder="Full name"
+                    required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input matInput
+                    type="text"
+                    placeholder="Country"
+                    required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input matInput
+                    type="text"
+                    placeholder="Street Address"
+                    required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input matInput
+                    type="text"
+                    placeholder="Address Line 2 (Optional)"
+                    required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input matInput
+                    type="text"
+                    placeholder="City"
+                    required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input matInput
+                    type="text"
+                    placeholder="Postal Code"
+                    required>
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <input matInput
+                    type="text"
+                    placeholder="Phone Number"
                     required>
             </mat-form-field>
         </mat-card-content>
@@ -40,7 +81,7 @@
 
     <mat-card>
         <mat-card-content>
-            <h5>Payment Breakdown</h5>
+            <h4>Payment Breakdown</h4>
 
             <div>
                 <img src="assets/hive-coin.svg"
@@ -80,7 +121,18 @@
             </div>
 
             <br>
-            <div>** ** **</div>
+            <div>
+                <span>
+                    <img src="assets/hive-coin.svg"
+                        style="max-height: 16px;">** milestone reward</span> |
+                <span>
+                    <img src="assets/hive-coin.svg"
+                        style="max-height: 16px;">** referral reward</span> |
+                <span>
+                    <img src="assets/hive-coin.svg"
+                        style="max-height: 16px;">** max milestone reward</span>
+            </div>
+            <br>
 
             <h5>Payment Details</h5>
             <mat-form-field>
@@ -104,7 +156,8 @@
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button>Submit Payment</button>
+            <button mat-raised-button
+                style="background: orange;">Submit Payment</button>
         </mat-card-actions>
     </mat-card>
 </div>
