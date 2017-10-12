@@ -9,6 +9,7 @@ import { MatTabChangeEvent } from '@angular/material';
 })
 export class EmojiPanelComponent implements OnInit {
 
+  isOpen = false;
   @Output() onInserted: EventEmitter<string> = new EventEmitter();
   visibleEmoji: string;
   emojiList;
@@ -34,6 +35,7 @@ export class EmojiPanelComponent implements OnInit {
         && img.classList
         && img.classList.contains('emojione')) {
         this.onInserted.emit(img.title);
+        this.isOpen = !this.isOpen;
       }
     });
   }
