@@ -13,7 +13,8 @@ import {
   MatInputModule,
   MatProgressSpinnerModule,
   MatCardModule,
-  MatStepperModule
+  MatStepperModule,
+  MatSelectModule
 } from '@angular/material';
 
 @NgModule({
@@ -27,7 +28,8 @@ import {
     MatStepperModule,
     MatCardModule,
     ShowErrorsModule,
-    UploadButtonModule
+    UploadButtonModule,
+    MatSelectModule
   ],
   declarations: [
     CreateCampaignComponent

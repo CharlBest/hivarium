@@ -57,3 +57,8 @@ mat-card[hidden] {
     height: 24px !important; 
     display: inline-block !important;
 }
+
+input[type=number] {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+}

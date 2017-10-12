@@ -6,7 +6,7 @@
                 style="color: orange;">log in</a>.
         </mat-card-subtitle>
 
-        <mat-horizontal-stepper [linear]="true">
+        <mat-horizontal-stepper [linear]="false">
             <mat-step [stepControl]="firstFormGroup">
                 <form [formGroup]="firstFormGroup">
                     <ng-template matStepLabel>Details</ng-template>
@@ -20,7 +20,7 @@
                     </mat-form-field>
                     <div *ngIf="serverErrors?.title"
                         class="validation-message">{{ serverErrors.title.message }}</div>
-                    <app-show-errors [control]="firstFormGroup.controls['title']"></app-show-errors>
+                    <app-show-errors [control]="firstFormGroup.get('title')"></app-show-errors>
 
                     <br>
 
@@ -33,7 +33,7 @@
                     </mat-form-field>
                     <div *ngIf="serverErrors?.description"
                         class="validation-message">{{ serverErrors.description.message }}</div>
-                    <app-show-errors [control]="firstFormGroup.controls['description']"></app-show-errors>
+                    <app-show-errors [control]="firstFormGroup.get('description')"></app-show-errors>
 
                     <br>
 
@@ -46,7 +46,7 @@
                     </mat-form-field>
                     <div *ngIf="serverErrors?.daysDuration"
                         class="validation-message">{{ serverErrors.daysDuration.message }}</div>
-                    <app-show-errors [control]="firstFormGroup.controls['daysDuration']"></app-show-errors>
+                    <app-show-errors [control]="firstFormGroup.get('daysDuration')"></app-show-errors>
 
                     <br>
 
@@ -59,12 +59,12 @@
                     </mat-form-field>
                     <div *ngIf="serverErrors?.fullDescription"
                         class="validation-message">{{ serverErrors.fullDescription.message }}</div>
-                    <app-show-errors [control]="firstFormGroup.controls['fullDescription']"></app-show-errors>
+                    <app-show-errors [control]="firstFormGroup.get('fullDescription')"></app-show-errors>
 
                     <br>
 
-                    <img [src]="firstFormGroup.controls['media'].value"
-                        *ngIf="firstFormGroup.controls['media'].value"
+                    <img [src]="firstFormGroup.get('media').value"
+                        *ngIf="firstFormGroup.get('media').value"
                         style="max-width: 200px;">
                     <br>
                     <mat-form-field>
@@ -76,13 +76,13 @@
                     </mat-form-field>
                     <div *ngIf="serverErrors?.media"
                         class="validation-message">{{ serverErrors.media.message }}</div>
-                    <app-show-errors [control]="firstFormGroup.controls['media']"></app-show-errors>
+                    <app-show-errors [control]="firstFormGroup.get('media')"></app-show-errors>
                     <br>
                     <button mat-raised-button
-                        *ngIf="firstFormGroup.controls['media'].value"
+                        *ngIf="firstFormGroup.get('media').value"
                         color="warn"
-                        (click)="firstFormGroup.controls['media'].reset()">Remove media</button>
-                    <app-upload-button (onUploadComplete)="firstFormGroup.controls['media'].setValue($event)"
+                        (click)="firstFormGroup.get('media').reset()">Remove media</button>
+                    <app-upload-button (onUploadComplete)="firstFormGroup.get('media').setValue($event)"
                         [showPreview]="false"></app-upload-button>
 
                     <br>
@@ -97,7 +97,7 @@
                     </mat-form-field>
                     <div *ngIf="serverErrors?.referralPercentage"
                         class="validation-message">{{ serverErrors.referralPercentage.message }}</div>
-                    <app-show-errors [control]="firstFormGroup.controls['referralPercentage']"></app-show-errors>
+                    <app-show-errors [control]="firstFormGroup.get('referralPercentage')"></app-show-errors>
 
                     <div>
                         <button mat-raised-button
@@ -126,7 +126,7 @@
                             </mat-form-field>
                             <div *ngIf="serverErrors?.unlockAtValueOfSales"
                                 class="validation-message">{{ serverErrors.unlockAtValueOfSales.message }}</div>
-                            <app-show-errors [control]="secondFormGroup.controls['unlockAtValueOfSales']"></app-show-errors>
+                            <app-show-errors [control]="secondFormGroup.get('unlockAtValueOfSales')"></app-show-errors>
 
                             <br>
 
@@ -139,7 +139,7 @@
                             </mat-form-field>
                             <div *ngIf="serverErrors?.percentageDiscount"
                                 class="validation-message">{{ serverErrors.percentageDiscount.message }}</div>
-                            <app-show-errors [control]="secondFormGroup.controls['percentageDiscount']"></app-show-errors>
+                            <app-show-errors [control]="secondFormGroup.get('percentageDiscount')"></app-show-errors>
 
                             <br>
                             <button mat-raised-button
@@ -182,7 +182,7 @@
                             </mat-form-field>
                             <div *ngIf="serverErrors?.title"
                                 class="validation-message">{{ serverErrors.title.message }}</div>
-                            <app-show-errors [control]="thirdFormGroup.controls['title']"></app-show-errors>
+                            <app-show-errors [control]="thirdFormGroup.get('title')"></app-show-errors>
 
                             <br>
 
@@ -195,7 +195,7 @@
                             </mat-form-field>
                             <div *ngIf="serverErrors?.description"
                                 class="validation-message">{{ serverErrors.description.message }}</div>
-                            <app-show-errors [control]="thirdFormGroup.controls['description']"></app-show-errors>
+                            <app-show-errors [control]="thirdFormGroup.get('description')"></app-show-errors>
 
                             <br>
 
@@ -208,7 +208,7 @@
                             </mat-form-field>
                             <div *ngIf="serverErrors?.cost"
                                 class="validation-message">{{ serverErrors.cost.message }}</div>
-                            <app-show-errors [control]="thirdFormGroup.controls['cost']"></app-show-errors>
+                            <app-show-errors [control]="thirdFormGroup.get('cost')"></app-show-errors>
 
                             <br>
 
@@ -221,12 +221,12 @@
                             </mat-form-field>
                             <div *ngIf="serverErrors?.quantity"
                                 class="validation-message">{{ serverErrors.quantity.message }}</div>
-                            <app-show-errors [control]="thirdFormGroup.controls['quantity']"></app-show-errors>
+                            <app-show-errors [control]="thirdFormGroup.get('quantity')"></app-show-errors>
 
                             <br>
 
-                            <img [src]="thirdFormGroup.controls['products'].controls[i].controls['media'].value"
-                                *ngIf="thirdFormGroup.controls['products'].controls[i].controls['media'].value"
+                            <img [src]="product.get('media').value"
+                                *ngIf="product.get('media').value"
                                 style="max-width: 200px;">
                             <br>
                             <mat-form-field>
@@ -238,17 +238,79 @@
                             </mat-form-field>
                             <div *ngIf="serverErrors?.media"
                                 class="validation-message">{{ serverErrors.media.message }}</div>
-                            <app-show-errors [control]="thirdFormGroup.controls['products'].controls[i].controls['media']"></app-show-errors>
+                            <app-show-errors [control]="product.get('media')"></app-show-errors>
                             <br>
                             <button mat-raised-button
-                                *ngIf="thirdFormGroup.controls['products'].controls[i].controls['media'].value"
+                                *ngIf="product.get('media').value"
                                 color="warn"
-                                (click)="thirdFormGroup.controls['products'].controls[i].controls['media'].reset()">Remove media</button>
-                            <app-upload-button (onUploadComplete)="thirdFormGroup.controls['products'].controls[i].controls['media'].setValue($event)"
-                        
+                                (click)="product.get('media').reset()">Remove media</button>
+                            <app-upload-button (onUploadComplete)="product.get('media').setValue($event)"
                                 [showPreview]="false"></app-upload-button>
 
                             <br>
+                            <br>
+
+                            <mat-form-field>
+                                <mat-select placeholder="Shipping details"
+                                    formControlName="shippingDetails"
+                                    required>
+                                    <mat-option *ngFor="let shippingDetail of shippingDetails"
+                                        [value]="shippingDetail.id">
+                                        {{ shippingDetail.title }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <div [hidden]="product.get('shippingDetails').value !== 1 && product.get('shippingDetails').value !== 2">
+                                <br>
+
+                                <mat-form-field>
+                                    <mat-select placeholder="Shipping countries"
+                                        formControlName="shippingCountries"
+                                        multiple>
+                                        <mat-option *ngFor="let shippingCountry of staticShippingCountries"
+                                            [value]="shippingCountry">
+                                            {{ shippingCountry.title }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <div formArrayName="selectedShippingCountries">
+                                    <div *ngFor="let selectedCountry of product['controls'].selectedShippingCountries.controls; let shipIndex=index"
+                                        [formGroupName]="shipIndex">
+                                        {{shipIndex}}
+                                        {{selectedCountry.title?.value}}
+                                    </div>
+                                </div>
+
+                                <!-- <table formArrayName="selectedShippingCountries">
+                                    <tr *ngFor="let selectedCountry of selectedShippingCountries.controls; let shipIndex=index"
+                                        [formGroupName]="shipIndex">
+                                        <td>{{selectedCountry.get('title').value}}</td>
+                                        <td>
+                                            <span>$</span>
+                                            <mat-form-field style="max-width: 100px;">
+                                                <input matInput
+                                                    formControlName="singleAmount"
+                                                    type="number"
+                                                    placeholder="first product"
+                                                    required>
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <span>$</span>
+                                            <mat-form-field style="max-width: 100px;">
+                                                <input matInput
+                                                    formControlName="extraAmount"
+                                                    type="number"
+                                                    placeholder="extra products"
+                                                    required>
+                                            </mat-form-field>
+                                        </td>
+                                    </tr>
+                                </table> -->
+                            </div>
+
                             <br>
                             <button mat-raised-button
                                 color="warn"

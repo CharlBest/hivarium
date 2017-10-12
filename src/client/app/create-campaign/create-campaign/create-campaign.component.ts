@@ -12,6 +12,7 @@ import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-t
 import { CreateCampaignViewModel } from '../../../../server/view-models/campaign/create-campaign.view-model';
 import { MilestoneModel } from '../../../../server/models/campaign/milestone.model';
 import { ProductModel } from '../../../../server/models/campaign/product.model';
+import { ShippingCountries, ShippingCountry } from '../../../../server/models/campaign/shipping-countries';
 import 'rxjs/add/operator/debounceTime';
 
 @Component({
@@ -31,6 +32,21 @@ export class CreateCampaignComponent implements OnInit {
   isProcessing = false;
   products: FormArray;
   milestones: FormArray;
+  staticShippingCountries = ShippingCountries;
+  shippingDetails = [
+    {
+      id: 0,
+      title: 'No shipping involved'
+    },
+    {
+      id: 1,
+      title: 'Only ships to certain countries'
+    },
+    {
+      id: 2,
+      title: 'Ships anywhere in the world'
+    }
+  ];
 
   constructor(private fb: FormBuilder,
     private createCampaignService: CreateCampaignService,
@@ -185,15 +201,55 @@ export class CreateCampaignComponent implements OnInit {
     return this.products = this.fb.array(groupArray);
   }
 
-  buildProductGroup(uId = null, title = null, description = null, cost = null, quantity = null, media = null): FormGroup {
-    return this.fb.group({
+  buildProductGroup(uId = null, title = null, description = null, cost = null, quantity = null, media = null, shippingDetails = null, shippingCountries = null): FormGroup {
+    const formGroup = this.fb.group({
       uId,
       title,
       description,
       cost,
       quantity,
-      media
+      media,
+      shippingDetails,
+      shippingCountries,
+      selectedShippingCountries: this.buildProductShippingCountryArray([
+        {
+          id: 111,
+          title: 'charlll',
+          singleAmount: 1000,
+          extraAmount: 20000
+        },
+        {
+          id: 111,
+          title: 'charlll',
+          singleAmount: 1000,
+          extraAmount: 20000
+        }
+      ])
     });
+
+    formGroup.get('shippingCountries').valueChanges.subscribe(value => {
+      const hi = [
+        {
+          id: 1111111111111,
+          title: 'charlll',
+          singleAmount: 1000,
+          extraAmount: 20000
+        },
+        {
+          id: 11111111111111111111111111111111,
+          title: 'charlll',
+          singleAmount: 1000,
+          extraAmount: 20000
+        }
+      ];
+
+      console.log(hi);
+      console.log(value);
+
+      formGroup.get('selectedShippingCountries').setValue(hi);
+    });
+
+    return formGroup;
   }
 
   addProduct(): void {
@@ -203,6 +259,33 @@ export class CreateCampaignComponent implements OnInit {
   removeProduct(index: number): void {
     this.products.removeAt(index);
   }
+
+  //#region Shipping countries
+
+  buildProductShippingCountryArray(shippingCountries: ShippingCountry[] = null): FormArray {
+    const groupArray = new Array<any>();
+
+    if (shippingCountries !== null && shippingCountries !== undefined) {
+      for (const shippingCountry of shippingCountries) {
+        groupArray.push(this.buildProductShippingCountryGroup(shippingCountry.id, shippingCountry.title, shippingCountry.singleAmount, shippingCountry.extraAmount));
+      }
+    } else {
+      groupArray.push(this.buildProductShippingCountryGroup());
+    }
+
+    return this.fb.array(groupArray);
+  }
+
+  buildProductShippingCountryGroup(id = null, title = null, singleAmount = null, extraAmount = null): FormGroup {
+    return this.fb.group({
+      id,
+      title,
+      singleAmount,
+      extraAmount
+    });
+  }
+
+  //#endregion
 
   //#endregion
 
