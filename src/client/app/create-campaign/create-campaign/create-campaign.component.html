@@ -6,7 +6,7 @@
                 style="color: orange;">log in</a>.
         </mat-card-subtitle>
 
-        <mat-horizontal-stepper [linear]="false">
+        <mat-horizontal-stepper [linear]="true">
             <mat-step [stepControl]="firstFormGroup">
                 <form [formGroup]="firstFormGroup">
                     <ng-template matStepLabel>Details</ng-template>
@@ -255,38 +255,30 @@
                                     formControlName="shippingDetails"
                                     required>
                                     <mat-option *ngFor="let shippingDetail of shippingDetails"
-                                        [value]="shippingDetail.id">
+                                        [value]="shippingDetail.shippingDetailType">
                                         {{ shippingDetail.title }}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
 
-                            <div [hidden]="product.get('shippingDetails').value !== 1 && product.get('shippingDetails').value !== 2">
+                            <div [hidden]="product.get('shippingDetails').value === null || product.get('shippingDetails').value === ShippingDetailsEnum.NoShippingInvolved">
                                 <br>
 
                                 <mat-form-field>
                                     <mat-select placeholder="Shipping countries"
-                                        formControlName="shippingCountries"
+                                        formControlName="selectedShippingCountries"
                                         multiple>
-                                        <mat-option *ngFor="let shippingCountry of staticShippingCountries"
-                                            [value]="shippingCountry">
-                                            {{ shippingCountry.title }}
+                                        <mat-option *ngFor="let staticShippingCountry of staticShippingCountries"
+                                            [value]="staticShippingCountry">
+                                            {{ staticShippingCountry.title }}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
 
-                                <div formArrayName="selectedShippingCountries">
-                                    <div *ngFor="let selectedCountry of product['controls'].selectedShippingCountries.controls; let shipIndex=index"
+                                <table formArrayName="shippingCountries">
+                                    <tr *ngFor="let shippingCountry of product['controls'].shippingCountries?.controls; let shipIndex=index"
                                         [formGroupName]="shipIndex">
-                                        {{shipIndex}}
-                                        {{selectedCountry.title?.value}}
-                                    </div>
-                                </div>
-
-                                <!-- <table formArrayName="selectedShippingCountries">
-                                    <tr *ngFor="let selectedCountry of selectedShippingCountries.controls; let shipIndex=index"
-                                        [formGroupName]="shipIndex">
-                                        <td>{{selectedCountry.get('title').value}}</td>
+                                        <td>{{shippingCountry.get('title').value}}</td>
                                         <td>
                                             <span>$</span>
                                             <mat-form-field style="max-width: 100px;">
@@ -308,13 +300,13 @@
                                             </mat-form-field>
                                         </td>
                                     </tr>
-                                </table> -->
+                                </table>
                             </div>
 
                             <br>
                             <button mat-raised-button
                                 color="warn"
-                                (click)="removeMilestone(i)">Remove product</button>
+                                (click)="removeProduct(i)">Remove product</button>
                         </div>
                         <br>
                         <button mat-raised-button

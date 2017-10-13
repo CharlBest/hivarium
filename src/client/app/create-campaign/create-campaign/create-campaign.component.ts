@@ -13,6 +13,8 @@ import { CreateCampaignViewModel } from '../../../../server/view-models/campaign
 import { MilestoneModel } from '../../../../server/models/campaign/milestone.model';
 import { ProductModel } from '../../../../server/models/campaign/product.model';
 import { ShippingCountries, ShippingCountry } from '../../../../server/models/campaign/shipping-countries';
+import { ShippingDetails } from '../../../../server/models/campaign/shipping-details.enum';
+import { CreateProductViewModel } from '../../../../server/view-models/campaign/create-product.view-model';
 import 'rxjs/add/operator/debounceTime';
 
 @Component({
@@ -33,17 +35,18 @@ export class CreateCampaignComponent implements OnInit {
   products: FormArray;
   milestones: FormArray;
   staticShippingCountries = ShippingCountries;
+  ShippingDetailsEnum = ShippingDetails;
   shippingDetails = [
     {
-      id: 0,
+      shippingDetailType: ShippingDetails.NoShippingInvolved,
       title: 'No shipping involved'
     },
     {
-      id: 1,
+      shippingDetailType: ShippingDetails.OnlyShipsToCertainCountries,
       title: 'Only ships to certain countries'
     },
     {
-      id: 2,
+      shippingDetailType: ShippingDetails.ShipsAnywhereInTheWorld,
       title: 'Ships anywhere in the world'
     }
   ];
@@ -187,12 +190,13 @@ export class CreateCampaignComponent implements OnInit {
 
   //#region Product
 
-  buildProductsArray(products: ProductModel[] = null): FormArray {
+  buildProductsArray(products: CreateProductViewModel[] = null): FormArray {
     const groupArray = new Array<any>();
 
     if (products !== null && products !== undefined) {
       for (const product of products) {
-        groupArray.push(this.buildProductGroup(product.uId, product.title, product.description, product.cost, product.quantity, product.media));
+        groupArray.push(this.buildProductGroup(product.uId, product.title, product.description, product.cost,
+          product.quantity, product.media, product.shippingDetails, product.selectedShippingCountries, product.shippingCountires));
       }
     } else {
       groupArray.push(this.buildProductGroup());
@@ -201,7 +205,8 @@ export class CreateCampaignComponent implements OnInit {
     return this.products = this.fb.array(groupArray);
   }
 
-  buildProductGroup(uId = null, title = null, description = null, cost = null, quantity = null, media = null, shippingDetails = null, shippingCountries = null): FormGroup {
+  buildProductGroup(uId = null, title = null, description = null, cost = null, quantity = null, media = null,
+    shippingDetails = null, selectedShippingCountries = null, shippingCountries= null): FormGroup {
     const formGroup = this.fb.group({
       uId,
       title,
@@ -210,43 +215,27 @@ export class CreateCampaignComponent implements OnInit {
       quantity,
       media,
       shippingDetails,
-      shippingCountries,
-      selectedShippingCountries: this.buildProductShippingCountryArray([
-        {
-          id: 111,
-          title: 'charlll',
-          singleAmount: 1000,
-          extraAmount: 20000
-        },
-        {
-          id: 111,
-          title: 'charlll',
-          singleAmount: 1000,
-          extraAmount: 20000
-        }
-      ])
+      selectedShippingCountries: [selectedShippingCountries],
+      shippingCountries: this.buildProductShippingCountryArray(shippingCountries)
     });
 
-    formGroup.get('shippingCountries').valueChanges.subscribe(value => {
-      const hi = [
-        {
-          id: 1111111111111,
-          title: 'charlll',
-          singleAmount: 1000,
-          extraAmount: 20000
-        },
-        {
-          id: 11111111111111111111111111111111,
-          title: 'charlll',
-          singleAmount: 1000,
-          extraAmount: 20000
+    formGroup.get('selectedShippingCountries').valueChanges.subscribe((value: ShippingCountry[]) => {
+      const currentSelectedCountries = (<FormArray>formGroup.get('shippingCountries')).value as ShippingCountry[];
+
+      for (const ship of value) {
+        if (currentSelectedCountries.filter(x => x.id === ship.id).length === 0) {
+          const group = this.buildProductShippingCountryGroup(ship.id, ship.title, ship.singleAmount, ship.extraAmount);
+          (<FormArray>formGroup.get('shippingCountries')).push(group);
         }
-      ];
+      }
 
-      console.log(hi);
-      console.log(value);
-
-      formGroup.get('selectedShippingCountries').setValue(hi);
+      let index = 0;
+      for (const selectedCountry of currentSelectedCountries) {
+        if (value.filter(x => x.id === selectedCountry.id).length === 0) {
+          (<FormArray>formGroup.get('shippingCountries')).removeAt(index);
+        }
+        index++;
+      }
     });
 
     return formGroup;
@@ -263,17 +252,17 @@ export class CreateCampaignComponent implements OnInit {
   //#region Shipping countries
 
   buildProductShippingCountryArray(shippingCountries: ShippingCountry[] = null): FormArray {
-    const groupArray = new Array<any>();
-
     if (shippingCountries !== null && shippingCountries !== undefined) {
+      const groupArray = new Array<any>();
+
       for (const shippingCountry of shippingCountries) {
         groupArray.push(this.buildProductShippingCountryGroup(shippingCountry.id, shippingCountry.title, shippingCountry.singleAmount, shippingCountry.extraAmount));
       }
-    } else {
-      groupArray.push(this.buildProductShippingCountryGroup());
-    }
 
-    return this.fb.array(groupArray);
+      return this.fb.array(groupArray);
+    } else {
+      return this.fb.array([]);
+    }
   }
 
   buildProductShippingCountryGroup(id = null, title = null, singleAmount = null, extraAmount = null): FormGroup {
@@ -305,6 +294,8 @@ export class CreateCampaignComponent implements OnInit {
     viewModel.referralPercentage = this.firstFormGroup.get('referralPercentage').value;
     viewModel.milestones = this.secondFormGroup.get('milestones').value;
     viewModel.products = this.thirdFormGroup.get('products').value;
+
+    console.log(viewModel.products);
 
     this.createCampaignService.createCampaign(viewModel).subscribe(
       data => {

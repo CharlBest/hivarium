@@ -13,6 +13,18 @@ FOREACH (milestone IN {milestones} |
 FOREACH (product IN {products} |
     CREATE (newProduct:Product { uId: product.uId, title: product.title, description: product.description, cost: product.cost, quantity: product.quantity, sold: 0, media: product.media })
     MERGE (campaign)-[:HAS_PRODUCT]->(newProduct)
+
+    //Ships anywhere in the world
+    FOREACH (o IN CASE WHEN product.shippingDetails = 3 THEN [1] ELSE [] END |
+        MERGE (shipping:Shipping { id: 0 })
+        MERGE (newProduct)-[:HAS_SHIPPING]->(shipping)
+    )
+
+    //Only ships to certain countries
+    FOREACH (shippingCountry IN product.shippingCountries |
+        MERGE (shipping:Shipping { id: shippingCountry.id })
+        MERGE (newProduct)-[:HAS_SHIPPING { singleAmount: shippingCountry.singleAmount, extraAmount: shippingCountry.extraAmount }]->(shipping)
+    )
 )
 
 RETURN campaign
