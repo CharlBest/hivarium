@@ -6,15 +6,21 @@ sgMail.setApiKey(environment.sendGrid.apiKey);
 sgMail.setSubstitutionWrappers('{{', '}}');
 
 export class Emailer {
+    static fromEmail = 'admin@hivarium.com';
+    static fromName = 'Hivarium';
+
     static welcomeEmail(email: string, username: string, emailVerifyCode: string) {
         const data: MailData = {
-            to: email,
-            from: 'info@test.com',
+            to: {
+                email,
+                name: Emailer.fromName
+            },
+            from: Emailer.fromEmail,
             subject: 'Welcome',
             templateId: environment.sendGrid.templates.welcome,
             substitutions: {
-                username: username,
-                emailverifycode: emailVerifyCode
+                username,
+                emailVerifyCode
             }
         };
 
@@ -23,26 +29,32 @@ export class Emailer {
 
     static forgotPasswordEmail(email: string, forgotPasswordCode: string) {
         const data: MailData = {
-            to: email,
-            from: 'info@test.com',
+            to: {
+                email,
+                name: Emailer.fromName
+            },
+            from: Emailer.fromEmail,
             subject: 'Forgot Password',
             templateId: environment.sendGrid.templates.forgotPassword,
             substitutions: {
-                forgotpasswordcode: forgotPasswordCode
+                forgotPasswordCode
             }
         };
 
         Emailer.send(data);
     }
 
-    static feedbackEmail(content: string) {
+    static feedbackEmail(feedbackContent: string) {
         const data: MailData = {
-            to: 'admin@test.com',
-            from: 'info@test.com',
+            to: {
+                email: 'feedback@hivarium.com',
+                name: Emailer.fromName
+            },
+            from: Emailer.fromEmail,
             subject: 'Feedback',
             templateId: environment.sendGrid.templates.feedback,
             substitutions: {
-                feedbackContent: content
+                feedbackContent
             }
         };
 
@@ -51,12 +63,15 @@ export class Emailer {
 
     static resendEmailVerificationLinkEmail(email: string, emailVerifyCode: string) {
         const data: MailData = {
-            to: 'admin@test.com',
-            from: 'info@test.com',
+            to: {
+                email,
+                name: Emailer.fromName
+            },
+            from: Emailer.fromEmail,
             subject: 'Email verification',
             templateId: environment.sendGrid.templates.resendEmailVerificationLink,
             substitutions: {
-                emailverifycode: emailVerifyCode
+                emailVerifyCode
             }
         };
 
