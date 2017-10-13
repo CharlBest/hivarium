@@ -87,9 +87,11 @@
             <div class="products-container">
                 <mat-card *ngFor="let product of campaign.products; let i=index"
                     style="max-width: 275px;">
-                    <img [src]="product.media"
+
+                    <app-media [src]="product.media"
                         *ngIf="product.media"
-                        mat-card-image>
+                        mat-card-image></app-media>
+
                     <mat-card-content>
                         <div>${{product.cost}} USD |
                             <img src="assets/hive-coin.svg"

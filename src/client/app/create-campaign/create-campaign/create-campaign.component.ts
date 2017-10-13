@@ -295,8 +295,6 @@ export class CreateCampaignComponent implements OnInit {
     viewModel.milestones = this.secondFormGroup.get('milestones').value;
     viewModel.products = this.thirdFormGroup.get('products').value;
 
-    console.log(viewModel.products);
-
     this.createCampaignService.createCampaign(viewModel).subscribe(
       data => {
         this.router.navigate([`/campaign/${data.uId}`]);
