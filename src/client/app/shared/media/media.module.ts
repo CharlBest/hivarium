@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MediaTypeComponent } from '../../shared/media-type/media-type/media-type.component';
+import { MediaComponent } from '../../shared/media/media/media.component';
 import { ViewMediaDialogComponent } from './view-media-dialog/view-media-dialog.component';
 import { ImgErrorDirective } from './img-error.directive';
 import {
@@ -15,15 +15,15 @@ import {
     MatButtonModule
   ],
   declarations: [
-    MediaTypeComponent,
+    MediaComponent,
     ViewMediaDialogComponent,
     ImgErrorDirective
   ],
   exports: [
-    MediaTypeComponent
+    MediaComponent
   ],
   entryComponents: [
     ViewMediaDialogComponent
   ]
 })
-export class MediaTypeModule { }
+export class MediaModule { }

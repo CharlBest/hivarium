@@ -1,8 +1,9 @@
 <div *ngIf="campaign !== null && campaign !== undefined">
     <mat-card>
-        <img [src]="campaign.campaign.media"
-            *ngIf="campaign.campaign.media"
-            mat-card-image>
+
+        <app-media [src]="campaign.campaign.media"
+            mat-card-image></app-media>
+
         <mat-card-title>{{campaign.campaign.title}}</mat-card-title>
         <mat-card-content>
             <div>{{campaign.campaign.description}}</div>

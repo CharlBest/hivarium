@@ -13,6 +13,7 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
 import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
+import { MediaModule } from '../shared/media/media.module';
 import {
   MatButtonModule,
   MatCardModule,
@@ -42,7 +43,8 @@ import {
     ReportDialogModule,
     UploadButtonModule,
     ShowErrorsModule,
-    TutorialModule
+    TutorialModule,
+    MediaModule
   ],
   declarations: [
     ProfileComponent,

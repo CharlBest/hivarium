@@ -82,8 +82,7 @@
                         *ngIf="firstFormGroup.get('media').value"
                         color="warn"
                         (click)="firstFormGroup.get('media').reset()">Remove media</button>
-                    <app-upload-button (onUploadComplete)="firstFormGroup.get('media').setValue($event)"
-                        [showPreview]="false"></app-upload-button>
+                    <app-upload-button (onUploadComplete)="firstFormGroup.get('media').setValue($event)"></app-upload-button>
 
                     <br>
                     <br>
@@ -244,8 +243,7 @@
                                 *ngIf="product.get('media').value"
                                 color="warn"
                                 (click)="product.get('media').reset()">Remove media</button>
-                            <app-upload-button (onUploadComplete)="product.get('media').setValue($event)"
-                                [showPreview]="false"></app-upload-button>
+                            <app-upload-button (onUploadComplete)="product.get('media').setValue($event)"></app-upload-button>
 
                             <br>
                             <br>

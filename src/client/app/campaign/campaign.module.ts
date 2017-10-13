@@ -9,6 +9,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { ReferralComponent } from './referral/referral.component';
 import { ReferralRewardsComponent } from './referral-rewards/referral-rewards.component';
 import { ClipboardModule } from 'ngx-clipboard';
+import { MediaModule } from '../shared/media/media.module';
 import {
   MatButtonModule,
   MatCardModule,
@@ -30,7 +31,8 @@ import {
     MatProgressBarModule,
     MatDialogModule,
     MatInputModule,
-    ClipboardModule
+    ClipboardModule,
+    MediaModule
   ],
   declarations: [
     CampaignComponent,
