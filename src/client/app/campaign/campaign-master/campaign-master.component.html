@@ -3,7 +3,7 @@
         [campaign]="campaign"></app-campaign>
 
     <app-checkout *ngIf="showCheckoutSection"
-        [campaign]="campaign"></app-checkout>
+        [campaign]="campaign" [selectedProductUId]="selectedProductUId"></app-checkout>
 </div>
 
 <div *ngIf="showReferralSection">

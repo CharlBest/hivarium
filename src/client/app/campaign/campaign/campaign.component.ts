@@ -34,9 +34,7 @@ export class CampaignComponent implements OnInit {
   }
 
   goToProduct(product: ProductModel) {
-    let uIds = this.route.snapshot.queryParams.productUId || null;
-    uIds = uIds !== null ? `${uIds},${product.uId}` : product.uId;
-    this.router.navigate([], { queryParams: { products: uIds, checkout: true } });
+    this.router.navigate([], { queryParams: { product: product.uId, checkout: true } });
   }
 
   openCoinRewardInfoDialog() {

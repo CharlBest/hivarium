@@ -93,10 +93,12 @@
             <br>
             <table>
                 <tbody>
-                    <tr *ngFor="let product of campaign.products" [style.opacity]="product['selected'] ? 'none' : 0.5">
-                        <td>{{product['selectedQuantity'] || 0}}</td>
-                        <td>${{product.title}}</td>
-                        <td>${{product.cost}}</td>
+                    <tr *ngFor="let product of campaign.products">
+                        <div *ngIf="product.uId === selectedProductUId">
+                            <td>0</td>
+                            <td>${{product.title}}</td>
+                            <td>${{product.cost}}</td>
+                        </div>
                     </tr>
                     <tr>
                         <td>Enter your HiveCoin Discount</td>

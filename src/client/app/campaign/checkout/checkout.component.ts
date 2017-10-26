@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class CheckoutComponent implements OnInit {
 
   @Input() campaign: CampaignViewModel = null;
+  @Input() selectedProductUId: string = null;
   loggedInUserId: number = this.authService.getloggedInUserId();
 
   constructor(private authService: AuthService,

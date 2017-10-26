@@ -13,7 +13,7 @@ export class CampaignMasterComponent implements OnInit {
   isProcessing = true;
   campaignUId: string;
   campaign: CampaignViewModel = null;
-  selectedProductUIds: string[] = null;
+  selectedProductUId: string = null;
 
   showCheckoutSection = false;
   showReferralSection = false;
@@ -30,11 +30,10 @@ export class CampaignMasterComponent implements OnInit {
     });
 
     this.route.queryParamMap.subscribe(params => {
-      if (params.has('products')) {
-        const productUIds = params.get('products') || null;
-        if (productUIds !== null) {
-          this.selectedProductUIds = productUIds.split(',');
-          this.setSelectedProducts();
+      if (params.has('product')) {
+        const productUId = params.get('product') || null;
+        if (productUId !== null) {
+          this.selectedProductUId = productUId;
         }
       }
 
@@ -48,23 +47,10 @@ export class CampaignMasterComponent implements OnInit {
     window.scroll(0, 0);
   }
 
-  setSelectedProducts() {
-    if (this.selectedProductUIds !== null && this.campaign !== null) {
-      this.campaign.products.forEach(product => {
-        if (this.selectedProductUIds.findIndex(x => x === product.uId) !== -1) {
-          product['selected'] = true;
-          product['selectedQuantity'] = 1;
-        }
-      });
-    }
-  }
-
   getCampaign() {
     this.campaignService.getCampaign(this.campaignUId).subscribe(data => {
       this.isProcessing = false;
       this.campaign = new CampaignViewModel(data.campaign, data.owner, data.milestones, data.products);
-
-      this.setSelectedProducts();
     });
   }
 }
