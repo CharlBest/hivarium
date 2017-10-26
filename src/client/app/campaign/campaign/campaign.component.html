@@ -47,7 +47,7 @@
             <mat-card>
                 <mat-card-content>
                     <h3 style="text-align: center;">Milestone HiveCoin Rewards</h3>
-                    <mat-progress-bar value="60"></mat-progress-bar>
+                    <mat-progress-bar [value]="campaign.totalValueOfSales / campaign.milestones[campaign.milestones.length - 1].unlockAtValueOfSales * 100"></mat-progress-bar>
                     <br>
                     <div style="text-align: center;">Value of Sales:
                         <strong>${{campaign.totalValueOfSales}}</strong>
