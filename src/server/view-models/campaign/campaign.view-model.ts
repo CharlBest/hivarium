@@ -7,7 +7,7 @@ export class CampaignViewModel {
     constructor(public campaign: CampaignModel, public owner: UserModel, public milestones: MilestoneModel[], public products: ProductModel[]) {
         this.campaign = Object.assign(new CampaignModel(), campaign);
         this.owner = Object.assign(new UserModel(), owner);
-        this.milestones = Object.assign(new Array<MilestoneModel>(), milestones);
+        this.milestones = Object.assign(new Array<MilestoneModel>(), milestones.sort((a, b) => a.unlockAtValueOfSales - b.unlockAtValueOfSales));
         this.products = Object.assign(new Array<ProductModel>(), products);
     }
 
