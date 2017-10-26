@@ -30,7 +30,40 @@ export class CampaignViewModel {
     }
 
     get milestonesReached(): number {
-        const totalValueOfSales = this.totalValueOfSales;
-        return this.milestones.filter(x => x.unlockAtValueOfSales <= totalValueOfSales).length;
+        return this.milestones.filter(x => x.unlockAtValueOfSales <= this.totalValueOfSales).length;
+    }
+
+    get percentageOfTopMilestoneReached(): number {
+        return this.totalValueOfSales / this.milestones[this.milestones.length - 1].unlockAtValueOfSales * 100;
+    }
+
+    productMilestoneReward(productCost: number, showDecimal = false): number {
+        const unlockedMilestones = this.milestones.filter(x => x.unlockAtValueOfSales <= this.totalValueOfSales);
+        const highestMilestonePercentageDiscount = unlockedMilestones[unlockedMilestones.length - 1].percentageDiscount;
+        const result = productCost * (highestMilestonePercentageDiscount / 100);
+        if (showDecimal) {
+            return Number(result.toFixed(2));
+        } else {
+            return Math.trunc(result);
+        }
+    }
+
+    productMaxMilestoneReward(productCost: number, showDecimal = false): number {
+        const highestMilestonePercentageDiscount = this.milestones[this.milestones.length - 1].percentageDiscount;
+        const result =  Math.trunc(productCost * (highestMilestonePercentageDiscount / 100));
+        if (showDecimal) {
+            return Number(result.toFixed(2));
+        } else {
+            return Math.trunc(result);
+        }
+    }
+
+    productReferralReward(productCost: number, showDecimal = false): number {
+        const result = Math.trunc(productCost * (this.campaign.singleReferralPercentage / 100));
+        if (showDecimal) {
+            return Number(result.toFixed(2));
+        } else {
+            return Math.trunc(result);
+        }
     }
 }

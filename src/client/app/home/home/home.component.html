@@ -18,7 +18,7 @@
                 <strong>{{campaign.owner.username}}</strong>
             </div>
             <br>
-            <mat-progress-bar [value]="campaign.totalValueOfSales / campaign.milestones[campaign.milestones.length - 1].unlockAtValueOfSales * 100"></mat-progress-bar>
+            <mat-progress-bar [value]="campaign.percentageOfTopMilestoneReached"></mat-progress-bar>
             <br>
             <span>
                 <span>
