@@ -34,13 +34,42 @@
             </span>
 
             <hr>
+
+            <div style="float: left;">
+                Earn from
+                <br>
+                <img src="assets/hive-coin.svg"
+                    style="max-height: 16px;">{{campaign.minimumMilestoneReward}} to
+                <img src="assets/hive-coin.svg"
+                    style="max-height: 16px;">{{campaign.maximumMilestoneReward}}
+                <br> when making a
+                <br> purchase
+                <br>
+                <mat-icon>shopping_cart</mat-icon>
+                <br>
+                <button mat-raised-button
+                    color="accent"
+                    (click)="buyNowButton()">Buy now</button>
+            </div>
+            <div style="float: left;">
+                Give and Get from
+                <br>
+                <img src="assets/hive-coin.svg"
+                    style="max-height: 16px;">{{campaign.minimumReferralReward}} to
+                <img src="assets/hive-coin.svg"
+                    style="max-height: 16px;">{{campaign.maximumReferralReward}}
+                <br> when referring a
+                <br> friend to make
+                <br> a purchase
+                <br>
+                <mat-icon>person_add</mat-icon>
+                <br>
+                <button mat-raised-button
+                    color="accent"
+                    (click)="goToRefferalSection()">Refer a friend</button>
+            </div>
+            <div style="clear: both;"></div>
         </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button
-                (click)="buyNowButton()">Buy now</button>
-            <button mat-raised-button
-                (click)="goToRefferalSection()">Refer a friend</button>
-        </mat-card-actions>
     </mat-card>
     <mat-tab-group [(selectedIndex)]="selectedTab"
         id="app-tab-group">

@@ -37,6 +37,30 @@ export class CampaignViewModel {
         return this.totalValueOfSales / this.milestones[this.milestones.length - 1].unlockAtValueOfSales * 100;
     }
 
+    get minimumMilestoneReward(): number {
+        const minToMaxProducts = this.products.sort((a, b) => a.cost - b.cost);
+        const result = minToMaxProducts[0].cost * (this.milestones[0].percentageDiscount / 100);
+        return Math.trunc(result);
+    }
+
+    get maximumMilestoneReward(): number {
+        const minToMaxProducts = this.products.sort((a, b) => a.cost - b.cost);
+        const result = minToMaxProducts[minToMaxProducts.length - 1].cost * (this.milestones[this.milestones.length - 1].percentageDiscount / 100);
+        return Math.trunc(result);
+    }
+
+    get minimumReferralReward(): number {
+        const minToMaxProducts = this.products.sort((a, b) => a.cost - b.cost);
+        const result = minToMaxProducts[0].cost * (this.campaign.singleReferralPercentage / 100);
+        return Math.trunc(result);
+    }
+
+    get maximumReferralReward(): number {
+        const minToMaxProducts = this.products.sort((a, b) => a.cost - b.cost);
+        const result = minToMaxProducts[minToMaxProducts.length - 1].cost * (this.campaign.singleReferralPercentage / 100);
+        return Math.trunc(result);
+    }
+
     productMilestoneReward(productCost: number, showDecimal = false): number {
         const unlockedMilestones = this.milestones.filter(x => x.unlockAtValueOfSales <= this.totalValueOfSales);
         const highestMilestonePercentageDiscount = unlockedMilestones[unlockedMilestones.length - 1].percentageDiscount;
@@ -50,7 +74,7 @@ export class CampaignViewModel {
 
     productMaxMilestoneReward(productCost: number, showDecimal = false): number {
         const highestMilestonePercentageDiscount = this.milestones[this.milestones.length - 1].percentageDiscount;
-        const result =  Math.trunc(productCost * (highestMilestonePercentageDiscount / 100));
+        const result = Math.trunc(productCost * (highestMilestonePercentageDiscount / 100));
         if (showDecimal) {
             return Number(result.toFixed(2));
         } else {
