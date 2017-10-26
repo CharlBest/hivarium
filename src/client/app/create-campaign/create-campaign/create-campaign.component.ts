@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, AbstractControl, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
@@ -15,6 +15,7 @@ import { ProductModel } from '../../../../server/models/campaign/product.model';
 import { ShippingCountries, ShippingCountry } from '../../../../server/models/campaign/shipping-countries';
 import { ShippingDetails } from '../../../../server/models/campaign/shipping-details.enum';
 import { CreateProductViewModel } from '../../../../server/view-models/campaign/create-product.view-model';
+import Quill from 'quill';
 import 'rxjs/add/operator/debounceTime';
 
 @Component({
@@ -22,13 +23,15 @@ import 'rxjs/add/operator/debounceTime';
   templateUrl: './create-campaign.component.html',
   styleUrls: ['./create-campaign.component.scss']
 })
-export class CreateCampaignComponent implements OnInit {
+export class CreateCampaignComponent implements OnInit, AfterViewInit {
 
   loggedInUserId: number = this.authService.getloggedInUserId();
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
+
+  editor: Quill;
 
   serverErrors;
   isProcessing = false;
@@ -81,6 +84,21 @@ export class CreateCampaignComponent implements OnInit {
     }
 
     this.saveAfterEdit();
+  }
+
+  ngAfterViewInit() {
+    this.editor = new Quill('#editor', {
+      modules: {
+        toolbar: [
+          ['bold', 'italic'],
+          [{ header: [1, 2, false] }],
+          [{ list: 'bullet' }, { list: 'ordered' }],
+          ['link', 'image']
+        ]
+      },
+      placeholder: 'Campaign story',
+      theme: 'snow'  // or 'bubble'
+    });
   }
 
   //#region base64 string
@@ -141,7 +159,6 @@ export class CreateCampaignComponent implements OnInit {
       title: '',
       description: '',
       daysDuration: '',
-      fullDescription: '',
       media: '',
       referralPercentage: ''
     });
@@ -206,7 +223,7 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   buildProductGroup(uId = null, title = null, description = null, cost = null, quantity = null, media = null,
-    shippingDetails = null, selectedShippingCountries = null, shippingCountries= null): FormGroup {
+    shippingDetails = null, selectedShippingCountries = null, shippingCountries = null): FormGroup {
     const formGroup = this.fb.group({
       uId,
       title,
@@ -289,7 +306,7 @@ export class CreateCampaignComponent implements OnInit {
     viewModel.title = this.firstFormGroup.get('title').value;
     viewModel.description = this.firstFormGroup.get('description').value;
     viewModel.daysDuration = this.firstFormGroup.get('daysDuration').value;
-    viewModel.fullDescription = this.firstFormGroup.get('fullDescription').value;
+    viewModel.fullDescription = this.editor.root.innerHTML;
     viewModel.media = this.firstFormGroup.get('media').value;
     viewModel.referralPercentage = this.firstFormGroup.get('referralPercentage').value;
     viewModel.milestones = this.secondFormGroup.get('milestones').value;

@@ -1,3 +1,5 @@
+<link href="https://cdn.quilljs.com/1.3.3/quill.snow.css" rel="stylesheet">
+
 <mat-card *ngIf="!isProcessing">
     <mat-card-content>
         <mat-card-subtitle *ngIf="!loggedInUserId">
@@ -50,16 +52,7 @@
 
                     <br>
 
-                    <mat-form-field>
-                        <textarea matInput
-                            formControlName="fullDescription"
-                            rows="5"
-                            required
-                            placeholder="full description"></textarea>
-                    </mat-form-field>
-                    <div *ngIf="serverErrors?.fullDescription"
-                        class="validation-message">{{ serverErrors.fullDescription.message }}</div>
-                    <app-show-errors [control]="firstFormGroup.get('fullDescription')"></app-show-errors>
+                    <div id="editor"></div>
 
                     <br>
 
