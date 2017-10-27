@@ -96,7 +96,10 @@
                 <tbody>
                     <tr>
                         <td>
-                            <app-number-ticker (valueChanges)="quantityValueChanges($event)"></app-number-ticker>
+                            <app-number-ticker (valueChanges)="quantityValueChanges($event)"
+                                [min]="1"
+                                [max]="selectedProduct.quantity * totalQuantity"
+                                [defaultValue]="1"></app-number-ticker>
                         </td>
                         <td>{{selectedProduct.title}}</td>
                         <td>${{selectedProduct.cost}}</td>
@@ -108,14 +111,14 @@
                             <img src="assets/hive-coin.svg"
                                 style="max-height: 16px; margin-bottom: 22px;">
                             <app-number-ticker (valueChanges)="hiveCoinsValueChanges($event)"
-                                [max]="10"
+                                [max]="selectedProduct.cost"
                                 style="display: inline-block;"></app-number-ticker>
                         </td>
                     </tr>
                     <tr style="font-weight: bold;">
                         <td>Total</td>
                         <td></td>
-                        <td>${{selectedProduct.cost}}</td>
+                        <td>${{totalAmount}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -166,7 +169,7 @@
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button
-                style="background: orange;">Submit Payment</button>
+                color="accent">Submit Payment</button>
         </mat-card-actions>
     </mat-card>
 </div>

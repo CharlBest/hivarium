@@ -9,7 +9,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class NumberTickerComponent implements OnInit {
 
+  @Input() min = 0;
   @Input() max: number = null;
+  @Input() defaultValue = 0;
   @Output() valueChanges: EventEmitter<number> = new EventEmitter();
 
   form: FormGroup;
@@ -22,7 +24,7 @@ export class NumberTickerComponent implements OnInit {
 
   buildForm() {
     this.form = this.fb.group({
-      ticker: 1
+      ticker: this.defaultValue
     });
 
     this.form.get('ticker').valueChanges.subscribe(value => {
@@ -40,7 +42,7 @@ export class NumberTickerComponent implements OnInit {
 
   decrease() {
     let value = this.form.get('ticker').value;
-    if (value > 1) {
+    if (value > this.min) {
       value--;
       this.form.get('ticker').setValue(value);
     }
