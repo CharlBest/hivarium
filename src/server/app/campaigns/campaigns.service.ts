@@ -15,6 +15,8 @@ import { CampaignsRepository } from './campaigns.repository';
 import { CampaignModel } from '../../models/campaign/campaign.model';
 import { CampaignViewModel } from '../../view-models/campaign/campaign.view-model';
 import { CreateCampaignViewModel } from '../../view-models/campaign/create-campaign.view-model';
+import { PaymentRequestViewModel } from '../../view-models/payment/payment-request.view-model';
+const stripe = require('stripe')(environment.stripe.secretKey);
 
 export class CampaignsService extends BaseService {
 
@@ -41,5 +43,19 @@ export class CampaignsService extends BaseService {
 
     public async getOrCreateCampaignReferralLink(session: neo4j.Session, userId: number, uId: string): Promise<string> {
         return await this.campaignsRepository.getOrCreateCampaignReferralLink(session, userId, uId, nodeUUId());
+    }
+
+    public async paymentRequest(session: neo4j.Session, userId: number, viewModel: PaymentRequestViewModel): Promise<boolean> {
+        // Charge the user's card:
+        stripe.charges.create({
+            amount: 1,
+            currency: 'EUR',
+            description: 'Hivarium Product bought',
+            source: viewModel.token,
+        }, (err, charge) => {
+            // asynchronously called
+        });
+
+        return await this.campaignsRepository.paymentRequest(session, userId, viewModel);
     }
 }

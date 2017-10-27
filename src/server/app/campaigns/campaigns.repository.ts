@@ -9,6 +9,7 @@ import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial
 import { CampaignModel } from '../../models/campaign/campaign.model';
 import { CampaignViewModel } from '../../view-models/campaign/campaign.view-model';
 import { CreateCampaignViewModel } from '../../view-models/campaign/create-campaign.view-model';
+import { PaymentRequestViewModel } from '../../view-models/payment/payment-request.view-model';
 
 export class CampaignsRepository extends BaseRepository {
 
@@ -97,6 +98,17 @@ export class CampaignsRepository extends BaseRepository {
             }
         } else {
             return null;
+        }
+    }
+
+    public async paymentRequest(session: neo4j.Session, userId: number, viewModel: PaymentRequestViewModel): Promise<boolean> {
+        const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Campaigns, Campaigns.PaymentRequest)}`);
+        const result = await session.run(query.data, { userId, token: viewModel.token });
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

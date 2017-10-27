@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { CampaignRoutes } from '../../../server/routes/campaign.routes';
 import { CampaignViewModel } from '../../../server/view-models/campaign/campaign.view-model';
+import { PaymentRequestViewModel } from '../../../server/view-models/payment/payment-request.view-model';
 
 @Injectable()
 export class CampaignService {
@@ -16,5 +17,9 @@ export class CampaignService {
 
     public getOrCreateCampaignReferralLink(uId: string): Observable<string> {
         return this.http.get<string>(`${environment.apiUrlEndpoint}${CampaignRoutes.getOrCreateCampaignReferralLink.constructRootUrl(`/${uId}`)}`);
+    }
+
+    public processPaymentRequest(viewModel: PaymentRequestViewModel): Observable<boolean> {
+        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${CampaignRoutes.paymentRequest.constructRootUrl()}`, viewModel);
     }
 }

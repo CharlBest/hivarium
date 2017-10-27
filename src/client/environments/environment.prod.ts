@@ -14,5 +14,8 @@ export const environment = {
     projectId: 'hivarium',
     storageBucket: 'gs://hivarium.appspot.com/',
     messagingSenderId: '3364304688'
+  },
+  stripe: {
+    publishableKey: 'pk_live_ee9MNzGQ4YeBswQ2dt8p4e9k'
   }
 };

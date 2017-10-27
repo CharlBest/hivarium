@@ -19,6 +19,7 @@ import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial
 import { CampaignsService } from './campaigns.service';
 import { GetCampaignViewModel } from '../../view-models/campaign/get-campaign.view-model';
 import { CreateCampaignViewModel } from '../../view-models/campaign/create-campaign.view-model';
+import { PaymentRequestViewModel } from '../../view-models/payment/payment-request.view-model';
 
 export class CampaignsController extends BaseController {
     private campaignsService: CampaignsService;
@@ -106,6 +107,29 @@ export class CampaignsController extends BaseController {
 
             const response = await this.campaignsService.getOrCreateCampaignReferralLink(Database.getSession(req), this.getUserId(req), uId);
             res.status(200).json(response);
+        } catch (error) {
+            this.returnError(res, error);
+        }
+    }
+
+    public async paymentRequest(req: Request, res: Response, next: NextFunction) {
+        try {
+            const viewModel = req.body as PaymentRequestViewModel;
+
+            const valid = Validators.required({ value: viewModel.token }) ||
+                Validators.required({ value: viewModel.productUId }) ||
+                Validators.required({ value: viewModel.quantity }) ||
+                Validators.required({ value: viewModel.hiveCoins }) ||
+                null;
+
+            if (valid !== null) {
+                throw ValidationUtil.createValidationErrors(valid);
+            }
+
+            // const response = await this.campaignsService.paymentRequest(Database.getSession(req), this.getUserId(req), viewModel);
+            res.status(200).json({
+                success: true
+            });
         } catch (error) {
             this.returnError(res, error);
         }

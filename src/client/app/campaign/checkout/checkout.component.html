@@ -147,19 +147,12 @@
             <br>
 
             <h5>Payment Details</h5>
-            <mat-form-field>
-                <input matInput
-                    type="text"
-                    placeholder="Name on Card"
-                    required>
-            </mat-form-field>
+            <div style="max-width: 370px;">
+                <div id="card-element"></div>
+                <div id="card-errors"
+                    role="alert"></div>
+            </div>
             <br>
-            <mat-form-field>
-                <input matInput
-                    type="text"
-                    placeholder="Card"
-                    required>
-            </mat-form-field>
 
             <div>By clicking "Submit Payment", you acknowledge you are making a purchase with a third-party vendor. Order fulfillment
                 is managed by campaigners and cannot be guaranteed by Hivarium. You also acknowledge and agree to our
@@ -169,6 +162,7 @@
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button
+                (click)="onSubmit()"
                 color="accent">Submit Payment</button>
         </mat-card-actions>
     </mat-card>
