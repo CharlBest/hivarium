@@ -12,6 +12,7 @@ import {
   MatButtonModule,
   MatInputModule,
   MatProgressSpinnerModule,
+  MatProgressBarModule,
   MatCardModule,
   MatStepperModule,
   MatSelectModule
@@ -25,6 +26,7 @@ import {
     MatButtonModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatStepperModule,
     MatCardModule,
     ShowErrorsModule,

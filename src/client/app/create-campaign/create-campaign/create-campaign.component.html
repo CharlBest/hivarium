@@ -1,4 +1,5 @@
-<link href="https://cdn.quilljs.com/1.3.3/quill.snow.css" rel="stylesheet">
+<link href="https://cdn.quilljs.com/1.3.3/quill.snow.css"
+    rel="stylesheet">
 
 <mat-card *ngIf="!isProcessing">
     <mat-card-content>
@@ -52,6 +53,8 @@
 
                     <br>
 
+                    <mat-progress-bar *ngIf="imageUploadProgressPercentage >= 0 && imageUploadProgressPercentage < 100"
+                        [value]="imageUploadProgressPercentage"></mat-progress-bar>
                     <div id="editor"></div>
 
                     <br>

@@ -15,8 +15,11 @@ import { ProductModel } from '../../../../server/models/campaign/product.model';
 import { ShippingCountries, ShippingCountry } from '../../../../server/models/campaign/shipping-countries';
 import { ShippingDetails } from '../../../../server/models/campaign/shipping-details.enum';
 import { CreateProductViewModel } from '../../../../server/view-models/campaign/create-product.view-model';
+import { environment } from '../../../environments/environment';
 import Quill from 'quill';
 import 'rxjs/add/operator/debounceTime';
+import { app, storage } from 'firebase/app';
+import 'firebase/storage';
 
 @Component({
   selector: 'app-create-campaign',
@@ -32,6 +35,7 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   thirdFormGroup: FormGroup;
 
   editor: Quill;
+  imageUploadProgressPercentage: number;
 
   serverErrors;
   isProcessing = false;
@@ -87,18 +91,66 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.initQuillEditor();
+  }
+
+  initQuillEditor() {
     this.editor = new Quill('#editor', {
       modules: {
         toolbar: [
           ['bold', 'italic'],
-          [{ header: [1, 2, false] }],
+          [{ 'header': 2 }],
           [{ list: 'bullet' }, { list: 'ordered' }],
           ['link', 'image']
         ]
       },
       placeholder: 'Campaign story',
-      theme: 'snow'  // or 'bubble'
+      theme: 'snow'
     });
+
+    this.editor.getModule('toolbar').addHandler('image', () => {
+      this.selectLocalImage();
+    });
+  }
+
+  selectLocalImage() {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.click();
+
+    // Listen upload local image and save to server
+    input.onchange = () => {
+      const file = input.files[0];
+
+      // file type is only image.
+      if (/^image\//.test(file.type)) {
+        this.saveToServer(file);
+      } else {
+        console.warn('You could only upload images.');
+      }
+    };
+  }
+
+  saveToServer(file: File) {
+    const storageRef = app(environment.firebase.projectId).storage().ref(`avatars/${file.name}`);
+
+    // Upload file
+    const task = storageRef.put(file);
+
+    // Update progress bar
+    task.on('state_changed', (snapshot: any) => {
+      this.imageUploadProgressPercentage = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+    }, (err) => {
+      // TODO show error when file upload fails
+      console.log(err);
+    }, () => {
+      this.insertToEditor(task.snapshot.downloadURL);
+    });
+  }
+
+  insertToEditor(url: string) {
+    const range = this.editor.getSelection();
+    this.editor.insertEmbed(range.index, 'image', url);
   }
 
   //#region base64 string
