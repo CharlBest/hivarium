@@ -30,7 +30,8 @@ export enum Folder {
 export enum Campaigns {
     CreateCampaign,
     GetCampaigns,
-    GetCampaign
+    GetCampaign,
+    GetOrCreateCampaignReferralLink
 }
 
 export enum Users {

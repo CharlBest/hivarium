@@ -38,4 +38,8 @@ export class CampaignsService extends BaseService {
     public async getCampaign(session: neo4j.Session, userId: number, uId: string): Promise<CampaignViewModel> {
         return await this.campaignsRepository.getCampaign(session, userId, uId);
     }
+
+    public async getOrCreateCampaignReferralLink(session: neo4j.Session, userId: number, uId: string): Promise<string> {
+        return await this.campaignsRepository.getOrCreateCampaignReferralLink(session, userId, uId, nodeUUId());
+    }
 }

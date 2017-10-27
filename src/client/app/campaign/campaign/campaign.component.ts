@@ -14,6 +14,7 @@ export class CampaignComponent implements OnInit {
 
   selectedTab: number;
   @Input() campaign: CampaignViewModel = null;
+
   constructor(public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router) { }

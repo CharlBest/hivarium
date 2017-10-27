@@ -79,4 +79,22 @@ export class CampaignsRepository extends BaseRepository {
             return null;
         }
     }
+
+    public async getOrCreateCampaignReferralLink(session: neo4j.Session, userId: number, uId: string, refLinkUId: string): Promise<string> {
+        const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Campaigns, Campaigns.GetOrCreateCampaignReferralLink)}`);
+        const result = await session.run(query.data, { userId, uId, refLinkUId });
+
+        const campaign = result.records;
+
+        if (campaign !== null && campaign.length > 0) {
+            const refLink = campaign[0].get('refLink');
+            if (refLink === null) {
+                return refLinkUId;
+            } else {
+                return refLink;
+            }
+        } else {
+            return null;
+        }
+    }
 }

@@ -91,4 +91,22 @@ export class CampaignsController extends BaseController {
             this.returnError(res, error);
         }
     }
+
+    public async getOrCreateCampaignReferralLink(req: Request, res: Response, next: NextFunction) {
+        try {
+            const uId = req.params.uId as string;
+
+            const valid = Validators.required({ value: uId }) ||
+                null;
+
+            if (valid !== null) {
+                throw ValidationUtil.createValidationErrors(valid);
+            }
+
+            const response = await this.campaignsService.getOrCreateCampaignReferralLink(Database.getSession(req), this.getUserId(req), uId);
+            res.status(200).json(response);
+        } catch (error) {
+            this.returnError(res, error);
+        }
+    }
 }

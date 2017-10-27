@@ -17,6 +17,8 @@
         <mat-card-content>
             <h4>Your unique referral link</h4>
 
+            <md-spinner *ngIf="isProcessing"
+                class="inline-preloader"></md-spinner>
             <mat-form-field>
                 <input matInput
                     [value]="link"
