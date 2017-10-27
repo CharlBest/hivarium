@@ -10,6 +10,7 @@ import { ReferralComponent } from './referral/referral.component';
 import { ReferralRewardsComponent } from './referral-rewards/referral-rewards.component';
 import { ClipboardModule } from 'ngx-clipboard';
 import { MediaModule } from '../shared/media/media.module';
+import { NumberTickerComponent } from './number-ticker/number-ticker.component';
 import {
   MatButtonModule,
   MatCardModule,
@@ -19,11 +20,13 @@ import {
   MatDialogModule,
   MatInputModule
 } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     CampaignRoutingModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
     MatTabsModule,
@@ -40,7 +43,8 @@ import {
     CheckoutComponent,
     ReferralComponent,
     ReferralRewardsComponent,
-    CoinRewardInfoDialogComponent
+    CoinRewardInfoDialogComponent,
+    NumberTickerComponent
   ],
   providers: [
     CampaignService

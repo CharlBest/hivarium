@@ -33,4 +33,12 @@ export class CheckoutComponent implements OnInit, OnChanges {
   goToLogin() {
     this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url } });
   }
+
+  quantityValueChanges(quantity: number) {
+
+  }
+
+  hiveCoinsValueChanges(quantity: number) {
+
+  }
 }

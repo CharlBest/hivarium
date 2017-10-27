@@ -1,0 +1,21 @@
+.ticker-input {
+    float: left;
+    height: 22px;
+    margin-top: 12px;
+    padding-left: 3px;
+    width: 30px;
+    border-radius: 4px;
+    border: solid 1px lightgrey;
+}
+
+.ticker-input::-webkit-outer-spin-button,
+.ticker-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;            
+}
+
+.ticker-button {
+    background: white;
+    border: none;
+    padding: 0;
+}

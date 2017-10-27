@@ -90,4 +90,12 @@ export class CampaignViewModel {
             return Math.trunc(result);
         }
     }
+
+    totalProductReward(productCost: number) {
+        return this.productMilestoneReward(productCost, true) + this.productReferralReward(productCost, true);
+    }
+
+    maximunTotalProductReward(productCost: number) {
+        return this.productMaxMilestoneReward(productCost, true) - this.productMilestoneReward(productCost, true);
+    }
 }

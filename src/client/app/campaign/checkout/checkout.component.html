@@ -91,25 +91,31 @@
                 HiveCoins available to spend
             </div>
             <br>
+
             <table>
                 <tbody>
-                    <tr *ngFor="let product of campaign.products">
-                        <div *ngIf="product.uId === selectedProductUId">
-                            <td>0</td>
-                            <td>${{product.title}}</td>
-                            <td>${{product.cost}}</td>
-                        </div>
+                    <tr>
+                        <td>
+                            <app-number-ticker (valueChanges)="quantityValueChanges($event)"></app-number-ticker>
+                        </td>
+                        <td>{{selectedProduct.title}}</td>
+                        <td>${{selectedProduct.cost}}</td>
                     </tr>
                     <tr>
                         <td>Enter your HiveCoin Discount</td>
+                        <td></td>
                         <td>
                             <img src="assets/hive-coin.svg"
-                                style="max-height: 16px;"> **
+                                style="max-height: 16px; margin-bottom: 22px;">
+                            <app-number-ticker (valueChanges)="hiveCoinsValueChanges($event)"
+                                [max]="10"
+                                style="display: inline-block;"></app-number-ticker>
                         </td>
                     </tr>
-                    <tr>
+                    <tr style="font-weight: bold;">
                         <td>Total</td>
-                        <td>$**</td>
+                        <td></td>
+                        <td>${{selectedProduct.cost}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -117,10 +123,10 @@
             <div>
                 You will immediately earn
                 <img src="assets/hive-coin.svg"
-                    style="max-height: 16px;">** for this purchase. If the biggest Campaign milestone unlocks after your purchase, you will automatically
-                receive up to an additional
+                    style="max-height: 16px;"> {{campaign.totalProductReward(selectedProduct.cost)}} for this purchase. If the biggest Campaign milestone
+                unlocks after your purchase, you will automatically receive up to an additional
                 <img src="assets/hive-coin.svg"
-                    style="max-height: 16px;">**
+                    style="max-height: 16px;"> {{campaign.maximunTotalProductReward(selectedProduct.cost)}}
             </div>
 
             <br>

@@ -1,0 +1,20 @@
+<form [formGroup]="form">
+    <input formControlName="ticker"
+        type="number"
+        (keypress)="onKeypress($event)"
+        class="ticker-input" />
+
+    <div style="float: left;">
+        <button (click)="increase()"
+            class="ticker-button">
+            <mat-icon>keyboard_arrow_up</mat-icon>
+        </button>
+        <br>
+        <button (click)="decrease()"
+            class="ticker-button">
+            <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+    </div>
+
+    <div style="clear: both;"></div>
+</form>
