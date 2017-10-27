@@ -28,7 +28,7 @@ export class ReferralComponent {
 
   webShare() {
     if (this.hasWebShareApi()) {
-      (<any>navigator).share({ title: 'Referral link', text: this.link, url: this.link, });
+      (<any>navigator).share({ title: 'Referral link', text: '', url: this.link, });
     }
   }
 
@@ -37,5 +37,4 @@ export class ReferralComponent {
       duration: 2000,
     });
   }
-
 }
