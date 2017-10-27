@@ -115,14 +115,14 @@
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>Buy</ng-template>
-            <div class="products-container">
-                <mat-card *ngIf="true">
-                    <mat-card-content style="text-align: center;">
-                        <h4>You've been referred by ***</h4>
-                        <div>Referral bonus HiveCoins Reward unlocked</div>
-                    </mat-card-content>
-                </mat-card>
+            <mat-card *ngIf="campaign.refUsername">
+                <mat-card-content style="text-align: center;">
+                    <h4>You've been referred by {{campaign.refUsername}}</h4>
+                    <div>Referral bonus HiveCoins Reward unlocked</div>
+                </mat-card-content>
+            </mat-card>
 
+            <div class="products-container">
                 <mat-card *ngFor="let product of campaign.products; let i=index"
                     style="max-width: 275px;">
 

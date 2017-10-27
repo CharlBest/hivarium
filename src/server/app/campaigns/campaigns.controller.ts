@@ -77,6 +77,7 @@ export class CampaignsController extends BaseController {
     public async getCampaign(req: Request, res: Response, next: NextFunction) {
         try {
             const uId = req.params.uId as string;
+            const refCode = req.query.refcode as string;
 
             const valid = Validators.required({ value: uId }) ||
                 null;
@@ -85,7 +86,7 @@ export class CampaignsController extends BaseController {
                 throw ValidationUtil.createValidationErrors(valid);
             }
 
-            const response = await this.campaignsService.getCampaign(Database.getSession(req), this.getUserId(req), uId);
+            const response = await this.campaignsService.getCampaign(Database.getSession(req), this.getUserId(req), uId, refCode);
             res.status(200).json(response);
         } catch (error) {
             this.returnError(res, error);

@@ -47,6 +47,7 @@ export class CampaignsRepository extends BaseRepository {
             return new CampaignViewModel(
                 Database.createNodeObject(x.get('campaign')),
                 Database.createNodeObject(x.get('user')),
+                null,
                 Database.createNodeObjectArray(x.get('milestones')),
                 Database.createNodeObjectArray(x.get('products'))
             );
@@ -60,14 +61,15 @@ export class CampaignsRepository extends BaseRepository {
     }
 
 
-    public async getCampaign(session: neo4j.Session, userId: number, uId: string): Promise<CampaignViewModel> {
+    public async getCampaign(session: neo4j.Session, userId: number, uId: string, refCode: string): Promise<CampaignViewModel> {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Campaigns, Campaigns.GetCampaign)}`);
-        const result = await session.run(query.data, { uId });
+        const result = await session.run(query.data, { uId, refCode });
 
         const campaign = result.records.map(x => {
             return new CampaignViewModel(
                 Database.createNodeObject(x.get('campaign')),
                 Database.createNodeObject(x.get('user')),
+                x.get('refUser'),
                 Database.createNodeObjectArray(x.get('milestones')),
                 Database.createNodeObjectArray(x.get('products'))
             );

@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
 
     this.homeService.getCampaigns(this.skip).subscribe(data => {
       if (data !== null) {
-        const campaigns = data.map(x => new CampaignViewModel(x.campaign, x.owner, x.milestones, x.products));
+        const campaigns = data.map(x => new CampaignViewModel(x.campaign, x.owner, x.refUsername, x.milestones, x.products));
         this.campaigns = this.campaigns.concat(campaigns);
       }
       this.isProcessing = false;

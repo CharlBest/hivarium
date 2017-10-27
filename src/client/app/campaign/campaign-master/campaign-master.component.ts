@@ -50,7 +50,7 @@ export class CampaignMasterComponent implements OnInit {
   getCampaign() {
     this.campaignService.getCampaign(this.campaignUId, this.route.snapshot.queryParams.refcode).subscribe(data => {
       this.isProcessing = false;
-      this.campaign = new CampaignViewModel(data.campaign, data.owner, data.milestones, data.products);
+      this.campaign = new CampaignViewModel(data.campaign, data.owner, data.refUsername, data.milestones, data.products);
     });
   }
 }
