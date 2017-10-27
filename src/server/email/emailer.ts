@@ -79,6 +79,23 @@ export class Emailer {
         Emailer.send(data);
     }
 
+    static boughtProductSuccessEmail(email: string, productTitle: string) {
+        const data: MailData = {
+            to: {
+                email,
+                name: Emailer.fromName
+            },
+            from: Emailer.fromEmail,
+            subject: 'Product bought',
+            templateId: environment.sendGrid.templates.boughtProductSuccess,
+            substitutions: {
+                productTitle
+            }
+        };
+
+        Emailer.send(data);
+    }
+
     static send(data: MailData) {
         if (!environment.production) {
             data.mailSettings = {
