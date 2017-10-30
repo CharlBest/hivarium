@@ -63,6 +63,10 @@ export class CampaignViewModel {
 
     productMilestoneReward(productCost: number, showDecimal = false): number {
         const unlockedMilestones = this.milestones.filter(x => x.unlockAtValueOfSales <= this.totalValueOfSales);
+        if (unlockedMilestones.length === 0) {
+            return 0;
+        }
+
         const highestMilestonePercentageDiscount = unlockedMilestones[unlockedMilestones.length - 1].percentageDiscount;
         const result = productCost * (highestMilestonePercentageDiscount / 100);
         if (showDecimal) {
