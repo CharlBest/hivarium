@@ -57,6 +57,30 @@
                         [value]="imageUploadProgressPercentage"></mat-progress-bar>
                     <div id="editor"></div>
 
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Paste HTML
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                Warning will overwrite everything
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <mat-form-field>
+                            <textarea matInput
+                                #editorHTMLPaste
+                                rows="5"
+                                placeholder="paste html here"></textarea>
+                        </mat-form-field>
+
+                        <mat-action-row>
+                            <button mat-raised-button
+                                type="button"
+                                (click)="htmlImportForEditor(editorHTMLPaste.value)">Replace</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+
                     <br>
 
                     <img [src]="firstFormGroup.get('media').value"

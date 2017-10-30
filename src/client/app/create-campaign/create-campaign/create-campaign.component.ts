@@ -372,6 +372,10 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
         this.serverErrors = this.formService.getServerErrors(error);
       });
   }
+
+  htmlImportForEditor(value: string) {
+    this.editor.pasteHTML(value);
+  }
 }
 
 class CreateCampaignFormData {

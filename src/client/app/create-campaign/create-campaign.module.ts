@@ -15,7 +15,8 @@ import {
   MatProgressBarModule,
   MatCardModule,
   MatStepperModule,
-  MatSelectModule
+  MatSelectModule,
+  MatExpansionModule
 } from '@angular/material';
 
 @NgModule({
@@ -31,7 +32,8 @@ import {
     MatCardModule,
     ShowErrorsModule,
     UploadButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule
   ],
   declarations: [
     CreateCampaignComponent
