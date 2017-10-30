@@ -32,5 +32,7 @@ export class UsersRoutes extends BaseRoute {
         this.router.post(UserRoutes.resendEmailVerificationLink.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.resendEmailVerificationLink(req, res, next));
         this.router.delete(UserRoutes.deleteUser.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.deleteUser(req, res, next));
         this.router.post(UserRoutes.completedTutorial.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.completedTutorial(req, res, next));
+
+        this.router.get(UserRoutes.getPublicUser.constructEndpointUrl('/:id'), (req, res, next) => this.usersController.getPublicUser(req, res, next));
     }
 }

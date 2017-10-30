@@ -12,6 +12,7 @@ import { ValidationUtil } from '../../core/utils/validation-util';
 import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-username-and-email-exist.view-model';
 import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
+import { UserViewModel } from '../../view-models/user/user.view-model';
 
 export class UsersService extends BaseService {
 
@@ -166,5 +167,9 @@ export class UsersService extends BaseService {
 
     public async completedTutorial(session: neo4j.Session, userId: number, viewModel: CompletedTutorial): Promise<boolean> {
         return await this.usersRepository.completedTutorial(session, userId, viewModel);
+    }
+
+    public async getPublicUser(session: neo4j.Session, userId: number): Promise<UserViewModel> {
+        return await this.usersRepository.getPublicUser(session, userId);
     }
 }

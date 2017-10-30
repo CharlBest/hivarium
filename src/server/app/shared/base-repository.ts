@@ -50,5 +50,6 @@ export enum Users {
     UpdateBio,
     UpdatePassword,
     DeleteUser,
-    CompletedTutorial
+    CompletedTutorial,
+    GetPublicUser
 }

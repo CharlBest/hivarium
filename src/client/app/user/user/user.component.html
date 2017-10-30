@@ -1,0 +1,53 @@
+<div *ngIf="!isProcessing && user !== null">
+  <mat-card>
+    <app-media [src]="user.user.avatarUrl"
+      *ngIf="user.user.avatarUrl"
+      mat-card-image></app-media>
+
+    <mat-card-content>
+      <div>{{user.user.username}}</div>
+      <div>
+        <img src="assets/hive-coin.svg"
+          style="max-height: 16px;"> {{user.user.hiveCoins}}
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-tab-group>
+    <mat-tab>
+      <ng-template mat-tab-label>Products</ng-template>
+      <mat-card *ngFor="let product of user.products">
+
+        <app-media [src]="product.media"
+          *ngIf="product.media"
+          [thumbnail]="true"
+          mat-card-image></app-media>
+
+        <mat-card-content>
+          {{product.title}}
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>Campaigns</ng-template>
+      <mat-card *ngFor="let campaign of user.campaigns"
+        routerLink="/campaign/{{campaign.uId}}">
+
+        <app-media [src]="campaign.media"
+          *ngIf="campaign.media"
+          [thumbnail]="true"          
+          mat-card-image></app-media>
+
+        <mat-card-content>
+          {{campaign.title}}
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<mat-card *ngIf="isProcessing">
+  <mat-card-content>
+    <mat-spinner class="preloader"></mat-spinner>
+  </mat-card-content>
+</mat-card>

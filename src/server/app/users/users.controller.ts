@@ -294,4 +294,21 @@ export class UsersController extends BaseController {
             this.returnError(res, error);
         }
     }
+
+    public async getPublicUser(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userId = +req.params.id as number;
+            const valid = Validators.required({ value: userId }) ||
+                null;
+
+            if (valid !== null) {
+                throw ValidationUtil.createValidationErrors(valid);
+            }
+
+            const response = await this.usersService.getPublicUser(Database.getSession(req), userId);
+            res.status(200).json(response);
+        } catch (error) {
+            this.returnError(res, error);
+        }
+    }
 }

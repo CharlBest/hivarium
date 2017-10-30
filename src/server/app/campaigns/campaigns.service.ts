@@ -46,15 +46,16 @@ export class CampaignsService extends BaseService {
     }
 
     public async paymentRequest(session: neo4j.Session, userId: number, viewModel: PaymentRequestViewModel): Promise<boolean> {
-        // Charge the user's card:
-        stripe.charges.create({
-            amount: 1,
-            currency: 'EUR',
-            description: 'Hivarium Product bought',
-            source: viewModel.token,
-        }, (err, charge) => {
-            // asynchronously called
-        });
+
+        // // Charge the user's card:
+        // stripe.charges.create({
+        //     amount: 1,
+        //     currency: 'EUR',
+        //     description: 'Hivarium Product bought',
+        //     source: viewModel.token,
+        // }, (err, charge) => {
+        //     // asynchronously called
+        // });
 
         return await this.campaignsRepository.paymentRequest(session, userId, viewModel);
     }

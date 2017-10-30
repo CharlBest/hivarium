@@ -6,6 +6,7 @@ import { UserModel } from '../../models/user/user.model';
 import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-username-and-email-exist.view-model';
 import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
+import { UserViewModel } from '../../view-models/user/user.view-model';
 
 export class UsersRepository extends BaseRepository {
 
@@ -174,6 +175,27 @@ export class UsersRepository extends BaseRepository {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public async getPublicUser(session: neo4j.Session, userId: number): Promise<UserViewModel> {
+        const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Users, Users.GetPublicUser)}`);
+        const result = await session.run(query.data, { userId });
+
+        const user = result.records.map(x => {
+            const viewModel = new UserViewModel();
+
+            viewModel.user = Database.createNodeObject(x.get('user'));
+            viewModel.campaigns = Database.createNodeObjectArray(x.get('campaigns'));
+            viewModel.products = Database.createNodeObjectArray(x.get('products'));
+
+            return viewModel;
+        });
+
+        if (user !== null && user.length > 0) {
+            return user[0];
+        } else {
+            return null;
         }
     }
 }

@@ -14,9 +14,10 @@
         <mat-card-content>
             <div>{{campaign.campaign.description}}</div>
             <br>
-            <div>by
+            <a routerLink="/user/{{campaign.owner.id}}">by
                 <strong>{{campaign.owner.username}}</strong>
-            </div>
+            </a>
+            <br>
             <br>
             <mat-progress-bar [value]="campaign.percentageOfTopMilestoneReached"></mat-progress-bar>
             <br>

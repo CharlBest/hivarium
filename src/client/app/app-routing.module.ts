@@ -21,6 +21,7 @@ import { CustomPreloading } from './shared/custom-preloading';
       { path: 'about', loadChildren: './about/about.module#AboutModule' },
       { path: 'campaign', loadChildren: './campaign/campaign.module#CampaignModule' },
       { path: 'newsletter', loadChildren: './newsletter/newsletter.module#NewsletterModule' },
+      { path: 'user', loadChildren: './user/user.module#UserModule' },
       { path: 'verify', loadChildren: './verify/verify.module#VerifyModule', canActivate: [AuthService] },
       { path: '**', redirectTo: '' }
     ], { preloadingStrategy: CustomPreloading })

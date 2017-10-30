@@ -1,6 +1,5 @@
 <div *ngIf="campaign !== null && campaign !== undefined">
     <mat-card>
-
         <app-media [src]="campaign.campaign.media"
             mat-card-image></app-media>
 
@@ -8,9 +7,10 @@
         <mat-card-content>
             <div>{{campaign.campaign.description}}</div>
             <br>
-            <div>by
+            <a routerLink="/user/{{campaign.owner.id}}">by
                 <strong>{{campaign.owner.username}}</strong>
-            </div>
+            </a>
+            <br>
             <br>
             <span>
                 <span>
