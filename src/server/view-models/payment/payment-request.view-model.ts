@@ -3,4 +3,5 @@ export class PaymentRequestViewModel {
     productUId: string;
     quantity: number;
     hiveCoins: number;
+    referralCode: string;
 }

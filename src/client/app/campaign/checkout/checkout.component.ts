@@ -2,7 +2,7 @@ import { Component, OnInit, Input, SimpleChanges, OnChanges, AfterViewChecked } 
 import { CampaignViewModel } from '../../../../server/view-models/campaign/campaign.view-model';
 import { ProductModel } from '../../../../server/models/campaign/product.model';
 import { AuthService } from '../../shared/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { PaymentRequestViewModel } from '../../../../server/view-models/payment/payment-request.view-model';
 import { CampaignService } from '../campaign.service';
@@ -19,6 +19,7 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
   @Input() selectedProductUId: string = null;
   selectedProduct: ProductModel = null;
   loggedInUserId: number = this.authService.getloggedInUserId();
+  referralCode: string = null;
 
   totalQuantity = 1;
   totalHiveCoins = 0;
@@ -29,9 +30,17 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
 
   constructor(private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
     private campaignService: CampaignService) { }
 
   ngOnInit() {
+    this.route.queryParamMap.subscribe(params => {
+      if (params.has('refcode')) {
+        this.referralCode = params.get('refcode');
+      } else {
+        this.referralCode = null;
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -129,6 +138,7 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
     viewModel.productUId = this.selectedProduct.uId;
     viewModel.quantity = this.totalQuantity;
     viewModel.hiveCoins = this.totalHiveCoins;
+    viewModel.referralCode = this.referralCode;
 
     this.campaignService.processPaymentRequest(viewModel).subscribe(
       data => {
