@@ -16,7 +16,7 @@ import { CampaignModel } from '../../models/campaign/campaign.model';
 import { CampaignViewModel } from '../../view-models/campaign/campaign.view-model';
 import { CreateCampaignViewModel } from '../../view-models/campaign/create-campaign.view-model';
 import { PaymentRequestViewModel } from '../../view-models/payment/payment-request.view-model';
-const stripe = require('stripe')(environment.stripe.secretKey);
+import * as stripe from 'stripe';
 
 export class CampaignsService extends BaseService {
 
@@ -47,6 +47,7 @@ export class CampaignsService extends BaseService {
 
     public async paymentRequest(session: neo4j.Session, userId: number, viewModel: PaymentRequestViewModel): Promise<boolean> {
 
+        // const stripe = require('stripe')(environment.stripe.secretKey);
         // // Charge the user's card:
         // stripe.charges.create({
         //     amount: 1,
