@@ -4,7 +4,8 @@
 
 <div class="card-container">
     <mat-card *ngFor="let campaign of campaigns"
-        routerLink="/campaign/{{campaign.campaign.uId}}">
+        routerLink="/campaign/{{campaign.campaign.uId}}"
+        style="cursor: pointer;">
 
         <app-media [src]="campaign.campaign.media"
             [thumbnail]="true"
@@ -14,33 +15,37 @@
         <mat-card-content>
             <div>{{campaign.campaign.description}}</div>
             <br>
-            <a routerLink="/user/{{campaign.owner.id}}">by
+            <a routerLink="/user/{{campaign.owner.id}}"
+                style="color: black; text-decoration: none;">by
                 <strong>{{campaign.owner.username}}</strong>
             </a>
             <br>
             <br>
             <mat-progress-bar [value]="campaign.percentageOfTopMilestoneReached"></mat-progress-bar>
             <br>
-            <span>
-                <span>
-                    <strong>{{campaign.milestonesReached}}</strong> of
-                    <strong>{{campaign.milestones.length}}</strong>
-                </span>
-                <span>milestones</span>
-            </span> |
-            <span>
-                <span>
-                    <strong>{{campaign.totalAmountSold}}</strong> of
-                    <strong>{{campaign.totalAvailableProducts}}</strong>
-                </span>
-                <span>sold</span>
-            </span> |
-            <span>
-                <span>
-                    <strong>{{campaign.campaign.daysRemaining}}</strong>
-                </span>
-                <span>days to go</span>
-            </span>
+            <div>
+                <div style="float: left; margin-right: 20px;">
+                    <div>
+                        <strong>{{campaign.milestonesReached}}</strong> of
+                        <strong>{{campaign.milestones.length}}</strong>
+                    </div>
+                    <div>milestones</div>
+                </div>
+                <div style="float: left; margin-right: 20px;">
+                    <div>
+                        <strong>{{campaign.totalAmountSold}}</strong> of
+                        <strong>{{campaign.totalAvailableProducts}}</strong>
+                    </div>
+                    <div>sold</div>
+                </div>
+                <div style="float: left;">
+                    <div>
+                        <strong>{{campaign.campaign.daysRemaining}}</strong>
+                    </div>
+                    <div>days to go</div>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
         </mat-card-content>
     </mat-card>
 </div>

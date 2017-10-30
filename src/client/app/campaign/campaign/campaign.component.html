@@ -7,68 +7,85 @@
         <mat-card-content>
             <div>{{campaign.campaign.description}}</div>
             <br>
-            <a routerLink="/user/{{campaign.owner.id}}">by
+            <a routerLink="/user/{{campaign.owner.id}}"
+                style="color: black; text-decoration: none;">by
                 <strong>{{campaign.owner.username}}</strong>
             </a>
             <br>
             <br>
-            <span>
-                <span>
-                    <strong>{{campaign.milestonesReached}}</strong> of
-                    <strong>{{campaign.milestones.length}}</strong>
-                </span>
-                <span>milestones</span>
-            </span> |
-            <span>
-                <span>
-                    <strong>{{campaign.totalAmountSold}}</strong> of
-                    <strong>{{campaign.totalAvailableProducts}}</strong>
-                </span>
-                <span>sold</span>
-            </span> |
-            <span>
-                <span>
-                    <strong>{{campaign.campaign.daysRemaining}}</strong>
-                </span>
-                <span>days to go</span>
-            </span>
+            <div>
+                <div style="float: left; margin-right: 20px;">
+                    <div>
+                        <strong>{{campaign.milestonesReached}}</strong> of
+                        <strong>{{campaign.milestones.length}}</strong>
+                    </div>
+                    <div>milestones</div>
+                </div>
+                <div style="float: left; margin-right: 20px;">
+                    <div>
+                        <strong>{{campaign.totalAmountSold}}</strong> of
+                        <strong>{{campaign.totalAvailableProducts}}</strong>
+                    </div>
+                    <div>sold</div>
+                </div>
+                <div style="float: left;">
+                    <div>
+                        <strong>{{campaign.campaign.daysRemaining}}</strong>
+                    </div>
+                    <div>days to go</div>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
 
             <hr>
 
-            <div style="float: left;">
-                Earn from
-                <br>
-                <img src="assets/hive-coin.svg"
-                    style="max-height: 16px;">{{campaign.minimumMilestoneReward}} to
-                <img src="assets/hive-coin.svg"
-                    style="max-height: 16px;">{{campaign.maximumMilestoneReward}}
-                <br> when making a
-                <br> purchase
-                <br>
-                <mat-icon>shopping_cart</mat-icon>
-                <br>
-                <button mat-raised-button
-                    color="accent"
-                    (click)="buyNowButton()">Buy now</button>
-            </div>
-            <div style="float: left;">
-                Give and Get from
-                <br>
-                <img src="assets/hive-coin.svg"
-                    style="max-height: 16px;">{{campaign.minimumReferralReward}} to
-                <img src="assets/hive-coin.svg"
-                    style="max-height: 16px;">{{campaign.maximumReferralReward}}
-                <br> when referring a
-                <br> friend to make
-                <br> a purchase
-                <br>
-                <mat-icon>person_add</mat-icon>
-                <br>
-                <button mat-raised-button
-                    color="accent"
-                    (click)="goToRefferalSection()">Refer a friend</button>
-            </div>
-            <div style="clear: both;"></div>
+            <table style="text-align: center; width: 100%;">
+                <tbody>
+                    <tr>
+                        <td>
+                            Earn from
+                            <br>
+                            <img src="assets/hive-coin.svg"
+                                style="max-height: 12px;"> {{campaign.minimumMilestoneReward}} to
+                            <img src="assets/hive-coin.svg"
+                                style="max-height: 12px;"> {{campaign.maximumMilestoneReward}}
+                            <br> when making a
+                            <br> purchase
+                        </td>
+                        <td>
+                            Give and Get from
+                            <br>
+                            <img src="assets/hive-coin.svg"
+                                style="max-height: 12px;"> {{campaign.minimumReferralReward}} to
+                            <img src="assets/hive-coin.svg"
+                                style="max-height: 12px;"> {{campaign.maximumReferralReward}}
+                            <br> when referring a
+                            <br> friend to make
+                            <br> a purchase
+                        </td>
+                    </tr>
+                    <tr style="color: lightgrey;">
+                        <td>
+                            <mat-icon>shopping_cart</mat-icon>
+                        </td>
+                        <td>
+                            <mat-icon>person_add</mat-icon>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button mat-raised-button
+                                color="accent"
+                                (click)="buyNowButton()">Buy now</button>
+                        </td>
+                        <td>
+                            <button mat-raised-button
+                                color="accent"
+                                (click)="goToRefferalSection()">Refer a friend</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </mat-card-content>
     </mat-card>
     <mat-tab-group [(selectedIndex)]="selectedTab"
@@ -85,25 +102,28 @@
                     </div>
                     <br>
 
-                    <div *ngFor="let milestone of campaign.milestones; let i=index">
-                        <div style="float: left;">
-                            <img src="assets/hive-coin.svg"
-                                style="max-height: 40px;">
-                        </div>
-                        <div style="float: left;">
-                            <h4>Milestone {{i+1}}</h4>
-                            <div>Unloacked at: ${{milestone.unlockAtValueOfSales}}</div>
-                            <div>
-                                Earn
-                                <strong>{{milestone.percentageDiscount}}%</strong>
-                                of your purchase back in HiveCoins
-                            </div>
-                        </div>
-                        <div style="float: left; font-size: 2rem;">
-                            {{milestone.percentageDiscount}}%
-                        </div>
-                        <div style="clear: both;"></div>
-                    </div>
+                    <table style="width: 100%;">
+                        <tbody>
+                            <tr *ngFor="let milestone of campaign.milestones; let i=index">
+                                <td style="vertical-align: top; padding-top: 24px;">
+                                    <img src="assets/hive-coin.svg"
+                                        style="max-height: 40px;">
+                                </td>
+                                <td>
+                                    <h4>Milestone {{i+1}}</h4>
+                                    <div>Unloacked at: ${{milestone.unlockAtValueOfSales}}</div>
+                                    <div>
+                                        Earn
+                                        <strong>{{milestone.percentageDiscount}}%</strong>
+                                        of your purchase back in HiveCoins
+                                    </div>
+                                </td>
+                                <td style="font-size: 2rem; border-left: 1px solid lightgray; text-align: center;">
+                                    {{campaign.campaign.singleReferralPercentage}}%
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </mat-card-content>
             </mat-card>
             <mat-card>
@@ -124,16 +144,28 @@
 
             <div class="products-container">
                 <mat-card *ngFor="let product of campaign.products; let i=index"
-                    style="max-width: 275px;">
+                    style="max-width: 380px;">
 
                     <app-media [src]="product.media"
                         *ngIf="product.media"
                         mat-card-image></app-media>
 
                     <mat-card-content>
-                        <div>${{product.cost}} USD |
-                            <img src="assets/hive-coin.svg"
-                                style="max-height: 16px;">{{product.cost}}</div>
+                        <table style="width: 100%; text-align: center; font-size: 2rem;">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        ${{product.cost}}
+                                        <span style="font-size: 1rem; color: lightgrey;">USD</span>
+                                    </td>
+                                    <td style="border-left: 1px solid lightgray;">
+                                        <img src="assets/hive-coin.svg"
+                                            style="max-height: 22px;"> {{product.cost}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                         <h3>{{product.title}}</h3>
                         <div>{{product.description}}</div>
                         <br>
@@ -148,20 +180,31 @@
                                 <mat-icon (click)="openCoinRewardInfoDialog()">info</mat-icon>
                             </button>
                         </h5>
-                        <span>
-                            <img src="assets/hive-coin.svg"
-                                style="max-height: 16px;">{{campaign.productMilestoneReward(product.cost)}} milestone reward</span> |
-                        <span>
-                            <img src="assets/hive-coin.svg"
-                                style="max-height: 16px;">{{campaign.productReferralReward(product.cost)}} referral reward</span> |
-                        <span>
-                            <img src="assets/hive-coin.svg"
-                                style="max-height: 16px;">{{campaign.productMaxMilestoneReward(product.cost)}} max milestone reward</span>
-                        <br>
+
+                        <div>
+                            <div style="float: left; margin-right: 20px;">
+                                <img src="assets/hive-coin.svg"
+                                    style="max-height: 12px;">{{campaign.productMilestoneReward(product.cost)}}
+                                <div>milestone reward</div>
+                            </div>
+                            <div style="float: left; margin-right: 20px;">
+                                <img src="assets/hive-coin.svg"
+                                    style="max-height: 12px;">{{campaign.productReferralReward(product.cost)}}
+                                <div>referral reward</div>
+                            </div>
+                            <div style="float: left;">
+                                <img src="assets/hive-coin.svg"
+                                    style="max-height: 12px;">{{campaign.productMaxMilestoneReward(product.cost)}}
+                                <div>max milestone reward</div>
+                            </div>
+                        </div>
+                        <br><br>
                     </mat-card-content>
                     <mat-card-actions>
                         <button mat-raised-button
-                            (click)="goToProduct(product)">Buy this product</button>
+                            color="accent"
+                            (click)="goToProduct(product)"
+                            style="width: 100%;">Buy this product</button>
                     </mat-card-actions>
                 </mat-card>
             </div>

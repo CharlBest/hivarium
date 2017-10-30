@@ -5,6 +5,8 @@
     mat-card {
         max-width: 400px;
         box-sizing: border-box;
-        margin: 16px;
+
+        //TODO: only on desktop
+        margin-bottom: 16px;
     }
 }
