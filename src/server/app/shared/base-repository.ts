@@ -51,5 +51,7 @@ export enum Users {
     UpdatePassword,
     DeleteUser,
     CompletedTutorial,
-    GetPublicUser
+    GetPublicUser,
+    CreateShippingAddress,
+    DeleteShippingAddress
 }

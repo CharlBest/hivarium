@@ -16,13 +16,13 @@ FOREACH (product IN {products} |
 
     //Ships anywhere in the world
     FOREACH (o IN CASE WHEN product.shippingDetails = 3 THEN [1] ELSE [] END |
-        MERGE (shipping:Shipping { id: 0 })
+        MERGE (shipping:ShippingCountry { id: 0 })
         MERGE (newProduct)-[:HAS_SHIPPING]->(shipping)
     )
 
     //Only ships to certain countries
     FOREACH (shippingCountry IN product.shippingCountries |
-        MERGE (shipping:Shipping { id: shippingCountry.id })
+        MERGE (shipping:ShippingCountry { id: shippingCountry.id })
         MERGE (newProduct)-[:HAS_SHIPPING { singleAmount: shippingCountry.singleAmount, extraAmount: shippingCountry.extraAmount }]->(shipping)
     )
 )

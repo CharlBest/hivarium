@@ -49,6 +49,28 @@
 
   <app-update-password></app-update-password>
 
+  <mat-card>
+    <mat-card-content>
+      <h3>Shipping Addresses</h3>
+      <button mat-raised-button
+        (click)="addShippingAddress()">Add address</button>
+      <br>
+      <br>
+
+      <div *ngFor="let shippingAddress of user.shippingAddresses">
+        <!-- TODO: show country as well -->
+        {{shippingAddress.recipientName}}, {{shippingAddress.contactNumber}}, {{shippingAddress.streetAddress}},
+        <span *ngIf="shippingAddress.addressLine2">{{shippingAddress.addressLine2}}, </span>
+        {{shippingAddress.city}}, {{shippingAddress.postalCode}}
+
+        <button mat-raised-button
+          (click)="removeShippingAddress(shippingAddress)">Remove address</button>
+        <br>
+        <br>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
   <mat-card *ngIf="!isProcessing && user === null">
     <mat-card-content>
       An error occurred

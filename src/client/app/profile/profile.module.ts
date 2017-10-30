@@ -14,6 +14,7 @@ import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { MediaModule } from '../shared/media/media.module';
+import { AddShippingAddressDialogComponent } from './add-shipping-address-dialog/add-shipping-address-dialog.component';
 import {
   MatButtonModule,
   MatCardModule,
@@ -23,7 +24,8 @@ import {
   MatMenuModule,
   MatSnackBarModule,
   MatTooltipModule,
-  MatInputModule
+  MatInputModule,
+  MatSelectModule
 } from '@angular/material';
 
 @NgModule({
@@ -39,6 +41,7 @@ import {
     MatSnackBarModule,
     MatTooltipModule,
     MatInputModule,
+    MatSelectModule,
     ShareDialogModule,
     ReportDialogModule,
     UploadButtonModule,
@@ -50,13 +53,15 @@ import {
     ProfileComponent,
     UpdateBioComponent,
     UpdatePasswordComponent,
-    DeleteUserDialogComponent
+    DeleteUserDialogComponent,
+    AddShippingAddressDialogComponent
   ],
   providers: [
     ProfileService
   ],
   entryComponents: [
-    DeleteUserDialogComponent
+    DeleteUserDialogComponent,
+    AddShippingAddressDialogComponent
   ]
 })
 export class ProfileModule { }

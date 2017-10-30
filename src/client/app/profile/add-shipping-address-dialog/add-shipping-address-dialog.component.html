@@ -1,0 +1,124 @@
+<mat-dialog-content>
+    <button mat-button
+        [matDialogClose]="true"
+        style="float: right;">
+        <mat-icon>close</mat-icon>
+    </button>
+
+    <h2 matDialogTitle
+        style="float: left;">Add address</h2>
+
+    <div style="clear: both;"></div>
+
+    <form [formGroup]="form">
+
+        <mat-form-field>
+            <input matInput
+                formControlName="recipientName"
+                type="text"
+                placeholder="Recipient Name"
+                required>
+        </mat-form-field>
+        <div *ngIf="serverErrors?.recipientName"
+            class="validation-message">{{ serverErrors.recipientName.message }}</div>
+        <app-show-errors [control]="form.controls['recipientName']"></app-show-errors>
+
+        <br>
+
+        <mat-form-field>
+            <input matInput
+                formControlName="contactNumber"
+                type="text"
+                placeholder="Contact Number"
+                required>
+        </mat-form-field>
+        <div *ngIf="serverErrors?.contactNumber"
+            class="validation-message">{{ serverErrors.contactNumber.message }}</div>
+        <app-show-errors [control]="form.controls['contactNumber']"></app-show-errors>
+
+        <br>
+
+        <mat-form-field>
+            <input matInput
+                formControlName="streetAddress"
+                type="text"
+                placeholder="Street Address"
+                required>
+        </mat-form-field>
+        <div *ngIf="serverErrors?.streetAddress"
+            class="validation-message">{{ serverErrors.streetAddress.message }}</div>
+        <app-show-errors [control]="form.controls['streetAddress']"></app-show-errors>
+
+        <br>
+
+        <mat-form-field>
+            <input matInput
+                formControlName="addressLine2"
+                type="text"
+                placeholder="Address Line 2">
+        </mat-form-field>
+        <div *ngIf="serverErrors?.addressLine2"
+            class="validation-message">{{ serverErrors.addressLine2.message }}</div>
+        <app-show-errors [control]="form.controls['addressLine2']"></app-show-errors>
+
+        <br>
+
+        <mat-form-field>
+            <input matInput
+                formControlName="city"
+                type="text"
+                placeholder="City"
+                required>
+        </mat-form-field>
+        <div *ngIf="serverErrors?.city"
+            class="validation-message">{{ serverErrors.city.message }}</div>
+        <app-show-errors [control]="form.controls['city']"></app-show-errors>
+
+        <br>
+
+        <mat-form-field>
+            <input matInput
+                formControlName="postalCode"
+                type="text"
+                placeholder="Postal/Zip Code"
+                required>
+        </mat-form-field>
+        <div *ngIf="serverErrors?.postalCode"
+            class="validation-message">{{ serverErrors.postalCode.message }}</div>
+        <app-show-errors [control]="form.controls['postalCode']"></app-show-errors>
+
+        <br>
+
+        <mat-form-field>
+            <mat-select formControlName="country"
+                placeholder="Country"
+                required>
+                <mat-option *ngFor="let shippingCountry of shippingCountries"
+                    [value]="shippingCountry">
+                    {{ shippingCountry.title }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div *ngIf="serverErrors?.country"
+            class="validation-message">{{ serverErrors.country.message }}</div>
+        <app-show-errors [control]="form.controls['country']"></app-show-errors>
+
+    </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button
+        [matDialogClose]="true">Cancel</button>
+    <button mat-raised-button
+        color="accent"
+        type="submit"
+        [disabled]="!form.valid"
+        (click)="onSubmit()">Add address</button>
+</mat-dialog-actions>
+
+<!-- <mat-card *ngIf="isProcessing">
+    <mat-card-content>
+        <mat-spinner class="preloader"></mat-spinner>
+    </mat-card-content>
+</mat-card> -->

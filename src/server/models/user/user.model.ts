@@ -1,4 +1,6 @@
-﻿export class UserModel {
+﻿import { ShippingAddressModel } from './shipping-address.model';
+
+export class UserModel {
     id: number;
     uId: string;
     email: string;
@@ -16,6 +18,8 @@
     forgotPasswordCodes: string[];
 
     hiveCoins: number;
+    // TODO: this prop is only populated for profile page
+    shippingAddresses: ShippingAddressModel[];
 
     // TODO: user role/permission
 }

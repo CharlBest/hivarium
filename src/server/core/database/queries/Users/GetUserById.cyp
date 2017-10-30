@@ -1,4 +1,6 @@
 export const data = `
 MATCH (user:User { id: {userId} })
-RETURN user
+OPTIONAL MATCH (user)-[:SHIPPING_ADDRESS]->(shippingAddress:ShippingAddress)
+RETURN user,
+collect(shippingAddress) as shippingAddress
 `

@@ -11,6 +11,8 @@ import { DeleteUserDialogComponent } from '../delete-user-dialog/delete-user-dia
 import * as emojione from 'emojione';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
 import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
+import { ShippingAddressModel } from '../../../../server/models/user/shipping-address.model';
+import { AddShippingAddressDialogComponent } from '../add-shipping-address-dialog/add-shipping-address-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -98,5 +100,28 @@ export class ProfileComponent implements OnInit {
 
   profileTour() {
     this.tutorialService.activateTutorial(TutorialType.ProfileShare);
+  }
+
+  addShippingAddress() {
+    const dialogRef = this.dialog.open(AddShippingAddressDialogComponent);
+    dialogRef.afterClosed().subscribe((data: ShippingAddressModel) => {
+      if (data !== null && data !== undefined) {
+        if (this.user.shippingAddresses === undefined) {
+          this.user.shippingAddresses = [];
+        }
+
+        this.user.shippingAddresses.push(data);
+      }
+    });
+  }
+
+  removeShippingAddress(shippingAddress: ShippingAddressModel) {
+    this.profileService.deleteShippingAddress(shippingAddress.uId).subscribe(data => {
+      const addressUId = this.user.shippingAddresses.findIndex(x => x.uId === shippingAddress.uId);
+      if (addressUId !== -1) {
+        this.user.shippingAddresses.splice(addressUId, 1);
+      }
+    }, error => {
+    });
   }
 }

@@ -34,5 +34,7 @@ export class UsersRoutes extends BaseRoute {
         this.router.post(UserRoutes.completedTutorial.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.completedTutorial(req, res, next));
 
         this.router.get(UserRoutes.getPublicUser.constructEndpointUrl('/:id'), (req, res, next) => this.usersController.getPublicUser(req, res, next));
+        this.router.post(UserRoutes.createShippingAddress.constructEndpointUrl(), Authentication.loginRequired, (req, res, next) => this.usersController.createShippingAddress(req, res, next));
+        this.router.delete(UserRoutes.deleteShippingAddress.constructEndpointUrl('/:uId'), Authentication.loginRequired, (req, res, next) => this.usersController.deleteShippingAddress(req, res, next));
     }
 }

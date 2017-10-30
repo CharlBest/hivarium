@@ -25,4 +25,6 @@ export class UserRoutes {
     public static completedTutorial = new BaseRoute(1, UserRoutes.rootRoute, 'completedTutorial');
 
     public static getPublicUser = new BaseRoute(1, UserRoutes.rootRoute, 'getPublicUser');
+    public static createShippingAddress = new BaseRoute(1, UserRoutes.rootRoute, 'createShippingAddress');
+    public static deleteShippingAddress = new BaseRoute(1, UserRoutes.rootRoute, 'deleteShippingAddress');
 }

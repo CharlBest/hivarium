@@ -17,6 +17,7 @@ import { UpdatePasswordViewModel } from '../../view-models/profile/update-passwo
 import { FeedbackViewModel } from '../../view-models/feedback/feedback.view-model';
 import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
+import { ShippingAddressModel } from '../../models/user/shipping-address.model';
 
 export class UsersController extends BaseController {
     private usersService: UsersService;
@@ -306,6 +307,46 @@ export class UsersController extends BaseController {
             }
 
             const response = await this.usersService.getPublicUser(Database.getSession(req), userId);
+            res.status(200).json(response);
+        } catch (error) {
+            this.returnError(res, error);
+        }
+    }
+
+    public async createShippingAddress(req: Request, res: Response, next: NextFunction) {
+        try {
+            const viewModel = req.body as ShippingAddressModel;
+            const valid = Validators.required({ value: viewModel.recipientName }) ||
+                Validators.required({ value: viewModel.contactNumber }) ||
+                Validators.required({ value: viewModel.streetAddress }) ||
+                Validators.required({ value: viewModel.city }) ||
+                Validators.required({ value: viewModel.postalCode }) ||
+                // TODO: validation is required on this
+                // Validators.required({ value: viewModel.country }) ||
+                null;
+
+            if (valid !== null) {
+                throw ValidationUtil.createValidationErrors(valid);
+            }
+
+            const response = await this.usersService.createShippingAddress(Database.getSession(req), this.getUserId(req), viewModel);
+            res.status(200).json(response);
+        } catch (error) {
+            this.returnError(res, error);
+        }
+    }
+
+    public async deleteShippingAddress(req: Request, res: Response, next: NextFunction) {
+        try {
+            const shippingAddressUId = req.params.uId as string;
+            const valid = Validators.required({ value: shippingAddressUId }) ||
+                null;
+
+            if (valid !== null) {
+                throw ValidationUtil.createValidationErrors(valid);
+            }
+
+            const response = await this.usersService.deleteShippingAddress(Database.getSession(req), this.getUserId(req), shippingAddressUId);
             res.status(200).json(response);
         } catch (error) {
             this.returnError(res, error);

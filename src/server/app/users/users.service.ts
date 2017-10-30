@@ -13,6 +13,7 @@ import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-us
 import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
 import { UserViewModel } from '../../view-models/user/user.view-model';
+import { ShippingAddressModel } from '../../models/user/shipping-address.model';
 
 export class UsersService extends BaseService {
 
@@ -171,5 +172,14 @@ export class UsersService extends BaseService {
 
     public async getPublicUser(session: neo4j.Session, userId: number): Promise<UserViewModel> {
         return await this.usersRepository.getPublicUser(session, userId);
+    }
+
+    public async createShippingAddress(session: neo4j.Session, userId: number, viewModel: ShippingAddressModel): Promise<ShippingAddressModel> {
+        viewModel.uId = nodeUUId();
+        return await this.usersRepository.createShippingAddress(session, userId, viewModel);
+    }
+
+    public async deleteShippingAddress(session: neo4j.Session, userId: number, uId: string): Promise<boolean> {
+        return await this.usersRepository.deleteShippingAddress(session, userId, uId);
     }
 }

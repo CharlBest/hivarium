@@ -7,6 +7,7 @@ import { DoesUsernameAndEmailExist } from '../../view-models/create-user/does-us
 import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
 import { UserViewModel } from '../../view-models/user/user.view-model';
+import { ShippingAddressModel } from '../../models/user/shipping-address.model';
 
 export class UsersRepository extends BaseRepository {
 
@@ -43,7 +44,13 @@ export class UsersRepository extends BaseRepository {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Users, Users.GetUser)}`);
         const result = await session.run(query.data, { emailOrUsername });
 
-        const user = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
+        const user = result.records.map(x => {
+            const viewModel = Database.createNodeObject(x.get('user')) as UserModel;
+
+            viewModel.shippingAddresses = Database.createNodeObjectArray(x.get('shippingAddress'));
+            return viewModel;
+        });
+
         if (user !== null && user.length > 0) {
             return user[0];
         } else {
@@ -55,7 +62,13 @@ export class UsersRepository extends BaseRepository {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Users, Users.GetUserById)}`);
         const result = await session.run(query.data, { userId });
 
-        const user = result.records.map(x => Database.createNodeObject(x.get('user'))) as UserModel[];
+        const user = result.records.map(x => {
+            const viewModel = Database.createNodeObject(x.get('user')) as UserModel;
+
+            viewModel.shippingAddresses = Database.createNodeObjectArray(x.get('shippingAddress'));
+            return viewModel;
+        });
+
         if (user !== null && user.length > 0) {
             return user[0];
         } else {
@@ -196,6 +209,39 @@ export class UsersRepository extends BaseRepository {
             return user[0];
         } else {
             return null;
+        }
+    }
+
+    public async createShippingAddress(session: neo4j.Session, userId: number, viewModel: ShippingAddressModel): Promise<ShippingAddressModel> {
+        const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Users, Users.CreateShippingAddress)}`);
+        const result = await session.run(query.data, {
+            userId,
+            uId: viewModel.uId,
+            recipientName: viewModel.recipientName,
+            contactNumber: viewModel.contactNumber,
+            streetAddress: viewModel.streetAddress,
+            addressLine2: viewModel.addressLine2,
+            city: viewModel.city,
+            postalCode: viewModel.postalCode,
+            country: viewModel.country
+        });
+
+        const address = result.records.map(x => Database.createNodeObject(x.get('shippingAddress'))) as ShippingAddressModel[];
+        if (address !== null && address.length > 0) {
+            return address[0];
+        } else {
+            return null;
+        }
+    }
+
+    public async deleteShippingAddress(session: neo4j.Session, userId: number, uId: string): Promise<boolean> {
+        const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Users, Users.DeleteShippingAddress)}`);
+        const result = await session.run(query.data, { userId, uId });
+
+        if (result.records) {
+            return true;
+        } else {
+            return false;
         }
     }
 }
