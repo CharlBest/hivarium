@@ -12,7 +12,7 @@ import * as emojione from 'emojione';
 import { TutorialService } from '../../shared/tutorial/tutorial.service';
 import { TutorialType } from '../../../../server/view-models/tutorial/tutorial-type.enum';
 import { ShippingAddressModel } from '../../../../server/models/user/shipping-address.model';
-import { AddShippingAddressDialogComponent } from '../add-shipping-address-dialog/add-shipping-address-dialog.component';
+import { AddShippingAddressDialogComponent } from '../../shared/add-shipping-address-dialog/add-shipping-address-dialog/add-shipping-address-dialog.component';
 
 @Component({
   selector: 'app-profile',
@@ -105,7 +105,7 @@ export class ProfileComponent implements OnInit {
   addShippingAddress() {
     const dialogRef = this.dialog.open(AddShippingAddressDialogComponent);
     dialogRef.afterClosed().subscribe((data: ShippingAddressModel) => {
-      if (data !== null && data !== undefined) {
+      if (data && data !== null && data !== undefined) {
         if (this.user.shippingAddresses === undefined) {
           this.user.shippingAddresses = [];
         }

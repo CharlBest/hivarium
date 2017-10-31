@@ -39,10 +39,6 @@ export class ProfileService {
     return this.http.post<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.resendEmailVerificationLink.constructRootUrl()}`, null);
   }
 
-  public createShippingAddress(viewModel: ShippingAddressModel): Observable<ShippingAddressModel> {
-    return this.http.post<ShippingAddressModel>(`${environment.apiUrlEndpoint}${UserRoutes.createShippingAddress.constructRootUrl()}`, viewModel);
-  }
-
   public deleteShippingAddress(uId: string): Observable<boolean> {
     return this.http.delete<boolean>(`${environment.apiUrlEndpoint}${UserRoutes.deleteShippingAddress.constructRootUrl(`/${uId}`)}`);
   }

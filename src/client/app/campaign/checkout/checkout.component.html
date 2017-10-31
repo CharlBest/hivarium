@@ -46,7 +46,7 @@
             <mat-card-actions>
                 <button mat-raised-button
                     type="button"
-                    routerLink="/profile">
+                    (click)="addShippingAddress()">
                     <mat-icon>add_circle</mat-icon>
                     Add Address
                 </button>
@@ -108,7 +108,8 @@
                                     style="display: inline-block;"></app-number-ticker>
                             </td>
                         </tr>
-                        <tr class="border-top" style="font-weight: bold;">
+                        <tr class="border-top"
+                            style="font-weight: bold;">
                             <td>Total</td>
                             <td></td>
                             <td>${{totalAmount + totalShippingCost}}</td>

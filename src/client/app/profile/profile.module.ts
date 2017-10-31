@@ -14,7 +14,7 @@ import { ShowErrorsModule } from '../shared/show-errors/show-errors.module';
 import { DeleteUserDialogComponent } from './delete-user-dialog/delete-user-dialog.component';
 import { TutorialModule } from '../shared/tutorial/tutorial.module';
 import { MediaModule } from '../shared/media/media.module';
-import { AddShippingAddressDialogComponent } from './add-shipping-address-dialog/add-shipping-address-dialog.component';
+import { AddShippingAddressDialogModule } from '../shared/add-shipping-address-dialog/add-shipping-address-dialog.module';
 import {
   MatButtonModule,
   MatCardModule,
@@ -47,21 +47,20 @@ import {
     UploadButtonModule,
     ShowErrorsModule,
     TutorialModule,
-    MediaModule
+    MediaModule,
+    AddShippingAddressDialogModule
   ],
   declarations: [
     ProfileComponent,
     UpdateBioComponent,
     UpdatePasswordComponent,
-    DeleteUserDialogComponent,
-    AddShippingAddressDialogComponent
+    DeleteUserDialogComponent
   ],
   providers: [
     ProfileService
   ],
   entryComponents: [
-    DeleteUserDialogComponent,
-    AddShippingAddressDialogComponent
+    DeleteUserDialogComponent
   ]
 })
 export class ProfileModule { }

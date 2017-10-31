@@ -1,7 +1,7 @@
 <mat-dialog-content>
     <button mat-button
         type="button"
-        [matDialogClose]="true"
+        mat-dialog-close
         style="float: right;">
         <mat-icon>close</mat-icon>
     </button>
@@ -111,7 +111,7 @@
 <mat-dialog-actions align="end">
     <button mat-raised-button
         type="button"
-        [matDialogClose]="true">Cancel</button>
+        mat-dialog-close>Cancel</button>
     <button mat-raised-button
         color="accent"
         type="submit"

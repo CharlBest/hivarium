@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatDialog, MatDialogRef } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { ProfileService } from '../profile.service';
-import { AuthService } from '../../shared/auth.service';
-import { ShippingAddressModel } from '../../../../server/models/user/shipping-address.model';
-import { Validators } from '../../../../server/validation/validators';
-import { ShippingCountries } from '../../../../server/models/campaign/shipping-countries';
+import { ShippingAddressModel } from '../../../../../server/models/user/shipping-address.model';
+import { Validators } from '../../../../../server/validation/validators';
+import { ShippingCountries } from '../../../../../server/models/campaign/shipping-countries';
+import { AddShippingAddressDialogService } from '../add-shipping-address-dialog.service';
 
 @Component({
     selector: 'app-add-shipping-address-dialog',
@@ -20,7 +19,7 @@ export class AddShippingAddressDialogComponent implements OnInit {
     shippingCountries = ShippingCountries;
 
     constructor(private fb: FormBuilder,
-        private profileService: ProfileService,
+        private addShippingAddressDialogService: AddShippingAddressDialogService,
         public dialogRef: MatDialogRef<AddShippingAddressDialogComponent>) { }
 
     ngOnInit() {
@@ -63,8 +62,11 @@ export class AddShippingAddressDialogComponent implements OnInit {
         viewModel.postalCode = this.form.get('postalCode').value;
         viewModel.country = this.form.get('country').value;
 
-        this.profileService.createShippingAddress(viewModel).subscribe(data => {
-            this.dialogRef.close(data);
+        this.addShippingAddressDialogService.createShippingAddress(viewModel).subscribe(data => {
+            viewModel.uId = data.uId;
+            viewModel.dateCreated = data.dateCreated;
+
+            this.dialogRef.close(viewModel);
         }, error => {
         });
     }

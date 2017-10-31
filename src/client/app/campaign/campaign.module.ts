@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CampaignRoutingModule } from './campaign-routing.module';
 import { CampaignService } from './campaign.service';
 import { CampaignComponent } from './campaign/campaign.component';
@@ -11,6 +12,7 @@ import { ReferralRewardsComponent } from './referral-rewards/referral-rewards.co
 import { ClipboardModule } from 'ngx-clipboard';
 import { MediaModule } from '../shared/media/media.module';
 import { NumberTickerComponent } from './number-ticker/number-ticker.component';
+import { AddShippingAddressDialogModule } from '../shared/add-shipping-address-dialog/add-shipping-address-dialog.module';
 import {
   MatButtonModule,
   MatCardModule,
@@ -21,7 +23,6 @@ import {
   MatInputModule,
   MatRadioModule
 } from '@angular/material';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     MatRadioModule,
     ClipboardModule,
-    MediaModule
+    MediaModule,
+    AddShippingAddressDialogModule
   ],
   declarations: [
     CampaignComponent,

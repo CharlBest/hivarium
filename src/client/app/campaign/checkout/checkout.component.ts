@@ -9,6 +9,8 @@ import { CampaignService } from '../campaign.service';
 import { UserModel } from '../../../../server/models/user/user.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ShippingAddressModel } from '../../../../server/models/user/shipping-address.model';
+import { MatDialog } from '@angular/material';
+import { AddShippingAddressDialogComponent } from '../../shared/add-shipping-address-dialog/add-shipping-address-dialog/add-shipping-address-dialog.component';
 
 @Component({
   selector: 'app-checkout',
@@ -40,6 +42,7 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
+    public dialog: MatDialog,
     private campaignService: CampaignService) { }
 
   ngOnInit() {
@@ -95,6 +98,19 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
     }, error => {
       this.isProcessing = false;
       // this.serverErrors = this.formService.getServerErrors(error);
+    });
+  }
+
+  addShippingAddress() {
+    const dialogRef = this.dialog.open(AddShippingAddressDialogComponent);
+    dialogRef.afterClosed().subscribe((data: ShippingAddressModel) => {
+      if (data && data !== null && data !== undefined) {
+        if (this.user.shippingAddresses === undefined) {
+          this.user.shippingAddresses = [];
+        }
+
+        this.user.shippingAddresses.push(data);
+      }
     });
   }
 
