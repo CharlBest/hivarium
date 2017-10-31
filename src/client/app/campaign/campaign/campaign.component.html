@@ -75,11 +75,13 @@
                     <tr>
                         <td>
                             <button mat-raised-button
+                                type="button"
                                 color="accent"
                                 (click)="buyNowButton()">Buy now</button>
                         </td>
                         <td>
                             <button mat-raised-button
+                                type="button"
                                 color="accent"
                                 (click)="goToRefferalSection()">Refer a friend</button>
                         </td>
@@ -176,7 +178,8 @@
                         </div>
                         <hr>
                         <h5 style="text-align: center;">HiveCoins Rewards
-                            <button mat-icon-button>
+                            <button mat-icon-button
+                                type="button">
                                 <mat-icon (click)="openCoinRewardInfoDialog()">info</mat-icon>
                             </button>
                         </h5>
@@ -198,10 +201,12 @@
                                 <div>max milestone reward</div>
                             </div>
                         </div>
-                        <br><br>
+                        <br>
+                        <br>
                     </mat-card-content>
                     <mat-card-actions>
                         <button mat-raised-button
+                            type="button"
                             color="accent"
                             (click)="goToProduct(product)"
                             style="width: 100%;">Buy this product</button>

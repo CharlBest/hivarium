@@ -1,5 +1,6 @@
 <mat-dialog-content>
     <button mat-button
+        type="button"
         [matDialogClose]="true"
         style="float: right;">
         <mat-icon>close</mat-icon>
@@ -19,10 +20,12 @@
 
 <mat-dialog-actions>
     <button mat-raised-button
+        type="button"
         ngxClipboard
         [cbContent]="link"
         (cbOnSuccess)="openSnackBar()">COPY</button>
     <button mat-icon-button
+        type="button"
         *ngIf="hasWebShareApi()"
         (click)="webShare()">
         <mat-icon>share</mat-icon>

@@ -99,6 +99,7 @@
                     <app-show-errors [control]="firstFormGroup.get('media')"></app-show-errors>
                     <br>
                     <button mat-raised-button
+                        type="button"
                         *ngIf="firstFormGroup.get('media').value"
                         color="warn"
                         (click)="firstFormGroup.get('media').reset()">Remove media</button>
@@ -120,6 +121,7 @@
 
                     <div>
                         <button mat-raised-button
+                            type="button"
                             matStepperNext>Next</button>
                         <br>
                         <br>
@@ -162,11 +164,13 @@
 
                             <br>
                             <button mat-raised-button
+                                type="button"
                                 color="warn"
                                 (click)="removeMilestone(i)">Remove milestone</button>
                         </div>
                         <br>
                         <button mat-raised-button
+                            type="button"
                             (click)="addMilestone()">Add milestone</button>
                         <br>
                         <br>
@@ -174,8 +178,10 @@
 
                     <div>
                         <button mat-raised-button
+                            type="button"
                             matStepperPrevious>Back</button>
                         <button mat-raised-button
+                            type="button"
                             matStepperNext>Next</button>
                         <br>
                         <br>
@@ -260,6 +266,7 @@
                             <app-show-errors [control]="product.get('media')"></app-show-errors>
                             <br>
                             <button mat-raised-button
+                                type="button"
                                 *ngIf="product.get('media').value"
                                 color="warn"
                                 (click)="product.get('media').reset()">Remove media</button>
@@ -323,11 +330,13 @@
 
                             <br>
                             <button mat-raised-button
+                                type="button"
                                 color="warn"
                                 (click)="removeProduct(i)">Remove product</button>
                         </div>
                         <br>
                         <button mat-raised-button
+                            type="button"
                             (click)="addProduct()">Add product</button>
                         <br>
                         <br>
@@ -335,8 +344,10 @@
 
                     <div>
                         <button mat-raised-button
+                            type="button"
                             matStepperPrevious>Back</button>
                         <button mat-raised-button
+                            type="button"
                             matStepperNext>Next</button>
                         <br>
                         <br>
@@ -350,8 +361,10 @@
                 <br>
                 <div>
                     <button mat-raised-button
+                        type="button"
                         matStepperPrevious>Back</button>
                     <button mat-raised-button
+                        type="button"
                         color="primary"
                         (click)="onSubmit()">Publish</button>
                     <br>

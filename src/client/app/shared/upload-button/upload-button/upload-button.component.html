@@ -3,6 +3,7 @@
     (change)="handleChange($event)" />
 
 <button mat-raised-button
+    type="button"
     (click)="fileInput.click()">Upload file</button>
 
 <mat-progress-bar *ngIf="progressPercentage >= 0 && progressPercentage < 100 || !hideProgressBarAfterUpload && progressPercentage <= 100"

@@ -13,16 +13,21 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button
+        type="button"
         (click)="openShareDialog()"
         [appTutorial]="tutorialTypeEnum.ProfileShare">Share</button>
       <button mat-raised-button
+        type="button"
         (click)="openReportDialog()"
         [appTutorial]="tutorialTypeEnum.ProfileReport">Report</button>
       <button mat-raised-button
+        type="button"
         (click)="resendEmailVerificationLink()">Resend email verification link</button>
       <button mat-raised-button
+        type="button"
         (click)="profileTour()">Profile tour</button>
       <button mat-raised-button
+        type="button"
         color="warn"
         (click)="openDeleteAccountDialog()"
         [appTutorial]="tutorialTypeEnum.DeleteUser"
@@ -34,6 +39,7 @@
     <mat-card-content>
       <h3>Avatar</h3>
       <button mat-raised-button
+        type="button"
         color="warn"
         (click)="removeAvatar()"
         *ngIf="user?.avatarUrl?.length > 0">Remove avatar</button>
@@ -53,6 +59,7 @@
     <mat-card-content>
       <h3>Shipping Addresses</h3>
       <button mat-raised-button
+        type="button"
         (click)="addShippingAddress()">Add address</button>
       <br>
       <br>
@@ -64,6 +71,7 @@
         {{shippingAddress.city}}, {{shippingAddress.postalCode}}
 
         <button mat-raised-button
+          type="button"
           (click)="removeShippingAddress(shippingAddress)">Remove address</button>
         <br>
         <br>

@@ -9,6 +9,7 @@
     </a>
 
     <button mat-icon-button
+      type="button"
       [matMenuTriggerFor]="menu"
       [appTutorial]="tutorialTypeEnum.ContextMenu"
       style="float: right;">
@@ -78,6 +79,7 @@
     </a>
 
     <button mat-icon-button
+      type="button"
       [matMenuTriggerFor]="menu"
       [appTutorial]="tutorialTypeEnum.ContextMenu"
       style="float: right;"
@@ -90,21 +92,27 @@
 
   <mat-menu #menu="matMenu">
     <button mat-menu-item
+      type="button"
       routerLink="/settings"
       i18n="top right context menu|Link to the settings page@@layoutNavigationHeaderLink8">Settings</button>
     <button mat-menu-item
+      type="button"
       routerLink="/feedback"
       i18n="top right context menu|Link to the feedback page@@layoutNavigationHeaderLink9">Feedback</button>
     <button mat-menu-item
+      type="button"
       routerLink="/newsletter"
       i18n="top right context menu|Link to the newsletter signup page@@layoutNavigationHeaderLink10">Newsletter</button>
     <button mat-menu-item
+      type="button"
       routerLink="/legal/help"
       i18n="top right context menu|Link to the help page@@layoutNavigationHeaderLink11">Help</button>
     <button mat-menu-item
+      type="button"
       (click)="takeTour()"
       i18n="top right context menu|Link to the help page@@layoutNavigationHeaderLink12">Take tour</button>
     <button mat-menu-item
+      type="button"
       *ngIf="loggedInUserId"
       (click)="logout()"
       i18n="top right context menu|Link to logout@@layoutNavigationHeaderLink12">Logout</button>
@@ -115,7 +123,8 @@
   <nav mat-tab-nav-bar>
     <div (click)="back()"
       class="back-button-navigation">
-      <button mat-icon-button>
+      <button mat-icon-button
+        type="button">
         <mat-icon>arrow_back</mat-icon>
       </button>
       <span style="font-weight: bold;">{{navigationBackTitle}}</span>

@@ -1,8 +1,9 @@
 <mat-dialog-content>
     <button mat-button
+        type="button"
         [matDialogClose]="true"
         style="float: right;">
-      <mat-icon>close</mat-icon>
+        <mat-icon>close</mat-icon>
     </button>
 
     <h2 matDialogTitle
@@ -16,6 +17,7 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-raised-button
+        type="button"
         color="warn"
         (click)="report()">Send report</button>
 </mat-dialog-actions>

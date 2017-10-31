@@ -13,9 +13,11 @@
     <br>
 
     <button mat-raised-button
+      type="button"
       (click)="back()"
       *ngIf="!tut.isFirst">Previous</button>
     <button mat-raised-button
+      type="button"
       (click)="goToTutorial(tut)">
       <span *ngIf="!tut.isLast">Next</span>
       <span *ngIf="tut.isLast">Done</span>
@@ -25,6 +27,7 @@
     <br>
 
     <button mat-raised-button
+      type="button"
       (click)="skip(tut)">Skip</button>
   </div>
 </div>
