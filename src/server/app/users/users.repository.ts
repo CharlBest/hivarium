@@ -8,6 +8,7 @@ import { TutorialType } from '../../view-models/tutorial/tutorial-type.enum';
 import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial.view-model';
 import { UserViewModel } from '../../view-models/user/user.view-model';
 import { ShippingAddressModel } from '../../models/user/shipping-address.model';
+import { ShippingCountries } from '../../models/campaign/shipping-countries';
 
 export class UsersRepository extends BaseRepository {
 
@@ -48,6 +49,12 @@ export class UsersRepository extends BaseRepository {
             const viewModel = Database.createNodeObject(x.get('user')) as UserModel;
 
             viewModel.shippingAddresses = Database.createNodeObjectArray(x.get('shippingAddress'));
+
+            const countries = Database.createNodeObjectArray(x.get('shippingCountry'));
+            for (let i = 0; i < viewModel.shippingAddresses.length; i++) {
+                viewModel.shippingAddresses[i].country = ShippingCountries.find(y => y.id === countries[i].id);
+            }
+
             return viewModel;
         });
 
@@ -66,6 +73,12 @@ export class UsersRepository extends BaseRepository {
             const viewModel = Database.createNodeObject(x.get('user')) as UserModel;
 
             viewModel.shippingAddresses = Database.createNodeObjectArray(x.get('shippingAddress'));
+
+            const countries = Database.createNodeObjectArray(x.get('shippingCountry'));
+            for (let i = 0; i < viewModel.shippingAddresses.length; i++) {
+                viewModel.shippingAddresses[i].country = ShippingCountries.find(y => y.id === countries[i].id);
+            }
+
             return viewModel;
         });
 

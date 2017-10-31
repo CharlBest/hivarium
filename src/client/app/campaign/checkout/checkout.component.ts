@@ -6,6 +6,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { PaymentRequestViewModel } from '../../../../server/view-models/payment/payment-request.view-model';
 import { CampaignService } from '../campaign.service';
+import { UserModel } from '../../../../server/models/user/user.model';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { ShippingAddressModel } from '../../../../server/models/user/shipping-address.model';
 
 @Component({
   selector: 'app-checkout',
@@ -28,9 +31,14 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
   stripe = null;
   stripeCard = null;
 
+  user: UserModel = null;
+
+  form: FormGroup;
+
   constructor(private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
+    private fb: FormBuilder,
     private campaignService: CampaignService) { }
 
   ngOnInit() {
@@ -41,6 +49,12 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
         this.referralCode = null;
       }
     });
+
+    if (this.loggedInUserId) {
+      this.getUser();
+    }
+
+    this.buildForm();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -60,8 +74,28 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
     }
   }
 
+  buildForm() {
+    this.form = this.fb.group({
+      selectedShippingAddress: null
+    });
+  }
+
+  getUser() {
+    this.campaignService.getUser().subscribe(data => {
+      this.user = data;
+      this.isProcessing = false;
+    }, error => {
+      this.isProcessing = false;
+      // this.serverErrors = this.formService.getServerErrors(error);
+    });
+  }
+
   goToLogin() {
     this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url } });
+  }
+
+  goToCreateUser() {
+    this.router.navigate(['create-user'], { queryParams: { returnUrl: this.router.url } });
   }
 
   quantityValueChanges(quantity: number) {
@@ -72,6 +106,17 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
   hiveCoinsValueChanges(quantity: number) {
     this.totalHiveCoins = quantity;
     this.totalAmount = (this.selectedProduct.cost * this.totalQuantity) - this.totalHiveCoins;
+  }
+
+  doesShipToUser() {
+    // TODO
+    const selectedShippingAddressCountry = (<ShippingAddressModel>this.form.get('selectedShippingAddress').value).country;
+    return false;
+  }
+
+  shippingCost() {
+    // TODO
+    return 50;
   }
 
   buildStripe() {
@@ -139,6 +184,7 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
     viewModel.quantity = this.totalQuantity;
     viewModel.hiveCoins = this.totalHiveCoins;
     viewModel.referralCode = this.referralCode;
+    viewModel.shippingAddressUId = (<ShippingAddressModel>this.form.get('selectedShippingAddress').value).uId;
 
     this.campaignService.processPaymentRequest(viewModel).subscribe(
       data => {

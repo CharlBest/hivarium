@@ -7,164 +7,152 @@
 
     <mat-card *ngIf="!loggedInUserId">
         <mat-card-content>
-            <h5>Please
-                <a (click)="goToLogin()"
-                    style="color: orange;">login</a>
-                to use your account
-            </h5>
-        </mat-card-content>
-    </mat-card>
-
-    <mat-card *ngIf="!loggedInUserId">
-        <mat-card-content>
-            <div>
-                <h4>Guest Checkout</h4>
-                <mat-form-field>
-                    <input matInput
-                        type="text"
-                        placeholder="Email"
-                        required>
-                </mat-form-field>
-            </div>
-
-            <h5>Shipping Address</h5>
-            <mat-form-field>
-                <input matInput
-                    type="text"
-                    placeholder="Full name"
-                    required>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-                <input matInput
-                    type="text"
-                    placeholder="Country"
-                    required>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-                <input matInput
-                    type="text"
-                    placeholder="Street Address"
-                    required>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-                <input matInput
-                    type="text"
-                    placeholder="Address Line 2 (Optional)"
-                    required>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-                <input matInput
-                    type="text"
-                    placeholder="City"
-                    required>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-                <input matInput
-                    type="text"
-                    placeholder="Postal Code"
-                    required>
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-                <input matInput
-                    type="text"
-                    placeholder="Phone Number"
-                    required>
-            </mat-form-field>
-        </mat-card-content>
-    </mat-card>
-
-    <mat-card>
-        <mat-card-content>
-            <h4>Payment Breakdown</h4>
-
-            <div>
-                <img src="assets/hive-coin.svg"
-                    style="max-height: 16px;"> **
-            </div>
-            <div>
-                HiveCoins available to spend
-            </div>
-            <br>
-
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <app-number-ticker (valueChanges)="quantityValueChanges($event)"
-                                [min]="1"
-                                [max]="selectedProduct.quantity * totalQuantity"
-                                [defaultValue]="1"></app-number-ticker>
-                        </td>
-                        <td>{{selectedProduct.title}}</td>
-                        <td>${{selectedProduct.cost}}</td>
-                    </tr>
-                    <tr>
-                        <td>Enter your HiveCoin Discount</td>
-                        <td></td>
-                        <td>
-                            <img src="assets/hive-coin.svg"
-                                style="max-height: 16px; margin-bottom: 22px;">
-                            <app-number-ticker (valueChanges)="hiveCoinsValueChanges($event)"
-                                [max]="selectedProduct.cost"
-                                style="display: inline-block;"></app-number-ticker>
-                        </td>
-                    </tr>
-                    <tr style="font-weight: bold;">
-                        <td>Total</td>
-                        <td></td>
-                        <td>${{totalAmount}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <div>
-                You will immediately earn
-                <img src="assets/hive-coin.svg"
-                    style="max-height: 16px;"> {{campaign.totalProductReward(selectedProduct.cost)}} for this purchase. If the biggest Campaign milestone
-                unlocks after your purchase, you will automatically receive up to an additional
-                <img src="assets/hive-coin.svg"
-                    style="max-height: 16px;"> {{campaign.maximunTotalProductReward(selectedProduct.cost)}}
-            </div>
-
-            <br>
-            <div>
-                <span>
-                    <img src="assets/hive-coin.svg"
-                        style="max-height: 16px;">{{campaign.productMilestoneReward(selectedProduct.cost, true)}} milestone reward</span> |
-                <span>
-                    <img src="assets/hive-coin.svg"
-                        style="max-height: 16px;">{{campaign.productReferralReward(selectedProduct.cost, true)}} referral reward</span> |
-                <span>
-                    <img src="assets/hive-coin.svg"
-                        style="max-height: 16px;">{{campaign.productMaxMilestoneReward(selectedProduct.cost, true)}} max milestone reward</span>
-            </div>
-            <br>
-
-            <h5>Payment Details</h5>
-            <div style="max-width: 370px;">
-                <div id="card-element"></div>
-                <div id="card-errors"
-                    role="alert"></div>
-            </div>
-            <br>
-
-            <div>By clicking "Submit Payment", you acknowledge you are making a purchase with a third-party vendor. Order fulfillment
-                is managed by campaigners and cannot be guaranteed by Hivarium. You also acknowledge and agree to our
-                <a routerLink="/legal/termsandconditions">Terms of Use</a> and
-                <a routerLink="/legal/privacypolicy">Privacy Policy</a>
-            </div>
+            <h4>Login or create an account to proceed</h4>
         </mat-card-content>
         <mat-card-actions>
             <button mat-raised-button
                 type="button"
-                (click)="onSubmit()"
-                color="accent">Submit Payment</button>
+                (click)="goToLogin()"
+                color="accent">Login</button>
+            <button mat-raised-button
+                type="button"
+                (click)="goToCreateUser()"
+                color="accent">Create account</button>
         </mat-card-actions>
     </mat-card>
+
+    <div *ngIf="loggedInUserId">
+        <mat-card>
+            <mat-card-content>
+                <form [formGroup]="form">
+                    <mat-radio-group class="radio-group"
+                        formControlName="selectedShippingAddress"
+                        required>
+                        <mat-radio-button class="radio-button"
+                            *ngFor="let shippingAddress of user?.shippingAddresses"
+                            [value]="shippingAddress">
+
+                            {{shippingAddress.recipientName}}, {{shippingAddress.contactNumber}}, {{shippingAddress.streetAddress}},
+                            <span *ngIf="shippingAddress.addressLine2">{{shippingAddress.addressLine2}}, </span>
+                            {{shippingAddress.city}}, {{shippingAddress.postalCode}}, {{shippingAddress.country.title}}
+
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </form>
+                <div *ngIf="user?.shippingAddresses?.length === 0">
+                    Please have at least one address
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button
+                    type="button"
+                    routerLink="/profile">Add Address</button>
+            </mat-card-actions>
+        </mat-card>
+
+        <mat-card *ngIf="form.get('selectedShippingAddress').value !== null">
+            <mat-card-content>
+                <h4>Payment Breakdown</h4>
+
+                <div>
+                    <img src="assets/hive-coin.svg"
+                        style="max-height: 12px;">
+                    <span>{{user?.hiveCoins}}</span>
+                </div>
+                <div>
+                    HiveCoins available to spend
+                </div>
+                <br>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <app-number-ticker (valueChanges)="quantityValueChanges($event)"
+                                    [min]="1"
+                                    [max]="selectedProduct.quantity * totalQuantity"
+                                    [defaultValue]="1"></app-number-ticker>
+                                <span>{{selectedProduct.title}}</span>
+                            </td>
+                            <td>${{selectedProduct.cost}}</td>
+                        </tr>
+                        <tr>
+                            <td>Enter your HiveCoin Discount</td>
+                            <td>
+                                <img src="assets/hive-coin.svg"
+                                    style="max-height: 16px; margin-bottom: 22px;">
+                                <app-number-ticker (valueChanges)="hiveCoinsValueChanges($event)"
+                                    [max]="selectedProduct.cost"
+                                    style="display: inline-block;"></app-number-ticker>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Shipping</td>
+                            <td>${{shippingCost()}}</td>
+                        </tr>
+                        <tr *ngIf="doesShipToUser()"
+                            style="color: red;">
+                            <td>WARNING: product does not ship to your country</td>
+                            <td></td>
+                        </tr>
+                        <tr style="font-weight: bold;">
+                            <td>Total</td>
+                            <td>${{totalAmount}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    You will immediately earn
+                    <img src="assets/hive-coin.svg"
+                        style="max-height: 12px;"> {{campaign.totalProductReward(selectedProduct.cost)}} for this purchase. If the biggest Campaign milestone
+                    unlocks after your purchase, you will automatically receive up to an additional
+                    <img src="assets/hive-coin.svg"
+                        style="max-height: 12px;"> {{campaign.maximunTotalProductReward(selectedProduct.cost)}}
+                </div>
+
+                <br>
+                <div>
+                    <div style="float: left; margin-right: 20px;">
+                        <img src="assets/hive-coin.svg"
+                            style="max-height: 12px;"> {{campaign.productMilestoneReward(selectedProduct.cost, true)}}
+                        <div>milestone reward</div>
+                    </div>
+                    <div style="float: left; margin-right: 20px;">
+                        <img src="assets/hive-coin.svg"
+                            style="max-height: 12px;"> {{campaign.productReferralReward(selectedProduct.cost, true)}}
+                        <div>referral reward</div>
+                    </div>
+                    <div style="float: left;">
+                        <img src="assets/hive-coin.svg"
+                            style="max-height: 12px;"> {{campaign.productMaxMilestoneReward(selectedProduct.cost, true)}}
+                        <div>max milestone reward</div>
+                    </div>
+                </div>
+                <br>
+                <br>
+
+                <h4>Payment Details</h4>
+                <div style="max-width: 370px;">
+                    <div id="card-element"></div>
+                    <div id="card-errors"
+                        role="alert"></div>
+                </div>
+                <br>
+
+                <div>By clicking "Submit Payment", you acknowledge you are making a purchase with a third-party vendor. Order
+                    fulfillment is managed by campaigners and cannot be guaranteed by Hivarium. You also acknowledge and
+                    agree to our
+                    <a routerLink="/legal/termsandconditions">Terms of Use</a> and
+                    <a routerLink="/legal/privacypolicy">Privacy Policy</a>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button
+                    type="button"
+                    (click)="onSubmit()"
+                    color="accent">Submit Payment</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
 </div>

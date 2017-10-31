@@ -27,3 +27,12 @@
   .StripeElement--webkit-autofill {
     background-color: #fefde5 !important;
   }
+
+  .radio-group {
+    display: inline-flex;
+    flex-direction: column;
+  }
+  
+  .radio-button {
+    margin: 5px;
+  }

@@ -18,7 +18,8 @@ import {
   MatIconModule,
   MatProgressBarModule,
   MatDialogModule,
-  MatInputModule
+  MatInputModule,
+  MatRadioModule
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -34,6 +35,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatProgressBarModule,
     MatDialogModule,
     MatInputModule,
+    MatRadioModule,
     ClipboardModule,
     MediaModule
   ],

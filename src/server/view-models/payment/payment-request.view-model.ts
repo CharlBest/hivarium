@@ -4,4 +4,5 @@ export class PaymentRequestViewModel {
     quantity: number;
     hiveCoins: number;
     referralCode: string;
+    shippingAddressUId: string;
 }

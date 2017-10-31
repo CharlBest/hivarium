@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../shared/auth.service';
 import { CreateUserService } from '../create-user.service';
 import { CreateUserViewModel } from '../../../../server/view-models/create-user/create-user.view-model';
@@ -20,10 +20,12 @@ export class CreateUserComponent implements OnInit {
   form: FormGroup;
   serverErrors;
   isProcessing = false;
+  returnUrl: string = null;
 
   constructor(private fb: FormBuilder,
     private createUserService: CreateUserService,
     private loginService: LoginService,
+    private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
     private formService: FormService) {
@@ -31,6 +33,12 @@ export class CreateUserComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
+
+    this.route.queryParamMap.subscribe(params => {
+      if (params.has('returnUrl')) {
+        this.returnUrl = params.get('returnUrl') || null;
+      }
+    });
   }
 
   buildForm() {
@@ -76,7 +84,11 @@ export class CreateUserComponent implements OnInit {
         if (data !== null && data.token !== null) {
           this.authService.setToken(data.token, data.userId);
 
-          this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.ProfileShare } });
+          if (this.returnUrl === null) {
+            this.router.navigate(['/profile'], { queryParams: { tut: TutorialType.ProfileShare } });
+          } else {
+            this.router.navigateByUrl(this.returnUrl);
+          }
         } else {
           // TODO: show material dialog (shared auth failed dialog)
           alert('Authentication failed');

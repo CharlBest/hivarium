@@ -5,6 +5,8 @@ import { environment } from '../../environments/environment';
 import { CampaignRoutes } from '../../../server/routes/campaign.routes';
 import { CampaignViewModel } from '../../../server/view-models/campaign/campaign.view-model';
 import { PaymentRequestViewModel } from '../../../server/view-models/payment/payment-request.view-model';
+import { UserModel } from '../../../server/models/user/user.model';
+import { UserRoutes } from '../../../server/routes/user.routes';
 
 @Injectable()
 export class CampaignService {
@@ -21,5 +23,9 @@ export class CampaignService {
 
     public processPaymentRequest(viewModel: PaymentRequestViewModel): Observable<boolean> {
         return this.http.post<boolean>(`${environment.apiUrlEndpoint}${CampaignRoutes.paymentRequest.constructRootUrl()}`, viewModel);
+    }
+
+    public getUser(): Observable<UserModel> {
+        return this.http.get<UserModel>(`${environment.apiUrlEndpoint}${UserRoutes.getUser.constructRootUrl()}`);
     }
 }
