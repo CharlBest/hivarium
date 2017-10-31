@@ -26,6 +26,7 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
 
   totalQuantity = 1;
   totalHiveCoins = 0;
+  totalShippingCost = 0;
   totalAmount: number = null;
 
   stripe = null;
@@ -78,6 +79,13 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
     this.form = this.fb.group({
       selectedShippingAddress: null
     });
+
+    this.form.get('selectedShippingAddress').valueChanges.subscribe(value => {
+      this.updateShippingCost();
+
+      // TODO: show if product ships to user
+      const selectedShippingAddressCountry = (<ShippingAddressModel>this.form.get('selectedShippingAddress').value).country;
+    });
   }
 
   getUser() {
@@ -101,22 +109,22 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
   quantityValueChanges(quantity: number) {
     this.totalQuantity = quantity;
     this.totalAmount = (this.selectedProduct.cost * this.totalQuantity) - this.totalHiveCoins;
+    this.updateShippingCost();
   }
 
   hiveCoinsValueChanges(quantity: number) {
     this.totalHiveCoins = quantity;
     this.totalAmount = (this.selectedProduct.cost * this.totalQuantity) - this.totalHiveCoins;
+    this.updateShippingCost();
   }
 
-  doesShipToUser() {
-    // TODO
+  updateShippingCost(): void {
     const selectedShippingAddressCountry = (<ShippingAddressModel>this.form.get('selectedShippingAddress').value).country;
-    return false;
-  }
-
-  shippingCost() {
-    // TODO
-    return 50;
+    if (this.totalQuantity === 1) {
+      this.totalShippingCost = 50;
+    } else if (this.totalQuantity > 1) {
+      this.totalShippingCost = 50 + ((this.totalQuantity - 1) * 20);
+    }
   }
 
   buildStripe() {

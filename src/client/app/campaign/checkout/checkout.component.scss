@@ -36,3 +36,9 @@
   .radio-button {
     margin: 5px;
   }
+
+  table {
+    .border-top td {
+      border-top: 1px solid lightgrey;
+    }
+  }

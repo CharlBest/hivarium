@@ -46,7 +46,10 @@
             <mat-card-actions>
                 <button mat-raised-button
                     type="button"
-                    routerLink="/profile">Add Address</button>
+                    routerLink="/profile">
+                    <mat-icon>add_circle</mat-icon>
+                    Add Address
+                </button>
             </mat-card-actions>
         </mat-card>
 
@@ -54,17 +57,14 @@
             <mat-card-content>
                 <h4>Payment Breakdown</h4>
 
-                <div>
-                    <img src="assets/hive-coin.svg"
-                        style="max-height: 12px;">
-                    <span>{{user?.hiveCoins}}</span>
-                </div>
-                <div>
-                    HiveCoins available to spend
-                </div>
-                <br>
-
                 <table>
+                    <thead>
+                        <tr>
+                            <th>Qty.</th>
+                            <th>Product</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr>
                             <td>
@@ -72,12 +72,34 @@
                                     [min]="1"
                                     [max]="selectedProduct.quantity * totalQuantity"
                                     [defaultValue]="1"></app-number-ticker>
-                                <span>{{selectedProduct.title}}</span>
                             </td>
-                            <td>${{selectedProduct.cost}}</td>
+                            <td>{{selectedProduct.title}}</td>
+                            <td>${{selectedProduct.cost * totalQuantity}}</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                Shipping
+                            </td>
+                            <td>${{totalShippingCost}}</td>
+                        </tr>
+                        <tr class="border-top">
+                            <td>
+                                <div>
+                                    <img src="assets/hive-coin.svg"
+                                        style="max-height: 12px;">
+                                    <span>{{user?.hiveCoins}}</span>
+                                </div>
+                                <div>
+                                    HiveCoins available to spend
+                                </div>
+                            </td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         <tr>
                             <td>Enter your HiveCoin Discount</td>
+                            <td></td>
                             <td>
                                 <img src="assets/hive-coin.svg"
                                     style="max-height: 16px; margin-bottom: 22px;">
@@ -86,18 +108,10 @@
                                     style="display: inline-block;"></app-number-ticker>
                             </td>
                         </tr>
-                        <tr>
-                            <td>Shipping</td>
-                            <td>${{shippingCost()}}</td>
-                        </tr>
-                        <tr *ngIf="doesShipToUser()"
-                            style="color: red;">
-                            <td>WARNING: product does not ship to your country</td>
-                            <td></td>
-                        </tr>
-                        <tr style="font-weight: bold;">
+                        <tr class="border-top" style="font-weight: bold;">
                             <td>Total</td>
-                            <td>${{totalAmount}}</td>
+                            <td></td>
+                            <td>${{totalAmount + totalShippingCost}}</td>
                         </tr>
                     </tbody>
                 </table>
