@@ -1,6 +1,7 @@
 import sgMail = require('@sendgrid/mail');
 import { MailData } from '@sendgrid/helpers/classes/mail';
 import { environment } from '../environments/environment';
+import { OrderPlacedViewModel } from '../view-models/email/order-placed.view-model';
 
 sgMail.setApiKey(environment.sendGrid.apiKey);
 sgMail.setSubstitutionWrappers('{{', '}}');
@@ -79,18 +80,31 @@ export class Emailer {
         Emailer.send(data);
     }
 
-    static boughtProductSuccessEmail(email: string, productTitle: string) {
+    static orderPlacedEmail(viewModel: OrderPlacedViewModel) {
         const data: MailData = {
             to: {
-                email,
+                email: viewModel.email,
                 name: Emailer.fromName
             },
             from: Emailer.fromEmail,
-            subject: 'Product bought',
-            templateId: environment.sendGrid.templates.boughtProductSuccess,
-            substitutions: {
-                productTitle
-            }
+            subject: 'Order Placed',
+            templateId: environment.sendGrid.templates.orderPlaced,
+            substitutions: <any>viewModel
+        };
+
+        Emailer.send(data);
+    }
+
+    static paymentConfirmationEmail(viewModel: OrderPlacedViewModel) {
+        const data: MailData = {
+            to: {
+                email: viewModel.email,
+                name: Emailer.fromName
+            },
+            from: Emailer.fromEmail,
+            subject: 'Payment Confirmation',
+            templateId: environment.sendGrid.templates.paymentConfirmation,
+            substitutions: <any>viewModel
         };
 
         Emailer.send(data);

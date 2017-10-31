@@ -17,7 +17,8 @@ export const environment = {
             forgotPassword: getEnvironmentVariable('SENDGRID_TEMPLATE_FORGOT_PASSWORD', '746786b0-9car-4c4c-a186-636d0ef62d1a'),
             feedback: getEnvironmentVariable('SENDGRID_TEMPLATE_FEEDBACK', '746786b0-9car-4c4c-a186-636d0ef62d1a'),
             resendEmailVerificationLink: getEnvironmentVariable('SENDGRID_TEMPLATE_RESEND_EMAIL_VERIFICATION_LINK', '746786b0-9car-4c4c-a186-636d0ef62d1a'),
-            boughtProductSuccess: getEnvironmentVariable('SENDGRID_TEMPLATE_BOUGHT_PRODUCT_SUCCESS', '***')
+            orderPlaced: getEnvironmentVariable('SENDGRID_TEMPLATE_ORDER_PLACED', '746786b0-9car-4c4c-a186-636d0ef62d1a'),
+            paymentConfirmation: getEnvironmentVariable('SENDGRID_TEMPLATE_PAYMENT_CONFIRMATION', '746786b0-9car-4c4c-a186-636d0ef62d1a')
         }
     },
     authentication: {
