@@ -9,7 +9,9 @@ import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial
 import { CampaignModel } from '../../models/campaign/campaign.model';
 import { CampaignViewModel } from '../../view-models/campaign/campaign.view-model';
 import { CreateCampaignViewModel } from '../../view-models/campaign/create-campaign.view-model';
-import { PaymentRequestViewModel } from '../../view-models/payment/payment-request.view-model';
+import { CreateOrderViewModel } from '../../view-models/order/create-order.view-model';
+import { OrderModel } from '../../models/campaign/order.model';
+import { OrderValidationModel } from '../../models/campaign/order-validation.model';
 
 export class CampaignsRepository extends BaseRepository {
 
@@ -101,14 +103,44 @@ export class CampaignsRepository extends BaseRepository {
         }
     }
 
-    public async paymentRequest(session: neo4j.Session, userId: number, viewModel: PaymentRequestViewModel): Promise<boolean> {
-        const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Campaigns, Campaigns.PaymentRequest)}`);
-        const result = await session.run(query.data, { userId, token: viewModel.token });
+    public async createOrder(session: neo4j.Session, userId: number, orderUId: string, viewModel: CreateOrderViewModel): Promise<OrderModel> {
+        const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Campaigns, Campaigns.CreateOrder)}`);
+        const result = await session.run(query.data, {
+            userId,
+            orderUId,
+            token: viewModel.token,
+            productUId: viewModel.productUId,
+            quantity: viewModel.quantity,
+            hiveCoins: viewModel.hiveCoins,
+            referralCode: viewModel.referralCode,
+            shippingAddressUId: viewModel.shippingAddressUId
+        });
 
-        if (result.records) {
-            return true;
+        const order = result.records.map(x => Database.createNodeObject(x.get('order'))) as OrderModel[];
+        if (order !== null && order.length > 0) {
+            return order[0];
         } else {
-            return false;
+            return null;
+        }
+    }
+
+    public async orderValidation(session: neo4j.Session, userId: number, viewModel: CreateOrderViewModel): Promise<OrderValidationModel> {
+        const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Campaigns, Campaigns.OrderValidation)}`);
+        const result = await session.run(query.data, {
+            userId,
+            token: viewModel.token,
+            productUId: viewModel.productUId,
+            quantity: viewModel.quantity,
+            hiveCoins: viewModel.hiveCoins,
+            referralCode: viewModel.referralCode,
+            shippingAddressUId: viewModel.shippingAddressUId
+        });
+
+        const order = result.records.map(x => Database.createNodeObject(x.get('order'))) as OrderValidationModel[];
+        if (order !== null && order.length > 0) {
+            return order[0];
+        } else {
+            return null;
         }
     }
 }

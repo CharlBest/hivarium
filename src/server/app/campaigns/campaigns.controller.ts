@@ -19,7 +19,7 @@ import { CompletedTutorial } from '../../view-models/tutorial/completed-tutorial
 import { CampaignsService } from './campaigns.service';
 import { GetCampaignViewModel } from '../../view-models/campaign/get-campaign.view-model';
 import { CreateCampaignViewModel } from '../../view-models/campaign/create-campaign.view-model';
-import { PaymentRequestViewModel } from '../../view-models/payment/payment-request.view-model';
+import { CreateOrderViewModel } from '../../view-models/order/create-order.view-model';
 
 export class CampaignsController extends BaseController {
     private campaignsService: CampaignsService;
@@ -112,9 +112,9 @@ export class CampaignsController extends BaseController {
         }
     }
 
-    public async paymentRequest(req: Request, res: Response, next: NextFunction) {
+    public async createOrder(req: Request, res: Response, next: NextFunction) {
         try {
-            const viewModel = req.body as PaymentRequestViewModel;
+            const viewModel = req.body as CreateOrderViewModel;
 
             const valid = Validators.required({ value: viewModel.token }) ||
                 Validators.required({ value: viewModel.productUId }) ||
@@ -126,7 +126,7 @@ export class CampaignsController extends BaseController {
                 throw ValidationUtil.createValidationErrors(valid);
             }
 
-            // const response = await this.campaignsService.paymentRequest(Database.getSession(req), this.getUserId(req), viewModel);
+            const response = await this.campaignsService.createOrder(Database.getSession(req), this.getUserId(req), viewModel);
             res.status(200).json({
                 success: true
             });

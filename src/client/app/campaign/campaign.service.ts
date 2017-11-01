@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import { CampaignRoutes } from '../../../server/routes/campaign.routes';
 import { CampaignViewModel } from '../../../server/view-models/campaign/campaign.view-model';
-import { PaymentRequestViewModel } from '../../../server/view-models/payment/payment-request.view-model';
+import { CreateOrderViewModel } from '../../../server/view-models/order/create-order.view-model';
 import { UserModel } from '../../../server/models/user/user.model';
 import { UserRoutes } from '../../../server/routes/user.routes';
 
@@ -21,8 +21,8 @@ export class CampaignService {
         return this.http.get<string>(`${environment.apiUrlEndpoint}${CampaignRoutes.getOrCreateCampaignReferralLink.constructRootUrl(`/${uId}`)}`);
     }
 
-    public processPaymentRequest(viewModel: PaymentRequestViewModel): Observable<boolean> {
-        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${CampaignRoutes.paymentRequest.constructRootUrl()}`, viewModel);
+    public createOrder(viewModel: CreateOrderViewModel): Observable<boolean> {
+        return this.http.post<boolean>(`${environment.apiUrlEndpoint}${CampaignRoutes.createOrder.constructRootUrl()}`, viewModel);
     }
 
     public getUser(): Observable<UserModel> {

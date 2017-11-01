@@ -4,7 +4,7 @@ import { ProductModel } from '../../../../server/models/campaign/product.model';
 import { AuthService } from '../../shared/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { PaymentRequestViewModel } from '../../../../server/view-models/payment/payment-request.view-model';
+import { CreateOrderViewModel } from '../../../../server/view-models/order/create-order.view-model';
 import { CampaignService } from '../campaign.service';
 import { UserModel } from '../../../../server/models/user/user.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -198,20 +198,24 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
   onSubmit() {
     this.isProcessing = true;
 
-    this.stripe.createToken(this.stripeCard).then((result) => {
-      if (result.error) {
-        // Inform the user if there was an error
-        const errorElement = document.getElementById('card-errors');
-        errorElement.textContent = result.error.message;
-      } else {
-        // Send the token to your server
-        this.sendPaymentToServer(result.token.id);
-      }
-    });
+    this.sendPaymentToServer('12345');
+
+    // this.stripe.createToken(this.stripeCard).then((result) => {
+    //   if (result.error) {
+    //     // Inform the user if there was an error
+    //     const errorElement = document.getElementById('card-errors');
+    //     errorElement.textContent = result.error.message;
+    //   } else {
+    //     // Send the token to your server
+    //     this.sendPaymentToServer(result.token.id);
+    //   }
+    // });
   }
 
   sendPaymentToServer(token: string) {
-    const viewModel = new PaymentRequestViewModel();
+    this.isProcessing = true;
+
+    const viewModel = new CreateOrderViewModel();
     viewModel.token = token;
     viewModel.productUId = this.selectedProduct.uId;
     viewModel.quantity = this.totalQuantity;
@@ -219,7 +223,7 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
     viewModel.referralCode = this.referralCode;
     viewModel.shippingAddressUId = (<ShippingAddressModel>this.form.get('selectedShippingAddress').value).uId;
 
-    this.campaignService.processPaymentRequest(viewModel).subscribe(
+    this.campaignService.createOrder(viewModel).subscribe(
       data => {
         this.isProcessing = false;
       }, error => {

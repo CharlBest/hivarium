@@ -1,4 +1,4 @@
-export class PaymentRequestViewModel {
+export class CreateOrderViewModel {
     token: string;
     productUId: string;
     quantity: number;

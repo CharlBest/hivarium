@@ -15,7 +15,9 @@ import { CampaignsRepository } from './campaigns.repository';
 import { CampaignModel } from '../../models/campaign/campaign.model';
 import { CampaignViewModel } from '../../view-models/campaign/campaign.view-model';
 import { CreateCampaignViewModel } from '../../view-models/campaign/create-campaign.view-model';
-import { PaymentRequestViewModel } from '../../view-models/payment/payment-request.view-model';
+import { CreateOrderViewModel } from '../../view-models/order/create-order.view-model';
+import { OrderModel } from '../../models/campaign/order.model';
+import { OrderValidationModel } from '../../models/campaign/order-validation.model';
 import * as stripe from 'stripe';
 
 export class CampaignsService extends BaseService {
@@ -45,7 +47,21 @@ export class CampaignsService extends BaseService {
         return await this.campaignsRepository.getOrCreateCampaignReferralLink(session, userId, uId, nodeUUId());
     }
 
-    public async paymentRequest(session: neo4j.Session, userId: number, viewModel: PaymentRequestViewModel): Promise<boolean> {
+    public async createOrder(session: neo4j.Session, userId: number, viewModel: CreateOrderViewModel): Promise<OrderModel> {
+        const validation = await this.orderValidation(session, userId, viewModel);
+        if (validation === null || validation === undefined) {
+            throw ValidationUtil.createValidationErrorMessage('general', 'Validation failed');
+        }
+        if (!validation.hasEnoughHiveCoins && !validation.hasValidShippingAddress) {
+            return await this.campaignsRepository.createOrder(session, userId, nodeUUId(), viewModel);
+        } else {
+            if (validation.hasEnoughHiveCoins) {
+                throw ValidationUtil.createValidationErrorMessage('hasEnoughHiveCoins', 'User does not have anough hive coins');
+            }
+            if (validation.hasValidShippingAddress) {
+                throw ValidationUtil.createValidationErrorMessage('hasValidShippingAddress', 'Shipping address is not valid');
+            }
+        }
 
         // const stripe = require('stripe')(environment.stripe.secretKey);
         // // Charge the user's card:
@@ -57,7 +73,9 @@ export class CampaignsService extends BaseService {
         // }, (err, charge) => {
         //     // asynchronously called
         // });
+    }
 
-        return await this.campaignsRepository.paymentRequest(session, userId, viewModel);
+    public async orderValidation(session: neo4j.Session, userId: number, viewModel: CreateOrderViewModel): Promise<OrderValidationModel> {
+        return await this.campaignsRepository.orderValidation(session, userId, viewModel);
     }
 }

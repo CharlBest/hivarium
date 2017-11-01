@@ -32,7 +32,8 @@ export enum Campaigns {
     GetCampaigns,
     GetCampaign,
     GetOrCreateCampaignReferralLink,
-    PaymentRequest
+    CreateOrder,
+    OrderValidation
 }
 
 export enum Users {
