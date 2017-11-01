@@ -14,3 +14,11 @@ mat-tab-group ::ng-deep mat-tab-header {
     display: flex; 
     flex-flow: row wrap;
 }
+
+.svg-greyscale {
+    filter: gray; /* IE */
+    -webkit-filter: grayscale(1); /* Old WebKit */
+    -webkit-filter: grayscale(100%); /* New WebKit */
+    // filter: url(resources.svg#desaturate); /* older Firefox */
+    filter: grayscale(100%); /* Current draft standard */
+}

@@ -44,7 +44,7 @@
                         <input matInput
                             formControlName="daysDuration"
                             type="number"
-                            placeholder="duration"
+                            placeholder="duration in days"
                             required>
                     </mat-form-field>
                     <div *ngIf="serverErrors?.daysDuration"
@@ -114,6 +114,7 @@
                             placeholder="referral percentage"
                             required>
                     </mat-form-field>
+                    <span>%</span>
                     <div *ngIf="serverErrors?.referralPercentage"
                         class="validation-message">{{ serverErrors.referralPercentage.message }}</div>
                     <app-show-errors [control]="firstFormGroup.get('referralPercentage')"></app-show-errors>
@@ -137,6 +138,7 @@
 
                             <h3>Milestone {{i+1}}</h3>
 
+                            <span>$</span>
                             <mat-form-field>
                                 <input matInput
                                     formControlName="unlockAtValueOfSales"
@@ -157,6 +159,7 @@
                                     placeholder="percentage discount"
                                     required>
                             </mat-form-field>
+                            <span>%</span>
                             <div *ngIf="serverErrors?.percentageDiscount"
                                 class="validation-message">{{ serverErrors.percentageDiscount.message }}</div>
                             <app-show-errors [control]="secondFormGroup.get('percentageDiscount')"></app-show-errors>
@@ -223,6 +226,7 @@
 
                             <br>
 
+                            <span>$</span>
                             <mat-form-field>
                                 <input matInput
                                     formControlName="cost"

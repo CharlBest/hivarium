@@ -43,20 +43,24 @@
                 <tbody>
                     <tr>
                         <td>
-                            Earn from
+                            Earn
                             <br>
-                            <img src="assets/hive-coin.svg"
-                                style="max-height: 12px;"> {{campaign.minimumMilestoneReward}} to
+                            <span *ngIf="campaign.minimumMilestoneReward !== campaign.maximumMilestoneReward">
+                                <img src="assets/hive-coin.svg"
+                                    style="max-height: 12px;"> {{campaign.minimumMilestoneReward}} to
+                            </span>
                             <img src="assets/hive-coin.svg"
                                 style="max-height: 12px;"> {{campaign.maximumMilestoneReward}}
                             <br> when making a
                             <br> purchase
                         </td>
                         <td>
-                            Give and Get from
+                            Give and Get
                             <br>
-                            <img src="assets/hive-coin.svg"
-                                style="max-height: 12px;"> {{campaign.minimumReferralReward}} to
+                            <span *ngIf="campaign.minimumReferralReward !== campaign.maximumReferralReward">
+                                <img src="assets/hive-coin.svg"
+                                    style="max-height: 12px;"> {{campaign.minimumReferralReward}} to
+                            </span>
                             <img src="assets/hive-coin.svg"
                                 style="max-height: 12px;"> {{campaign.maximumReferralReward}}
                             <br> when referring a
@@ -109,7 +113,8 @@
                             <tr *ngFor="let milestone of campaign.milestones; let i=index">
                                 <td style="vertical-align: top; padding-top: 24px;">
                                     <img src="assets/hive-coin.svg"
-                                        style="max-height: 40px;">
+                                        style="max-height: 40px;"
+                                        [class.svg-greyscale]="milestone.unlockAtValueOfSales > campaign.totalValueOfSales">
                                 </td>
                                 <td>
                                     <h4>Milestone {{i+1}}</h4>
@@ -137,7 +142,7 @@
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>Buy</ng-template>
-            <mat-card *ngIf="campaign.refUsername">
+            <mat-card *ngIf="campaign.refUsername && loggedInUsername !== campaign.refUsername">
                 <mat-card-content style="text-align: center;">
                     <h4>You've been referred by {{campaign.refUsername}}</h4>
                     <div>Referral bonus HiveCoins Reward unlocked</div>

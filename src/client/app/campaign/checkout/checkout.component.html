@@ -40,7 +40,7 @@
                     </mat-radio-group>
                 </form>
                 <div *ngIf="user?.shippingAddresses?.length === 0">
-                    Please have at least one address
+                    Please have at least one shipping address
                 </div>
             </mat-card-content>
             <mat-card-actions>
@@ -70,7 +70,7 @@
                             <td>
                                 <app-number-ticker (valueChanges)="quantityValueChanges($event)"
                                     [min]="1"
-                                    [max]="selectedProduct.quantity * totalQuantity"
+                                    [max]="selectedProduct.quantity"
                                     [defaultValue]="1"></app-number-ticker>
                             </td>
                             <td>{{selectedProduct.title}}</td>
@@ -104,7 +104,7 @@
                                 <img src="assets/hive-coin.svg"
                                     style="max-height: 16px; margin-bottom: 22px;">
                                 <app-number-ticker (valueChanges)="hiveCoinsValueChanges($event)"
-                                    [max]="selectedProduct.cost"
+                                    [max]="maxHiveCoinsDiscount()"
                                     style="display: inline-block;"></app-number-ticker>
                             </td>
                         </tr>
@@ -148,6 +148,7 @@
                 <br>
 
                 <h4>Payment Details</h4>
+                <div *ngIf="totalHiveCoins > (totalAmount + totalShippingCost)">Yay. It;s free</div>
                 <div style="max-width: 370px;">
                     <div id="card-element"></div>
                     <div id="card-errors"

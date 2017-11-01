@@ -143,6 +143,15 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
     }
   }
 
+  maxHiveCoinsDiscount() {
+    const maxNeededHiveCoins = this.selectedProduct.cost * this.totalQuantity + this.totalShippingCost;
+    if (maxNeededHiveCoins < this.user.hiveCoins) {
+      return maxNeededHiveCoins;
+    } else {
+      return this.user.hiveCoins;
+    }
+  }
+
   buildStripe() {
     // Create a Stripe client
     this.stripe = window['Stripe'](environment.stripe.publishableKey);

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { CoinRewardInfoDialogComponent } from '../coin-reward-info-dialog/coin-reward-info-dialog.component';
 import { ProductModel } from '../../../../server/models/campaign/product.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../shared/auth.service';
 
 @Component({
   selector: 'app-campaign',
@@ -14,12 +15,15 @@ export class CampaignComponent implements OnInit {
 
   selectedTab: number;
   @Input() campaign: CampaignViewModel = null;
+  loggedInUsername: string = null;
 
   constructor(public dialog: MatDialog,
     private route: ActivatedRoute,
+    private authService: AuthService,
     private router: Router) { }
 
   ngOnInit() {
+    this.loggedInUsername = this.authService.getUsernameFromJWT();
   }
 
   buyNowButton() {

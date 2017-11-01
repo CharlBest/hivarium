@@ -17,7 +17,7 @@ export class AuthService implements CanActivate {
         if (this.checkLogin()) {
             return true;
         } else {
-            this.router.navigate(['login'], { queryParams: { returnUrl: state.url }});
+            this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
             return false;
         }
     }
@@ -29,6 +29,18 @@ export class AuthService implements CanActivate {
             const id = parsedToken.data.id;
             if (id !== null && id !== undefined) {
                 return +id;
+            }
+        }
+        return null;
+    }
+
+    public getUsernameFromJWT() {
+        const token = this.getLocalToken();
+        if (token !== null) {
+            const parsedToken = this.parseJwt(token);
+            const username = parsedToken.data.username;
+            if (username !== null && username !== undefined) {
+                return username;
             }
         }
         return null;
@@ -61,7 +73,7 @@ export class AuthService implements CanActivate {
     public removeToken() {
         sessionStorage.clear();
         this.updateloggedInUserId(null);
-        this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url }});
+        this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url } });
     }
 
     public checkLogin(): boolean {
