@@ -37,7 +37,6 @@ export class CampaignsController extends BaseController {
                 Validators.required({ value: viewModel.description }) ||
                 Validators.required({ value: viewModel.daysDuration }) ||
                 Validators.required({ value: viewModel.fullDescription }) ||
-                Validators.required({ value: viewModel.media }) ||
                 Validators.required({ value: viewModel.referralPercentage }) ||
                 // Validators.required({ value: viewModel.milestones }) ||
                 // Validators.required({ value: viewModel.products }) ||
