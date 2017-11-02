@@ -4,13 +4,13 @@
 <table style="width: 100%;">
     <tbody>
         <tr *ngFor="let referral of [1,2]; let i=index">
-            <td style="vertical-align: top; padding-top: 24px;">
+            <td style="vertical-align: top; padding-top: 20px; width: 50px;">
                 <img src="assets/hive-coin.svg"
                     style="max-height: 40px;">
             </td>
             <td>
                 <span *ngIf="i == 0">
-                    <h4>Give</h4>
+                    <h3>Give</h3>
                     <strong>Give your friends HiveCoins</strong>
                     <div>
                         Your friends
@@ -20,7 +20,7 @@
                     </div>
                 </span>
                 <span *ngIf="i == 1">
-                    <h4>Get</h4>
+                    <h3>Get</h3>
                     <strong>Refer more friends and keep earning HiveCoins, again and again.</strong>
                     <div>
                         You
@@ -29,7 +29,7 @@
                     </div>
                 </span>
             </td>
-            <td style="font-size: 2rem; border-left: 1px solid lightgray; text-align: center;">
+            <td style="font-size: 2rem; border-left: 1px solid #ececec; text-align: center; width: 100px;">
                 {{campaign.campaign.singleReferralPercentage}}%
             </td>
         </tr>

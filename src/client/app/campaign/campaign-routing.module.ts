@@ -6,7 +6,7 @@ import { CampaignMasterComponent } from './campaign-master/campaign-master.compo
 @NgModule({
     imports: [
         RouterModule.forChild([
-            { path: ':uId', component: CampaignMasterComponent, pathMatch: 'full', data: { title: 'Campaign', nav: Navigation.Back } },
+            { path: ':uId', component: CampaignMasterComponent, pathMatch: 'full', data: { title: 'Campaign', nav: Navigation.Primary } },
         ])
     ],
     exports: [RouterModule]

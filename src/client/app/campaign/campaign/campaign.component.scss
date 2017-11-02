@@ -1,3 +1,6 @@
+@import '~@angular/material/theming';
+@import '~app-theme-definition.scss';
+
 .tab-layout-settings {
     max-width: 990px;
     margin: 0 auto;
@@ -19,10 +22,30 @@ mat-tab-group ::ng-deep mat-tab-header {
     filter: gray; /* IE */
     -webkit-filter: grayscale(1); /* Old WebKit */
     -webkit-filter: grayscale(100%); /* New WebKit */
-    // filter: url(resources.svg#desaturate); /* older Firefox */
     filter: grayscale(100%); /* Current draft standard */
 }
 
 .fit-images ::ng-deep img {
     max-width: 100%;
+}
+
+.reward-info-dialog-button {
+    mat-icon {
+        font-size: 1.2rem;
+        color: mat-color($app-primary);
+    }
+}
+
+.hero-actions-table {
+    text-align: center;
+    width: 100%;
+
+    tr:first-child td > div {
+        max-width: 110px;
+        margin: 0 auto;
+
+        @media (min-width: 480px) {
+            max-width: 220px;
+        }
+    }
 }
