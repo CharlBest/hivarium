@@ -136,9 +136,22 @@ export class CampaignsRepository extends BaseRepository {
             shippingAddressUId: viewModel.shippingAddressUId
         });
 
-        const order = result.records.map(x => Database.createNodeObject(x.get('order'))) as OrderValidationModel[];
-        if (order !== null && order.length > 0) {
-            return order[0];
+        console.log(result);
+
+        const data = result.records.map(x => {
+            const model = new OrderValidationModel();
+            model.userExists = x.get('userExists');
+            model.productExists = x.get('productExists');
+            model.userHasEnoughHiveCoins = x.get('userHasEnoughHiveCoins');
+            model.productHasEnoughQuantity = x.get('productHasEnoughQuantity');
+            model.validReferral = x.get('validReferral');
+            model.userHasShippingAddress = x.get('userHasShippingAddress');
+            model.product = Database.createNodeObject(x.get('product'));
+            return model;
+        });
+
+        if (data !== null && data.length > 0) {
+            return data[0];
         } else {
             return null;
         }

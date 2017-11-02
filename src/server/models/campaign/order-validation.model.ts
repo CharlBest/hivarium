@@ -1,4 +1,12 @@
+import { ProductModel } from '../../models/campaign/product.model';
+
 export class OrderValidationModel {
-    hasEnoughHiveCoins: boolean;
-    hasValidShippingAddress: boolean;
+    userExists: boolean;
+    productExists: boolean;
+    userHasEnoughHiveCoins: boolean;
+    productHasEnoughQuantity: boolean;
+    validReferral: boolean;
+    userHasShippingAddress: boolean;
+
+    product: ProductModel;
 }

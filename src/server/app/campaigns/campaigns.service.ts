@@ -48,31 +48,83 @@ export class CampaignsService extends BaseService {
     }
 
     public async createOrder(session: neo4j.Session, userId: number, viewModel: CreateOrderViewModel): Promise<OrderModel> {
+        // Validation
+        // 1 - check if user has enough hive coins that they want to use
+        // 2 - check if user has valid shipping address for prodcut
+        // 3 - check if there are anough proudcts (quantity) that they want
+        // 4 - check if referral code is 1) valid code 2) valid from given product 3) not from same user
+
+        // 5 - if cash payable token is not null
+        // 6 - if cash payable payment successful
+
         const validation = await this.orderValidation(session, userId, viewModel);
         if (validation === null || validation === undefined) {
             throw ValidationUtil.createValidationErrorMessage('general', 'Validation failed');
         }
-        if (!validation.hasEnoughHiveCoins && !validation.hasValidShippingAddress) {
-            return await this.campaignsRepository.createOrder(session, userId, nodeUUId(), viewModel);
-        } else {
-            if (validation.hasEnoughHiveCoins) {
-                throw ValidationUtil.createValidationErrorMessage('hasEnoughHiveCoins', 'User does not have anough hive coins');
+        if (validation.userExists &&
+            validation.productExists &&
+            validation.userHasEnoughHiveCoins &&
+            validation.productHasEnoughQuantity &&
+            (validation.validReferral || viewModel.referralCode === null) &&
+            validation.userHasShippingAddress) {
+            // TODO: validate if shipping address is valid
+
+            // TODO: add shipping cost to calc
+            if (validation.product.cost === viewModel.hiveCoins) {
+                return await this.campaignsRepository.createOrder(session, userId, nodeUUId(), viewModel);
+            } else {
+                if (viewModel.token === null) {
+                    throw ValidationUtil.createValidationErrorMessage('token', 'Empty token');
+                }
+
+                // TODO: add shipping cost to calc
+                const totalPayableAmount = validation.product.cost - viewModel.hiveCoins;
+
+                const stripeAccount = new stripe(environment.stripe.secretKey);
+                // Charge the user's card:
+                let stripeCharge = null;
+                let stripeError = null;
+                await stripeAccount.charges.create({
+                    amount: totalPayableAmount,
+                    currency: 'USD',
+                    description: 'Hivarium Product order',
+                    source: viewModel.token,
+                }, (err, charge) => {
+                    if (err) {
+                        stripeError = err;
+                    }
+                    if (charge) {
+                        stripeCharge = charge;
+                    }
+                });
+
+                if (stripeCharge !== null) {
+                    return await this.campaignsRepository.createOrder(session, userId, nodeUUId(), viewModel);
+                }
+                if (stripeError !== null) {
+                    throw ValidationUtil.createValidationErrorMessage('stripeError', stripeError);
+                }
             }
-            if (validation.hasValidShippingAddress) {
-                throw ValidationUtil.createValidationErrorMessage('hasValidShippingAddress', 'Shipping address is not valid');
+        } else {
+            if (validation.userExists) {
+                throw ValidationUtil.createValidationErrorMessage('userExists', 'User does not exist');
+            }
+            if (validation.productExists) {
+                throw ValidationUtil.createValidationErrorMessage('productExists', 'Product does not exist');
+            }
+            if (validation.userHasEnoughHiveCoins) {
+                throw ValidationUtil.createValidationErrorMessage('userHasEnoughHiveCoins', 'user does not have enough HiveCoins');
+            }
+            if (validation.productHasEnoughQuantity) {
+                throw ValidationUtil.createValidationErrorMessage('productHasEnoughQuantity', 'Not enough proudct available');
+            }
+            if (validation.validReferral && viewModel.referralCode !== null) {
+                throw ValidationUtil.createValidationErrorMessage('validReferral', 'Invalid referral code');
+            }
+            if (validation.userHasShippingAddress) {
+                throw ValidationUtil.createValidationErrorMessage('userHasShippingAddress', 'User did not specify their shipping address');
             }
         }
-
-        // const stripe = require('stripe')(environment.stripe.secretKey);
-        // // Charge the user's card:
-        // stripe.charges.create({
-        //     amount: 1,
-        //     currency: 'EUR',
-        //     description: 'Hivarium Product bought',
-        //     source: viewModel.token,
-        // }, (err, charge) => {
-        //     // asynchronously called
-        // });
     }
 
     public async orderValidation(session: neo4j.Session, userId: number, viewModel: CreateOrderViewModel): Promise<OrderValidationModel> {

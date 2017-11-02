@@ -148,7 +148,8 @@
                 <br>
 
                 <h4>Payment Details</h4>
-                <div *ngIf="totalHiveCoins > (totalAmount + totalShippingCost)">Yay. It;s free</div>
+                <div *ngIf="(totalAmount + totalShippingCost) === 0"
+                    style="color: orange;">Yay. It's free</div>
                 <div style="max-width: 370px;">
                     <div id="card-element"></div>
                     <div id="card-errors"
@@ -166,6 +167,7 @@
             <mat-card-actions>
                 <button mat-raised-button
                     type="button"
+                    [disabled]="(totalAmount + totalShippingCost) !== 0"
                     (click)="onSubmit()"
                     color="primary">Submit Payment</button>
             </mat-card-actions>
