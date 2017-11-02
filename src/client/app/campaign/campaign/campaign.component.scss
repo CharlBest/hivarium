@@ -22,3 +22,7 @@ mat-tab-group ::ng-deep mat-tab-header {
     // filter: url(resources.svg#desaturate); /* older Firefox */
     filter: grayscale(100%); /* Current draft standard */
 }
+
+.fit-images ::ng-deep img {
+    max-width: 100%;
+}
