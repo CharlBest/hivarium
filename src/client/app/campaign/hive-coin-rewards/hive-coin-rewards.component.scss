@@ -1,0 +1,10 @@
+.svg-greyscale {
+  filter: gray; /* IE */
+  -webkit-filter: grayscale(1); /* Old WebKit */
+  -webkit-filter: grayscale(100%); /* New WebKit */
+  filter: grayscale(100%); /* Current draft standard */
+}
+
+.text-greyscale {
+  color: grey;
+}

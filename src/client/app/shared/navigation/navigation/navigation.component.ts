@@ -15,15 +15,7 @@ import { TutorialService } from '../../../shared/tutorial/tutorial.service';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent implements OnInit, OnChanges {
-
-  @Input() swipeEvent: PointerEvent;
-  @ViewChild('tabLinkAbout') tabLinkAbout: ElementRef;
-  @ViewChild('tabLinkStartCampaign') tabLinkStartCampaign: ElementRef;
-  @ViewChild('tabLinkSignUp') tabLinkSignUp: ElementRef;
-  @ViewChild('tabLinkLogin') tabLinkLogin: ElementRef;
-  @ViewChild('tabLinkProfile') tabLinkProfile: ElementRef;
-
+export class NavigationComponent implements OnInit {
   loggedInUserId: number = this.authService.getloggedInUserId();
   activeNavigation = Navigation.Primary;
   navigationTypes = Navigation;
@@ -75,25 +67,6 @@ export class NavigationComponent implements OnInit, OnChanges {
           }
         }
       });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    for (const propName in changes) {
-      if (propName === 'swipeEvent') {
-        if (this.swipeEvent !== undefined) {
-          // TODO: impliment swipes again
-          // if (this.swipeEvent.type === 'swiperight') {
-          //   this.router.navigate([(<HTMLAnchorElement>this.tabLinkHome.nativeElement).pathname]);
-          // } else if (this.swipeEvent.type === 'swipeleft') {
-          //   if (this.loggedInUserId) {
-          //     this.router.navigate([(<HTMLAnchorElement>this.tabLinkProfile.nativeElement).pathname]);
-          //   } else {
-          //     this.router.navigate([(<HTMLAnchorElement>this.tabLinkLogin.nativeElement).pathname]);
-          //   }
-          // }
-        }
-      }
-    }
   }
 
   logout() {

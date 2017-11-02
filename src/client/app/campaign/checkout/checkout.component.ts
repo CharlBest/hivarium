@@ -37,6 +37,7 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
   user: UserModel = null;
 
   form: FormGroup;
+  loggedInUsername: string = null;
 
   constructor(private authService: AuthService,
     private router: Router,
@@ -53,6 +54,8 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
         this.referralCode = null;
       }
     });
+
+    this.loggedInUsername = this.authService.getUsernameFromJWT();
 
     if (this.loggedInUserId) {
       this.getUser();

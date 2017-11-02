@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, PreloadAllModules } from '@angular/router';
 import { AuthService } from './shared/auth.service';
 import { CustomPreloading } from './shared/custom-preloading';
 
@@ -24,7 +24,7 @@ import { CustomPreloading } from './shared/custom-preloading';
       { path: 'user', loadChildren: './user/user.module#UserModule' },
       { path: 'verify', loadChildren: './verify/verify.module#VerifyModule', canActivate: [AuthService] },
       { path: '**', redirectTo: '' }
-    ], { preloadingStrategy: CustomPreloading })
+    ], { preloadingStrategy: PreloadAllModules })
   ],
   exports: [
     RouterModule

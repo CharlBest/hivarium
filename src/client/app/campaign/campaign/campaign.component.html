@@ -85,12 +85,14 @@
                         <td>
                             <button mat-raised-button
                                 type="button"
-                                (click)="buyNowButton()">Buy now</button>
+                                (click)="buyNowButton()"
+                                color="primary">Buy now</button>
                         </td>
                         <td>
                             <button mat-raised-button
                                 type="button"
-                                (click)="goToRefferalSection()">Refer a friend</button>
+                                (click)="goToRefferalSection()"
+                                color="primary">Refer a friend</button>
                         </td>
                     </tr>
                 </tbody>
@@ -130,7 +132,8 @@
                                         of your purchase in HiveCoins
                                     </div>
                                 </td>
-                                <td style="font-size: 2rem; border-left: 1px solid #ececec; text-align: center; width: 100px;">
+                                <td style="font-size: 2rem; border-left: 1px solid #ececec; text-align: center; width: 100px;"
+                                    [class.text-greyscale]="milestone.unlockAtValueOfSales > campaign.totalValueOfSales">
                                     {{milestone.percentageDiscount}}%
                                 </td>
                             </tr>
@@ -163,6 +166,7 @@
                         mat-card-image></app-media>
 
                     <mat-card-content>
+                        <br>
                         <table style="width: 100%; text-align: center; font-size: 2rem;">
                             <tbody>
                                 <tr>
@@ -177,6 +181,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <br>
 
                         <h3>{{product.title}}</h3>
                         <div>{{product.description}}</div>
@@ -201,25 +206,9 @@
                             </button>
                         </p>
 
-                        <div>
-                            <div style="float: left; margin-right: 20px;">
-                                <img src="assets/hive-coin.svg"
-                                    style="max-height: 12px;"> {{campaign.productMilestoneReward(product.cost)}}
-                                <div class="small-descriptive-text">milestone reward</div>
-                            </div>
-                            <div style="float: left; margin-right: 20px;">
-                                <img src="assets/hive-coin.svg"
-                                    style="max-height: 12px;"
-                                    [class.svg-greyscale]="campaign.refUsername === null || (loggedInUsername === campaign.refUsername && campaign.refUsername !== null)"> {{campaign.productReferralReward(product.cost)}}
-                                <div class="small-descriptive-text">referral reward</div>
-                            </div>
-                            <div style="float: left;">
-                                <img src="assets/hive-coin.svg"
-                                    style="max-height: 12px;"
-                                    [class.svg-greyscale]="campaign.totalValueOfSales < campaign.milestones[campaign.milestones.length - 1].unlockAtValueOfSales"> {{campaign.productMaxMilestoneReward(product.cost)}}
-                                <div class="small-descriptive-text">max milestone reward</div>
-                            </div>
-                        </div>
+                        <app-hive-coin-rewards [campaign]="campaign"
+                            [product]="product"
+                            [loggedInUsername]="loggedInUsername"></app-hive-coin-rewards>
                         <br>
                         <br>
                         <br>
@@ -228,7 +217,7 @@
                             type="button"
                             color="primary"
                             (click)="goToProduct(product)"
-                            style="width: 100%;">Buy this product</button>
+                            style="width: 100%; height: 46px;">Buy this product</button>
                     </mat-card-content>
                 </mat-card>
             </div>

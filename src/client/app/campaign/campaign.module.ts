@@ -13,6 +13,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { MediaModule } from '../shared/media/media.module';
 import { NumberTickerComponent } from './number-ticker/number-ticker.component';
 import { AddShippingAddressDialogModule } from '../shared/add-shipping-address-dialog/add-shipping-address-dialog.module';
+import { HiveCoinRewardsComponent } from './hive-coin-rewards/hive-coin-rewards.component';
 import {
   MatButtonModule,
   MatCardModule,
@@ -48,7 +49,8 @@ import {
     ReferralComponent,
     ReferralRewardsComponent,
     CoinRewardInfoDialogComponent,
-    NumberTickerComponent
+    NumberTickerComponent,
+    HiveCoinRewardsComponent
   ],
   providers: [
     CampaignService

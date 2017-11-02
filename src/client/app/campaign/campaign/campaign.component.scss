@@ -25,6 +25,10 @@ mat-tab-group ::ng-deep mat-tab-header {
     filter: grayscale(100%); /* Current draft standard */
 }
 
+.text-greyscale {
+    color: grey;
+}
+
 .fit-images ::ng-deep img {
     max-width: 100%;
 }

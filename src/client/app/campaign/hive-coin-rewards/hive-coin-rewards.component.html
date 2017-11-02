@@ -1,0 +1,28 @@
+<div>
+    <div style="float: left; margin-right: 20px;">
+        <img src="assets/hive-coin.svg"
+            style="max-height: 12px;">
+        <strong>
+            {{campaign.productMilestoneReward(product.cost, showDecimal)}}
+        </strong>
+        <div class="small-descriptive-text">milestone reward</div>
+    </div>
+    <div style="float: left; margin-right: 20px;">
+        <img src="assets/hive-coin.svg"
+            style="max-height: 12px;"
+            [class.svg-greyscale]="campaign.refUsername === null || (loggedInUsername === campaign.refUsername && campaign.refUsername !== null)">
+        <strong [class.text-greyscale]="campaign.refUsername === null || (loggedInUsername === campaign.refUsername && campaign.refUsername !== null)">
+            {{campaign.productReferralReward(product.cost, showDecimal)}}
+        </strong>
+        <div class="small-descriptive-text">referral reward</div>
+    </div>
+    <div style="float: left;">
+        <img src="assets/hive-coin.svg"
+            style="max-height: 12px;"
+            [class.svg-greyscale]="campaign.totalValueOfSales < campaign.milestones[campaign.milestones.length - 1].unlockAtValueOfSales">
+        <strong [class.text-greyscale]="campaign.totalValueOfSales < campaign.milestones[campaign.milestones.length - 1].unlockAtValueOfSales">
+            {{campaign.productMaxMilestoneReward(product.cost, showDecimal)}}
+        </strong>
+        <div class="small-descriptive-text">max milestone reward</div>
+    </div>
+</div>

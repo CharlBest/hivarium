@@ -72,7 +72,11 @@ app-media {
     font-size: 0.75rem;
 }
 
-.mat-raised-button {
+a:visited {
+    color: mat-color($app-primary);
+}
+
+.mat-raised-button.mat-primary {
     background-color: mat-color($app-primary, 700) !important;
     color: white !important;
     font-weight: bold;
