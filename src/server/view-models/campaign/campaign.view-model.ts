@@ -2,6 +2,8 @@ import { CampaignModel } from '../../models/campaign/campaign.model';
 import { ProductModel } from '../../models/campaign/product.model';
 import { UserModel } from '../../models/user/user.model';
 import { MilestoneModel } from '../../models/campaign/milestone.model';
+import { ShippingAddressModel } from '../../models/user/shipping-address.model';
+import { ShippingCountry } from '../../models/campaign/shipping-countries';
 
 export class CampaignViewModel {
     constructor(public campaign: CampaignModel, public owner: UserModel, public refUsername: string, public milestones: MilestoneModel[], public products: ProductModel[]) {
@@ -101,5 +103,54 @@ export class CampaignViewModel {
 
     maximunTotalProductReward(productCost: number) {
         return this.productMaxMilestoneReward(productCost, true) - this.productMilestoneReward(productCost, true);
+    }
+
+    doesShipToUser(product: ProductModel, userShippingAddress: ShippingAddressModel): boolean {
+        if (product !== null && userShippingAddress !== null) {
+            if (product.shippingCountires === null || product.shippingCountires === undefined || product.shippingCountires.length === 0) {
+                return true;
+            } else if (product.shippingCountires.some(x => x.id === 0)) {
+                // Ships to entire world
+                return true;
+            } else if (product.shippingCountires.some(x => x.id === 1) && userShippingAddress.country.euCountry) {
+                // EU countries
+                return true;
+            } else if (product.shippingCountires.some(x => x.id === userShippingAddress.country.id)) {
+                // Certain countries
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    // TODO: add EU country pricing
+    shippingCost(product: ProductModel, quantity: number, userShippingAddressCountry: ShippingCountry): number {
+        if (product.shippingCountires === null || product.shippingCountires === undefined || product.shippingCountires.length === 0) {
+            return 0;
+        } else if (product.shippingCountires.some(x => x.id === 0)) {
+            // Ships to entire world
+            const destinationAddress = product.shippingCountires.find(x => x.id === userShippingAddressCountry.id) || null;
+            if (destinationAddress !== null) {
+                return this.calculateShippingCost(quantity, destinationAddress.singleAmount, destinationAddress.extraAmount);
+            } else {
+                const entireWorldShipping = product.shippingCountires.find(x => x.id === 0);
+                return this.calculateShippingCost(quantity, entireWorldShipping.singleAmount, entireWorldShipping.extraAmount);
+            }
+        } else if (product.shippingCountires.some(x => x.id === userShippingAddressCountry.id)) {
+            // Certain countries
+            const certainCountryShipping = product.shippingCountires.find(x => x.id === userShippingAddressCountry.id);
+            return this.calculateShippingCost(quantity, certainCountryShipping.singleAmount, certainCountryShipping.extraAmount);
+        }
+    }
+
+    private calculateShippingCost(quantity: number, singleAmount: number, extraAmount: number): number {
+        if (quantity === 1) {
+            return singleAmount;
+        } else if (quantity > 1) {
+            return singleAmount + ((quantity - 1) * extraAmount);
+        }
     }
 }

@@ -12,6 +12,7 @@ import { CreateCampaignViewModel } from '../../view-models/campaign/create-campa
 import { CreateOrderViewModel } from '../../view-models/order/create-order.view-model';
 import { OrderModel } from '../../models/campaign/order.model';
 import { OrderValidationModel } from '../../models/campaign/order-validation.model';
+import { ShippingCountry, ShippingCountries } from '../../models/campaign/shipping-countries';
 
 export class CampaignsRepository extends BaseRepository {
 
@@ -69,13 +70,49 @@ export class CampaignsRepository extends BaseRepository {
         const result = await session.run(query.data, { uId, refCode });
 
         const campaign = result.records.map(x => {
-            return new CampaignViewModel(
+            const viewModel = new CampaignViewModel(
                 Database.createNodeObject(x.get('campaign')),
                 Database.createNodeObject(x.get('user')),
                 x.get('refUser'),
                 Database.createNodeObjectArray(x.get('milestones')),
                 Database.createNodeObjectArray(x.get('products'))
             );
+
+            // Shipping
+            const shippingData = x.get('shipping').map(y => {
+                return {
+                    productUId: y.productUId,
+                    shipping: Database.createNodeObject(y.shipping),
+                    shippingCountry: Database.createNodeObject(y.shippingCountry)
+                };
+            }) as { productUId: string, shipping: { singleAmount: number, extraAmount: number }, shippingCountry: { id: number } }[];
+
+            for (const product of viewModel.products) {
+                const shippingInformation = shippingData.filter(y => y.productUId === product.uId);
+                for (const shippingInfo of shippingInformation) {
+                    let shippingCountry = new ShippingCountry();
+
+                    if (shippingInfo.shippingCountry.id === 0) {
+                        // Entire world
+                        shippingCountry.id = 0;
+                        shippingCountry.title = 'Entire world';
+                        shippingCountry.singleAmount = shippingInfo.shipping.singleAmount;
+                        shippingCountry.extraAmount = shippingInfo.shipping.extraAmount;
+                    } else {
+                        shippingCountry = ShippingCountries.find(y => y.id === shippingInfo.shippingCountry.id);
+                        shippingCountry.singleAmount = shippingInfo.shipping.singleAmount;
+                        shippingCountry.extraAmount = shippingInfo.shipping.extraAmount;
+                    }
+
+                    if (product.shippingCountires === undefined) {
+                        product.shippingCountires = [];
+                    }
+
+                    product.shippingCountires.push(shippingCountry);
+                }
+            }
+
+            return viewModel;
         });
 
         if (campaign !== null && campaign.length > 0) {

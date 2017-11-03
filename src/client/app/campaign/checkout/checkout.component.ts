@@ -88,9 +88,6 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
 
     this.form.get('selectedShippingAddress').valueChanges.subscribe(value => {
       this.updateShippingCost();
-
-      // TODO: show if product ships to user
-      const selectedShippingAddressCountry = (<ShippingAddressModel>this.form.get('selectedShippingAddress').value).country;
     });
   }
 
@@ -139,11 +136,7 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
 
   updateShippingCost(): void {
     const selectedShippingAddressCountry = (<ShippingAddressModel>this.form.get('selectedShippingAddress').value).country;
-    if (this.totalQuantity === 1) {
-      this.totalShippingCost = 50;
-    } else if (this.totalQuantity > 1) {
-      this.totalShippingCost = 50 + ((this.totalQuantity - 1) * 20);
-    }
+    this.totalShippingCost = this.campaign.shippingCost(this.selectedProduct, this.totalQuantity, selectedShippingAddressCountry);
   }
 
   maxHiveCoinsDiscount() {

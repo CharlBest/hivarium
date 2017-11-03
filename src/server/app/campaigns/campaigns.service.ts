@@ -19,6 +19,7 @@ import { CreateOrderViewModel } from '../../view-models/order/create-order.view-
 import { OrderModel } from '../../models/campaign/order.model';
 import { OrderValidationModel } from '../../models/campaign/order-validation.model';
 import * as stripe from 'stripe';
+import { ShippingDetails } from '../../models/campaign/shipping-details.enum';
 
 export class CampaignsService extends BaseService {
 
@@ -32,6 +33,13 @@ export class CampaignsService extends BaseService {
     public async createCampaign(session: neo4j.Session, userId: number, campaignUId: string, viewModel: CreateCampaignViewModel): Promise<CampaignModel> {
         // TODO: validation checks
         viewModel.products.forEach(x => x.uId = nodeUUId());
+
+        viewModel.products.forEach(x => {
+            if (x.shippingDetails === ShippingDetails.NoShippingInvolved) {
+                x.shippingCountires = null;
+            }
+        });
+
         return await this.campaignsRepository.createCampaign(session, userId, campaignUId, viewModel);
     }
 

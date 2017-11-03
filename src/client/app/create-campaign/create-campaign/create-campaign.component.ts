@@ -288,9 +288,25 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
       shippingCountries: this.buildProductShippingCountryArray(shippingCountries)
     });
 
+    formGroup.get('shippingDetails').valueChanges.subscribe((value: ShippingDetails) => {
+      if (value === ShippingDetails.ShipsAnywhereInTheWorld) {
+        // Add Entire world option
+        const group = this.buildProductShippingCountryGroup(0, 'Entire world');
+        (<FormArray>formGroup.get('shippingCountries')).push(group);
+      } else if (value === ShippingDetails.OnlyShipsToCertainCountries) {
+        // Remove Entire world option
+        const tempShippingCountries = formGroup.get('shippingCountries').value as ShippingCountry[];
+        const index = tempShippingCountries.findIndex(x => x.id === 0);
+        if (index !== -1) {
+          (<FormArray>formGroup.get('shippingCountries')).removeAt(index);
+        }
+      }
+    });
+
     formGroup.get('selectedShippingCountries').valueChanges.subscribe((value: ShippingCountry[]) => {
       const currentSelectedCountries = (<FormArray>formGroup.get('shippingCountries')).value as ShippingCountry[];
 
+      // Add new country options
       for (const ship of value) {
         if (currentSelectedCountries.filter(x => x.id === ship.id).length === 0) {
           const group = this.buildProductShippingCountryGroup(ship.id, ship.title, ship.singleAmount, ship.extraAmount);
@@ -298,9 +314,10 @@ export class CreateCampaignComponent implements OnInit, AfterViewInit {
         }
       }
 
+      // Remove new country options
       let index = 0;
       for (const selectedCountry of currentSelectedCountries) {
-        if (value.filter(x => x.id === selectedCountry.id).length === 0) {
+        if (value.filter(x => x.id === selectedCountry.id || x.id !== 0).length === 0) {
           (<FormArray>formGroup.get('shippingCountries')).removeAt(index);
         }
         index++;
