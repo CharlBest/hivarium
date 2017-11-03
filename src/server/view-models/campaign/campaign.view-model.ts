@@ -63,6 +63,63 @@ export class CampaignViewModel {
         return Math.trunc(result);
     }
 
+    static doesShipToUserStatic(product: ProductModel, userShippingCountry: ShippingCountry): boolean {
+        if (product !== null && userShippingCountry !== null && userShippingCountry !== undefined) {
+            if (product.shippingCountires === null || product.shippingCountires === undefined || product.shippingCountires.length === 0) {
+                return true;
+            } else if (product.shippingCountires.some(x => x.id === 0)) {
+                // Ships to entire world
+                return true;
+            } else if (product.shippingCountires.some(x => x.id === 1) && userShippingCountry.euCountry) {
+                // EU countries
+                return true;
+            } else if (product.shippingCountires.some(x => x.id === userShippingCountry.id)) {
+                // Certain countries
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    // TODO: add EU country pricing
+    static shippingCostStatic(product: ProductModel, quantity: number, userShippingAddressCountry: ShippingCountry): number {
+        if (product.shippingCountires === null || product.shippingCountires === undefined || product.shippingCountires.length === 0) {
+            return 0;
+        } else if (product.shippingCountires.some(x => x.id === 0)) {
+            // Ships to entire world
+            const destinationAddress = product.shippingCountires.find(x => x.id === userShippingAddressCountry.id) || null;
+            if (destinationAddress !== null) {
+                return this.calculateShippingCost(quantity, destinationAddress.singleAmount, destinationAddress.extraAmount);
+            } else {
+                const entireWorldShipping = product.shippingCountires.find(x => x.id === 0);
+                return this.calculateShippingCost(quantity, entireWorldShipping.singleAmount, entireWorldShipping.extraAmount);
+            }
+        } else if (product.shippingCountires.some(x => x.id === userShippingAddressCountry.id)) {
+            // Certain countries
+            const certainCountryShipping = product.shippingCountires.find(x => x.id === userShippingAddressCountry.id);
+            return this.calculateShippingCost(quantity, certainCountryShipping.singleAmount, certainCountryShipping.extraAmount);
+        }
+    }
+
+    private static calculateShippingCost(quantity: number, singleAmount: number, extraAmount: number): number {
+        if (quantity === 1) {
+            return singleAmount;
+        } else if (quantity > 1) {
+            return singleAmount + ((quantity - 1) * extraAmount);
+        }
+    }
+
+    doesShipToUser(product: ProductModel, userShippingAddressCountry: ShippingCountry): boolean {
+        return CampaignViewModel.doesShipToUserStatic(product, userShippingAddressCountry);
+    }
+
+    shippingCost(product: ProductModel, quantity: number, userShippingAddressCountry: ShippingCountry): number {
+        return CampaignViewModel.shippingCostStatic(product, quantity, userShippingAddressCountry);
+    }
+
     productMilestoneReward(productCost: number, showDecimal = false): number {
         const unlockedMilestones = this.milestones.filter(x => x.unlockAtValueOfSales <= this.totalValueOfSales);
         if (unlockedMilestones.length === 0) {
@@ -103,54 +160,5 @@ export class CampaignViewModel {
 
     maximunTotalProductReward(productCost: number) {
         return this.productMaxMilestoneReward(productCost, true) - this.productMilestoneReward(productCost, true);
-    }
-
-    doesShipToUser(product: ProductModel, userShippingAddress: ShippingAddressModel): boolean {
-        if (product !== null && userShippingAddress !== null) {
-            if (product.shippingCountires === null || product.shippingCountires === undefined || product.shippingCountires.length === 0) {
-                return true;
-            } else if (product.shippingCountires.some(x => x.id === 0)) {
-                // Ships to entire world
-                return true;
-            } else if (product.shippingCountires.some(x => x.id === 1) && userShippingAddress.country.euCountry) {
-                // EU countries
-                return true;
-            } else if (product.shippingCountires.some(x => x.id === userShippingAddress.country.id)) {
-                // Certain countries
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return null;
-        }
-    }
-
-    // TODO: add EU country pricing
-    shippingCost(product: ProductModel, quantity: number, userShippingAddressCountry: ShippingCountry): number {
-        if (product.shippingCountires === null || product.shippingCountires === undefined || product.shippingCountires.length === 0) {
-            return 0;
-        } else if (product.shippingCountires.some(x => x.id === 0)) {
-            // Ships to entire world
-            const destinationAddress = product.shippingCountires.find(x => x.id === userShippingAddressCountry.id) || null;
-            if (destinationAddress !== null) {
-                return this.calculateShippingCost(quantity, destinationAddress.singleAmount, destinationAddress.extraAmount);
-            } else {
-                const entireWorldShipping = product.shippingCountires.find(x => x.id === 0);
-                return this.calculateShippingCost(quantity, entireWorldShipping.singleAmount, entireWorldShipping.extraAmount);
-            }
-        } else if (product.shippingCountires.some(x => x.id === userShippingAddressCountry.id)) {
-            // Certain countries
-            const certainCountryShipping = product.shippingCountires.find(x => x.id === userShippingAddressCountry.id);
-            return this.calculateShippingCost(quantity, certainCountryShipping.singleAmount, certainCountryShipping.extraAmount);
-        }
-    }
-
-    private calculateShippingCost(quantity: number, singleAmount: number, extraAmount: number): number {
-        if (quantity === 1) {
-            return singleAmount;
-        } else if (quantity > 1) {
-            return singleAmount + ((quantity - 1) * extraAmount);
-        }
     }
 }

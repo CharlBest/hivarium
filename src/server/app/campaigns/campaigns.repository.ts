@@ -20,6 +20,42 @@ export class CampaignsRepository extends BaseRepository {
         super();
     }
 
+    private buildProductModel(shippingNode, model) {
+        const shippingData = shippingNode.map(y => {
+            return {
+                productUId: y.productUId,
+                shipping: Database.createNodeObject(y.shipping),
+                shippingCountry: Database.createNodeObject(y.shippingCountry)
+            };
+        }) as { productUId: string, shipping: { singleAmount: number, extraAmount: number }, shippingCountry: { id: number } }[];
+
+        const products = model.products || [model.product];
+        for (const product of products) {
+            const shippingInformation = shippingData.filter(y => y.productUId === product.uId);
+            for (const shippingInfo of shippingInformation) {
+                let shippingCountry = new ShippingCountry();
+
+                if (shippingInfo.shippingCountry.id === 0) {
+                    // Entire world
+                    shippingCountry.id = 0;
+                    shippingCountry.title = 'Entire world';
+                    shippingCountry.singleAmount = shippingInfo.shipping.singleAmount;
+                    shippingCountry.extraAmount = shippingInfo.shipping.extraAmount;
+                } else {
+                    shippingCountry = ShippingCountries.find(y => y.id === shippingInfo.shippingCountry.id);
+                    shippingCountry.singleAmount = shippingInfo.shipping.singleAmount;
+                    shippingCountry.extraAmount = shippingInfo.shipping.extraAmount;
+                }
+
+                if (product.shippingCountires === undefined) {
+                    product.shippingCountires = [];
+                }
+
+                product.shippingCountires.push(shippingCountry);
+            }
+        }
+    }
+
     public async createCampaign(session: neo4j.Session, userId: number, campaignUId: string, viewModel: CreateCampaignViewModel): Promise<CampaignModel> {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Campaigns, Campaigns.CreateCampaign)}`);
         const result = await session.run(query.data, {
@@ -79,38 +115,7 @@ export class CampaignsRepository extends BaseRepository {
             );
 
             // Shipping
-            const shippingData = x.get('shipping').map(y => {
-                return {
-                    productUId: y.productUId,
-                    shipping: Database.createNodeObject(y.shipping),
-                    shippingCountry: Database.createNodeObject(y.shippingCountry)
-                };
-            }) as { productUId: string, shipping: { singleAmount: number, extraAmount: number }, shippingCountry: { id: number } }[];
-
-            for (const product of viewModel.products) {
-                const shippingInformation = shippingData.filter(y => y.productUId === product.uId);
-                for (const shippingInfo of shippingInformation) {
-                    let shippingCountry = new ShippingCountry();
-
-                    if (shippingInfo.shippingCountry.id === 0) {
-                        // Entire world
-                        shippingCountry.id = 0;
-                        shippingCountry.title = 'Entire world';
-                        shippingCountry.singleAmount = shippingInfo.shipping.singleAmount;
-                        shippingCountry.extraAmount = shippingInfo.shipping.extraAmount;
-                    } else {
-                        shippingCountry = ShippingCountries.find(y => y.id === shippingInfo.shippingCountry.id);
-                        shippingCountry.singleAmount = shippingInfo.shipping.singleAmount;
-                        shippingCountry.extraAmount = shippingInfo.shipping.extraAmount;
-                    }
-
-                    if (product.shippingCountires === undefined) {
-                        product.shippingCountires = [];
-                    }
-
-                    product.shippingCountires.push(shippingCountry);
-                }
-            }
+            this.buildProductModel(x.get('shipping'), viewModel);
 
             return viewModel;
         });
@@ -165,15 +170,12 @@ export class CampaignsRepository extends BaseRepository {
         const query = require(`../../core/database/queries/${this.getQueryPath(Folder.Campaigns, Campaigns.OrderValidation)}`);
         const result = await session.run(query.data, {
             userId,
-            token: viewModel.token,
             productUId: viewModel.productUId,
             quantity: viewModel.quantity,
             hiveCoins: viewModel.hiveCoins,
             referralCode: viewModel.referralCode,
             shippingAddressUId: viewModel.shippingAddressUId
         });
-
-        console.log(result);
 
         const data = result.records.map(x => {
             const model = new OrderValidationModel();
@@ -183,7 +185,12 @@ export class CampaignsRepository extends BaseRepository {
             model.productHasEnoughQuantity = x.get('productHasEnoughQuantity');
             model.validReferral = x.get('validReferral');
             model.userHasShippingAddress = x.get('userHasShippingAddress');
+            model.userShippingCountryId = x.get('userShippingCountryId');
             model.product = Database.createNodeObject(x.get('product'));
+
+            // Shipping
+            this.buildProductModel(x.get('shipping'), model);
+
             return model;
         });
 

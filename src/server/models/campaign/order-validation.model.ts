@@ -1,4 +1,5 @@
 import { ProductModel } from '../../models/campaign/product.model';
+import { ShippingCountry } from '../../models/campaign/shipping-countries';
 
 export class OrderValidationModel {
     userExists: boolean;
@@ -9,4 +10,5 @@ export class OrderValidationModel {
     userHasShippingAddress: boolean;
 
     product: ProductModel;
+    userShippingCountryId: number;
 }

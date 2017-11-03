@@ -45,7 +45,7 @@
                     Please have at least one shipping address
                 </div>
 
-                <div *ngIf="!campaign.doesShipToUser(selectedProduct, form.get('selectedShippingAddress').value) && form.get('selectedShippingAddress').value !== null">
+                <div *ngIf="!campaign.doesShipToUser(selectedProduct, form.get('selectedShippingAddress').value?.country) && form.get('selectedShippingAddress').value !== null">
                     <br>
                     <div style="color: red;">
                         <strong>Product does not ship to your country</strong>
@@ -67,7 +67,7 @@
             </mat-card-actions>
         </mat-card>
 
-        <mat-card *ngIf="campaign.doesShipToUser(selectedProduct, form.get('selectedShippingAddress').value) && form.get('selectedShippingAddress').value !== null">
+        <mat-card *ngIf="campaign.doesShipToUser(selectedProduct, form.get('selectedShippingAddress').value?.country) && form.get('selectedShippingAddress').value !== null">
             <mat-card-content>
                 <h4>Payment Breakdown</h4>
 

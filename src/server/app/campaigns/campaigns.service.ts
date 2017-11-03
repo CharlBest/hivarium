@@ -20,6 +20,7 @@ import { OrderModel } from '../../models/campaign/order.model';
 import { OrderValidationModel } from '../../models/campaign/order-validation.model';
 import * as stripe from 'stripe';
 import { ShippingDetails } from '../../models/campaign/shipping-details.enum';
+import { ShippingCountries } from '../../models/campaign/shipping-countries';
 
 export class CampaignsService extends BaseService {
 
@@ -69,24 +70,26 @@ export class CampaignsService extends BaseService {
         if (validation === null || validation === undefined) {
             throw ValidationUtil.createValidationErrorMessage('general', 'Validation failed');
         }
+        const userShippingCountry = ShippingCountries.find(x => x.id === validation.userShippingCountryId);
+        const validShippingDestination = CampaignViewModel.doesShipToUserStatic(validation.product, userShippingCountry);
+
         if (validation.userExists &&
             validation.productExists &&
             validation.userHasEnoughHiveCoins &&
             validation.productHasEnoughQuantity &&
             (validation.validReferral || viewModel.referralCode === null) &&
-            validation.userHasShippingAddress) {
-            // TODO: validate if shipping address is valid
+            validation.userHasShippingAddress &&
+            validShippingDestination) {
 
-            // TODO: add shipping cost to calc
-            if (validation.product.cost === viewModel.hiveCoins) {
+            const totalCost = validation.product.cost + CampaignViewModel.shippingCostStatic(validation.product, viewModel.quantity, userShippingCountry);
+            if (totalCost === viewModel.hiveCoins) {
                 return await this.campaignsRepository.createOrder(session, userId, nodeUUId(), viewModel);
             } else {
                 if (viewModel.token === null) {
                     throw ValidationUtil.createValidationErrorMessage('token', 'Empty token');
                 }
 
-                // TODO: add shipping cost to calc
-                const totalPayableAmount = validation.product.cost - viewModel.hiveCoins;
+                const totalPayableAmount = totalCost - viewModel.hiveCoins;
 
                 const stripeAccount = new stripe(environment.stripe.secretKey);
                 // Charge the user's card:
@@ -131,6 +134,9 @@ export class CampaignsService extends BaseService {
             }
             if (validation.userHasShippingAddress) {
                 throw ValidationUtil.createValidationErrorMessage('userHasShippingAddress', 'User did not specify their shipping address');
+            }
+            if (validShippingDestination) {
+                throw ValidationUtil.createValidationErrorMessage('validShippingDestination', 'Product does not ship to user');
             }
         }
     }
