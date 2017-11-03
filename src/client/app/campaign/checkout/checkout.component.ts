@@ -221,8 +221,6 @@ export class CheckoutComponent implements OnInit, OnChanges, AfterViewChecked {
     viewModel.referralCode = this.referralCode;
     viewModel.shippingAddressUId = (<ShippingAddressModel>this.form.get('selectedShippingAddress').value).uId;
 
-    console.log(viewModel);
-
     this.campaignService.createOrder(viewModel).subscribe(
       data => {
         this.isProcessing = false;

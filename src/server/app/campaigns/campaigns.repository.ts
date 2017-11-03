@@ -33,25 +33,27 @@ export class CampaignsRepository extends BaseRepository {
         for (const product of products) {
             const shippingInformation = shippingData.filter(y => y.productUId === product.uId);
             for (const shippingInfo of shippingInformation) {
-                let shippingCountry = new ShippingCountry();
+                if (shippingInfo.shipping !== null && shippingInfo.shippingCountry !== null) {
+                    let shippingCountry = new ShippingCountry();
 
-                if (shippingInfo.shippingCountry.id === 0) {
-                    // Entire world
-                    shippingCountry.id = 0;
-                    shippingCountry.title = 'Entire world';
-                    shippingCountry.singleAmount = shippingInfo.shipping.singleAmount;
-                    shippingCountry.extraAmount = shippingInfo.shipping.extraAmount;
-                } else {
-                    shippingCountry = ShippingCountries.find(y => y.id === shippingInfo.shippingCountry.id);
-                    shippingCountry.singleAmount = shippingInfo.shipping.singleAmount;
-                    shippingCountry.extraAmount = shippingInfo.shipping.extraAmount;
+                    if (shippingInfo.shippingCountry.id === 0) {
+                        // Entire world
+                        shippingCountry.id = 0;
+                        shippingCountry.title = 'Entire world';
+                        shippingCountry.singleAmount = shippingInfo.shipping.singleAmount;
+                        shippingCountry.extraAmount = shippingInfo.shipping.extraAmount;
+                    } else {
+                        shippingCountry = ShippingCountries.find(y => y.id === shippingInfo.shippingCountry.id);
+                        shippingCountry.singleAmount = shippingInfo.shipping.singleAmount;
+                        shippingCountry.extraAmount = shippingInfo.shipping.extraAmount;
+                    }
+
+                    if (product.shippingCountires === undefined) {
+                        product.shippingCountires = [];
+                    }
+
+                    product.shippingCountires.push(shippingCountry);
                 }
-
-                if (product.shippingCountires === undefined) {
-                    product.shippingCountires = [];
-                }
-
-                product.shippingCountires.push(shippingCountry);
             }
         }
     }
